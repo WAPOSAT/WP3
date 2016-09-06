@@ -1,0 +1,10 @@
+{{ form_start(form) }}
+{{ form_widget(form) }}
+{{ form_end(form) }}
+
+{% if data == null %}
+	<h2>Insert dates</h2>
+{% else %}
+	<p>{{ data.d1|date('F jS \\o\\f Y') }}</p>
+	<p>{{ data.d2|date('F jS \\o\\f Y') }}</p>
+{% endif %}

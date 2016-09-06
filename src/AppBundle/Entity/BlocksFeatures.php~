@@ -1,0 +1,81 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * BlocksFeatures
+ *
+ * @ORM\Table(name="Blocks_Features", indexes={@ORM\Index(name="id_block", columns={"id_block"}), @ORM\Index(name="id_feature", columns={"id_feature"})})
+ * @ORM\Entity
+ */
+class BlocksFeatures
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="owner", type="integer", nullable=false)
+     */
+    private $owner;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="admin", type="integer", nullable=false)
+     */
+    private $admin;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="user", type="integer", nullable=false)
+     */
+    private $user;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="creation_date", type="datetime", nullable=false)
+     */
+    private $creationDate = 'CURRENT_TIMESTAMP';
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="active", type="boolean", nullable=false)
+     */
+    private $active = '1';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_block_feature", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idBlockFeature;
+
+    /**
+     * @var \AppBundle\Entity\Blocks
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Blocks")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_block", referencedColumnName="id")
+     * })
+     */
+    private $idBlock;
+
+    /**
+     * @var \AppBundle\Entity\Features
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Features")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_feature", referencedColumnName="id")
+     * })
+     */
+    private $idFeature;
+
+
+}
+

@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+				<html>
+				<head>
+					<title>Persisted data</title>
+				</head>
+				<body>
+					The credential are validated, the data was persisted.
+				</body>
+				</html>

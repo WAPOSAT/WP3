@@ -1,0 +1,71 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * ScheduledReports
+ *
+ * @ORM\Table(name="Scheduled_Reports", indexes={@ORM\Index(name="id_user", columns={"id_user"})})
+ * @ORM\Entity
+ */
+class ScheduledReports
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="schedule", type="string", length=20, nullable=false)
+     */
+    private $schedule;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="template", type="integer", nullable=false)
+     */
+    private $template;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="subject", type="string", length=100, nullable=false)
+     */
+    private $subject;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="creation_date", type="datetime", nullable=false)
+     */
+    private $creationDate = 'CURRENT_TIMESTAMP';
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="active", type="boolean", nullable=false)
+     */
+    private $active = '1';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_scheduled_report", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idScheduledReport;
+
+    /**
+     * @var \AppBundle\Entity\Users
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_user", referencedColumnName="id")
+     * })
+     */
+    private $idUser;
+
+
+}
+

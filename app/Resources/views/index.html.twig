@@ -1,0 +1,10 @@
+   	{% extends 'base.html.twig' %}
+
+   	{% block body %}
+   	{{ parent() }}
+   		<script type="text/javascript">
+   			// Las variables son utilizadas para definir la vista de la plataforma
+        	var vista = "{{ seleccion }}";
+        	var path = "{{ path }}";
+    	</script>		
+   	{% endblock %}

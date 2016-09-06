@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} WAPOSAT {% endblock %}
+
+{% block body %}
+	{{ parent() }}
+	<h1>aca</h1>
+	{% for t in query %}
+	    <tr>
+	    	<td>idUserBlock: {{t.idUserBlock}}<br></td>
+	    	<td>iUseridentidad: {{t.idUser.idUser}}<br></td>
+	    	<td>idBlock: {{t.idBlock.idBlock}}<br></td>
+	    	<td>role: {{t.role}}<br></td>
+	    	<td>codename: {{t.codename}}<br></td>
+	    	<td>Active: {{t.active}}<br></td>
+	    </tr>
+	{% endfor %}
+	
+{% endblock %}

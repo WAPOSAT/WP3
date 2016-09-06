@@ -1,0 +1,74 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Components
+ *
+ * @ORM\Table(name="Components", indexes={@ORM\Index(name="id_component_model", columns={"id_component_model"}), @ORM\Index(name="id_sender", columns={"id_sender"})})
+ * @ORM\Entity
+ */
+class Components
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="serie", type="integer", nullable=false)
+     */
+    private $serie;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="codename", type="string", length=50, nullable=false)
+     */
+    private $codename;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="connection_date", type="datetime", nullable=false)
+     */
+    private $connectionDate = 'CURRENT_TIMESTAMP';
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="active", type="boolean", nullable=false)
+     */
+    private $active = '1';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_component", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idComponent;
+
+    /**
+     * @var \AppBundle\Entity\Senders
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Senders")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_sender", referencedColumnName="id_sender")
+     * })
+     */
+    private $idSender;
+
+    /**
+     * @var \AppBundle\Entity\ComponentModels
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ComponentModels")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_component_model", referencedColumnName="id_component_model")
+     * })
+     */
+    private $idComponentModel;
+
+
+}
+

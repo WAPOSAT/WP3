@@ -1,0 +1,575 @@
+
+html,
+body {
+  font-family: sans-serif;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  /*overflow: hidden;*/
+overflow-x: hidden;
+}
+
+
+
+#bloques{
+    background-color: #222222;
+    width: 195px;
+    text-align: right;
+    padding-right: 20px;
+    height: 70px;
+    color:#FFFFFF;
+line-height: 70px}
+
+/* HEADER */
+header {
+
+  font-size: 13px;
+  height: 70px;
+  color: #fff;
+  background-color: #45464a;
+}
+
+
+
+#limites{margin-left:10px;background-color: #FFFFFF;border-radius: 4px;border:solid 1px #dddddd;display: inline-block;padding:5px;font-size:11px;font-family: sans-serif;   }
+select{border-radius: 4px;border:solid 1 px #dddddd;padding:3px;font-size:11px;font-family: sans-serif;  }             
+.subtitulo{font-size: 11px;font-family: sans-serif;color:#666666}
+.tablainformativa tr {}
+.tablainformativa td {height:30px;color:#000000;text-align: left; padding-left: 15px;padding-right: 15px;font-size:11px;margin: 0;  border-bottom:solid 1px #555555;}
+.tablainformativa { margin-bottom: 20px;margin-top: 20px;background-color: #FFFFFF; border-spacing: 0;border-collapse: collapse; }
+.tablainformativa th {height:30px; background-color: #256088;color: #ffffff;font-size: 11px;text-transform: uppercase; }
+
+h6{text-transform: uppercase;font-family: sans-serif;font-weight:bold;color:#FF0000;margin-bottom: 0px;font-size: 16px }
+/* RESPONSIVE */
+@media only screen and (max-width: 1920px) {
+
+
+ 
+
+  section{
+ -webkit-overflow-scrolling: touch;
+border: solid 1px #383838;
+padding-top: 0;
+padding-left: 0;
+padding-bottom: 20px;
+padding-right: 0;
+margin: 0;
+background-color: #383838;
+min-height: calc(100vh - 100px);
+}
+
+
+
+  .icon {
+    font-size: 14px;
+    position: relative;
+    display: block;
+    float: left;
+    width: 50px;
+    text-align: center;
+    height: 70px;
+    line-height: 70px;
+    cursor: pointer;
+    background-color: #38393e;
+  }  
+  
+  
+  .icon:hover {
+    background-color: #222222;
+  }
+  
+  
+    .icon-close {
+    font-size: 14px;
+    line-height: 70px;
+    display: block;
+    color:#FF0000;
+    margin-right: 0;
+    float:right;
+    right: 0;
+    width: 50px;
+    text-align: center;
+    height: 70px;
+    cursor: pointer;
+    background-color: #38393e;
+  }  
+  
+  
+  .icon-close:hover {
+    background-color: #222222;
+  }
+  
+  
+
+
+  .menu {
+    background-color: #45464a;
+    width: 100%;   
+  }
+  
+  .MenuRight
+  {
+    
+      color:#FFFFFF;
+      font-size: 16px;
+   }
+  
+  .menu a {
+    display: block;
+    color:#FFFFFF;
+    height: 60px;
+    text-align: right;
+    line-height: 20px;
+    margin-top:10px;
+    font-size: 11px;
+    margin-right: 5px;
+    border-bottom: 1px solid #555555;
+    cursor: pointer;
+  }
+
+ 
+}
+
+
+.Panel{border:solid 1px #dddddd;
+height: 109px;
+width: 93%;
+display: inline-block;
+font-size: 11px;
+/*margin: 5px 5px 5px 5px;*/
+box-shadow: 3px 3px 5px #cccccc;
+}
+
+
+
+
+
+
+.user{float: left;
+margin-left: 2%;
+margin-right: 2%;
+margin-top: 30px;}
+
+#infoscada{float: left;
+margin-left: 2%;
+margin-right: 2%;
+margin-top: 20px;
+font-family: sans-serif;
+font-size: 11px;
+text-transform: uppercase;}
+
+.infoscadacelda{
+    border-left: solid 1px #ffffff;
+border-top: solid 1px #ffffff;
+border-bottom:  solid 1px #ffffff;
+}
+
+.logo{float:left;
+margin-left: 2%;
+margin-right: 2%;
+margin-top: 17px;}
+
+
+div .export:hover
+{background-color:#7777FF; }
+
+.filtros
+{border: solid 0px #ff0000;
+text-transform: uppercase;
+font-size: 12px;
+line-height: 60px;
+   
+}
+
+
+.PanelHeadDanger, .PanelHeadRisk, .PanelHeadStable{
+border:solid 0px #1111ff;
+height: 63px;
+ 
+display: flex;
+align-items: center;
+}
+.PanelHeadDanger{
+background-color: #c63e40;
+}
+.PanelHeadRisk{
+background-color: #f0b42f;
+}
+.PanelHeadStable{
+background-color: #009e3f;
+}
+
+
+
+
+
+
+.PanelBody{
+border:solid 0px #FF0000;
+height: 40px;
+width: 231px;
+}
+
+.PanelAlerta
+{width:10%;
+ font-size: 14px;
+ color: #FFFFFF;
+ border: solid 0px #FF0000;
+ text-align: center;
+}
+
+.Resumen{
+    padding: 0;
+    border-spacing: 0;
+}
+
+.Detail{ 
+    border: solid 0px #FF0000;
+    width:100%;
+    text-align: center;
+    padding-top: 20px;
+    color: #ffffff;  
+    }
+
+
+
+
+
+.InfoDanger
+{width:22px;
+ font-size: 14px;
+ height:22px;
+ background-color: #a73836;
+ border-radius: 15px;
+ color: #FFFFFF;
+ text-align: center;
+ line-height: 20px;
+ margin-left: 2px;
+ margin-right: 2px;
+ display: inline-block;
+}
+
+.InfoRisk
+{width:22px;
+ font-size: 14px;
+ height:22px;
+ background-color: #efa331;
+ border-radius: 15px;
+ color: #FFFFFF;
+
+ display: inline-block;
+ text-align: center;
+ line-height:20px;
+ margin-left: 2px;
+ margin-right: 2px;
+}
+.InfoStable
+{width:22px;
+ font-size: 14px;
+ height:22px;
+ background-color: #009e41;
+ border-radius: 15px;
+ color: #FFFFFF;
+
+ display: inline-block;
+ text-align: center;
+ line-height:20px;
+ margin-left: 2px;
+ margin-right: 2px;
+}
+
+.InfoLittle{
+ width:17px;
+ font-size: 11px;
+ height:17px;
+ line-height: 17px;
+   }
+   
+.InfoLittlePoint{
+ width:10px;
+ font-size: 9px;
+ height:10px;
+ line-height: 10px;
+   }
+
+.PanelTitulo
+{width:60%;
+ font-size: 11px;
+ color: #FFFFFF;
+ text-align: left;
+ white-space: nowrap;
+ word-wrap: normal;
+ }
+ 
+ 
+.PanelDetalle{float: left;width:80px;
+padding-left: 10px;padding-top: 5px;}
+
+.Login{
+    width: 246px;
+    height: 330px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5%;
+    background-color: #FFFFFF;   
+padding: 20px; 
+text-align: center;
+border: solid 1px #dddddd;
+}
+
+#graficolineas div div{
+    text-align: center;
+    
+}
+
+    #graficolineas{
+    
+    border: solid 1px #FF0000;
+    width: 90%;
+    text-align: center;
+    margin:2% 2% 2% 2%;
+    padding: 3% 3% 3% 3%;
+    background-color: red;
+   
+}
+
+
+.grafico{
+    border: solid 0px #FF0000;
+    width: 90px;
+    text-align: center;
+    height: 90px;
+ font-size: 11px;  
+    display: inline-block;
+    align-items: center;
+    margin:2% 2% 2% 2%;
+}
+
+
+.Stable, .Danger, .Risk {
+    color:#ffffff;
+}
+.Stable{
+    background-color:#019935;
+}
+.Risk{
+    background-color: #f2b330;
+        
+}
+.Danger{
+    background-color: #bd3d3a;   
+}
+
+
+.ButtonBack{
+    
+  background-color: #1111FF;
+  padding: 5px 25px 5px 25px;
+ line-height: 30px;
+ height: 25px;
+ width: auto;
+ /*display: block;*/
+  border-radius: 5px;
+  text-decoration: none;
+  color: #ffffff;
+  margin-top:30px;
+  cursor: pointer;
+  
+}
+.ButtonBack:hover{
+    
+  background-color: #5555FF;
+  
+}
+
+.Export{
+   
+    background-color: #256088;
+    color: #FFFFFF;
+    cursor: pointer;
+    padding: 5px 8px 5px 8px;
+    float: right;
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 20px;
+    
+    font-size: 16px;
+}
+.BoxAlert{
+    background-color: #c53f40;
+    color: #FFFFFF;
+    width: auto;
+    cursor: pointer;
+    padding: 5px 8px 5px 8px;
+    margin-top: 20px;
+    margin-left: 2%;
+    margin-right: 2%;
+    float: right;  
+    font-size: 16px;
+
+  
+}
+
+
+.ButtonEnter{
+    
+ background-color: #b9423e;
+ padding: 0px 25px 0px 25px;
+ line-height: 36px;
+ border: 0;
+ font-size: 16px;
+ font-family: sans-serif;
+ font-weight: bold;
+ /*display: block;*/
+  border-radius: 5px;
+  text-decoration: none;
+  color: #ffffff;
+  margin-top:5px;
+ 
+  
+}
+.ButtonEnter:hover{
+  background-color: #c55552;
+}
+
+.BoxLogin{
+    background-color: #ffffff;
+    border: solid 1px #bbbbbb;
+    border-radius: 3px;
+    height: 30px;
+    margin-top: 10px;
+    display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.BoxLogin input{border:0;font-weight: bold;margin-left: 10px;width: 200px}
+.Recordar{margin-top: 10px;margin-bottom: 10px; border:solid 0px #000000;font-family: sans-serif;font-size: 14px;height:30px}
+.Recordar label{cursor: pointer;color: #aaaaaa}
+.LoginInfo{text-align: center;color:#b4b2b3;width:280px;font-size: 13px;margin-left: auto;margin-right: auto;margin-top: 20px}
+.Respuesta{color:#a8403d;padding-top:20px }
+
+footer{
+    background-color: #45464a;
+    height: 22px;
+    position:absolute;
+    bottom:0;
+    width:100%;
+    color: #FFFFFF;
+    font-size: 11px;
+    line-height: 22px;
+    text-align: center;
+}
+.TablePlain{border-spacing: 0;border-collapse: collapse;}
+.Plain{text-align: center; font-size: 11px;vertical-align: top;padding-top: 20px;}
+.PlainBox{border: solid 1px #000000;line-height:20px;text-align:center;padding:3px 10px 3px 10px ;margin: 10px; display:inline-block }
+.Punto{height:10px;width: 10px;border-radius: 5px;color: green; background-color:green; display: inline-block;
+    *display: inline;   }
+
+/*col:first-child {background: #ccc}*/
+col:nth-child(2n) {background: #CCC}
+col:nth-child(2n+1) {background: #aaa}
+
+.Message ,.Message li{list-style: none;font-size: 11px; 
+display: block;
+margin: 0;
+padding: 0;
+}
+
+.Message li{display:block;line-height:11px; align-items: center; height: 34px;padding-top: 5px;cursor: pointer;padding-left: 10px;padding-right: 10px; white-space: nowrap;
+ word-wrap: normal;}
+.MessageDanger{background-color: #f5e2de;color:#ba5351; border-bottom: solid 1px #ff0000;}
+.MessageRisk{background-color: #f1ddc2;color:#ed9c37; border-bottom: solid 1px #e5bf8f;}
+
+.BoxMessage{width: 320px;overflow-x: hidden;height:240px; }
+
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-button {
+    width: 8px;
+    height:5px;
+}
+::-webkit-scrollbar-track {
+    background:#eee;
+    border: thin solid lightgray;
+    box-shadow: 0px 0px 3px #dfdfdf inset;
+    border-radius:0px;
+}
+::-webkit-scrollbar-thumb {
+    background:#999;
+    border: thin solid gray;
+    border-radius:0px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background:#7d7d7d;
+}
+
+#owl-demo .item{
+ 
+  padding: 20px 0px;
+  margin: 0px;
+  color: #000000;
+  text-align: center; font-size: 11px;vertical-align: top;padding-top: 20px;
+}
+
+.btn {background-color: rgba(68,68,68,0.5);color:#ffffff;font-size: 14px; padding: 10px 10px ;position: absolute;top:50%;margin-top: -10px;} 
+.next {right:0}
+div .prev:hover {background-color: rgba(68,68,68,1)}
+div .next:hover {background-color: rgba(68,68,68,1)}
+
+.owl-item:nth-child(2n+1) 
+{background-color: #b9b9b9}
+ 
+.owl-item:nth-child(2n) {
+  background-color: #c1c1c1;
+}
+.InfoList{margin-top: 10px;margin-right: 10px;}
+
+.DetailParameter{background-color: #45464a;border: solid 1px #000000}
+.DetailHead{background-color: #38393e;height: 52px;line-height: 52px;text-align: center;color: #FFFFFF;font-weight: bold;font-family: sans-serif;text-transform: uppercase;}
+.DetailAlert{background-color:#FF0000;color: #ffffff; display: flex;align-items: center;width: 200px;margin-left: auto;margin-right: auto;margin-top: 10px;margin-bottom: 10px;padding: 10px 10px 10px 10px;}
+.DetailValue{color:#ffffff;border:solid 1px #ffffff;display: inline-block;font-size: 10px;padding: 10px;margin-left: 15px}
+.DetailValue label{font-size: 20px;font-weight: bold}
+#Chart{border: solid #ffFF00 0px;width:100px;height: 100px;}
+.DetailChart{color: #ffffff;font-size:10px;text-align: center;}
+.DetailChart label{font-size: 20px;font-weight: bold}
+.DetailLabel{font-size: 10px;color: #FFFFFF;line-height: 40px;}
+.boxcols{border: solid 0px #0000FF;}
+.Group{border: solid 0px #0000FF;}
+
+
+.box{display:inline-block;border: solid 0px #ff0000;text-align: center;padding-bottom: 10px; cursor: pointer;}
+.box:hover {opacity: 0.5;
+    filter: alpha(opacity=50); /* For IE8 and earlier */}
+
+
+.ItemBox{display:inline-block;border: solid 0px #ff0000;text-align: center;padding-bottom: 10px;}
+
+
+.TablaPanel{width: 100%;border-spacing: 0;border-collapse: collapse;}
+.TablaPoint{width: 100%;border-spacing: 0;border-collapse: collapse;}
+
+.Black{color: #000000; border: solid 1px #000000;display: inline-block;padding: 10px 10px 10px 10px;}
+.DetailBlock{
+    border-left:solid 0px #eeeeee;width: 0%;
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+vertical-align: top;
+}
+
+.Block{border:solid 0px #ff0000;
+display: inline-block;
+vertical-align: top;
+}
+@viewport {
+    width: device-width;
+    max-zoom: 1;
+}
+@media (max-width: 750px) {
+    .Block{display: block;width:95%}
+    .DetailBlock{display: block;width:95%}
+
+    .labelExport{display: none}
+}

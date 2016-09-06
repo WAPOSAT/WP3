@@ -1,0 +1,120 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Blocks
+ *
+ * @ORM\Table(name="Blocks", indexes={@ORM\Index(name="id_block_type", columns={"id_block_type"})})
+ * @ORM\Entity
+ */
+class Blocks
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="block_codename", type="string", length=50, nullable=false)
+     */
+    private $blockCodename;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="block_name", type="string", length=100, nullable=false)
+     */
+    private $blockName;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_parent_block", type="integer", nullable=true)
+     */
+    private $idParentBlock;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="canvas_order", type="integer", nullable=false)
+     */
+    private $canvasOrder;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="longitude", type="integer", nullable=false)
+     */
+    private $longitude;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="latitude", type="integer", nullable=false)
+     */
+    private $latitude;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="description", type="integer", nullable=false)
+     */
+    private $description;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="ubigeo", type="integer", nullable=false)
+     */
+    private $ubigeo;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="image", type="integer", nullable=false)
+     */
+    private $image;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="refresh", type="integer", nullable=false)
+     */
+    private $refresh;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="creation_date", type="datetime", nullable=false)
+     */
+    private $creationDate = 'CURRENT_TIMESTAMP';
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="active", type="boolean", nullable=false)
+     */
+    private $active = '1';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \AppBundle\Entity\BlockType
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BlockType")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_block_type", referencedColumnName="id_block_type")
+     * })
+     */
+    private $idBlockType;
+
+
+}
+

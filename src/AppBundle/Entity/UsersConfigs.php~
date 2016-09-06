@@ -1,0 +1,70 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * UsersConfigs
+ *
+ * @ORM\Table(name="Users_Configs", indexes={@ORM\Index(name="id_user", columns={"id_user"}), @ORM\Index(name="id_block", columns={"id_block"}), @ORM\Index(name="id_feature", columns={"id_feature"})})
+ * @ORM\Entity
+ */
+class UsersConfigs
+{
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="active", type="boolean", nullable=false)
+     */
+    private $active = '1';
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="creation_date", type="datetime", nullable=false)
+     */
+    private $creationDate = 'CURRENT_TIMESTAMP';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_user_config", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idUserConfig;
+
+    /**
+     * @var \AppBundle\Entity\Blocks
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Blocks")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_block", referencedColumnName="id")
+     * })
+     */
+    private $idBlock;
+
+    /**
+     * @var \AppBundle\Entity\Users
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_user", referencedColumnName="id")
+     * })
+     */
+    private $idUser;
+
+    /**
+     * @var \AppBundle\Entity\Features
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Features")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_feature", referencedColumnName="id")
+     * })
+     */
+    private $idFeature;
+
+
+}
+

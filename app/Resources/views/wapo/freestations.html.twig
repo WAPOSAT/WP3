@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} WAPOSAT {% endblock %}
+
+{% block body %}
+	{{ parent() }}
+	<h1><span class="label label-info grumpy">WAPOSAT > Estaciones libres</span></h1>  
+	<div  class="text-center" style="margin-top: 30px">
+		<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3902.4723534452255!2d-77.05093360000707!3d-12.010967824177081!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2spe!4v1458608154398" width="800" height="600" frameborder="0" style="border:0" allowfullscreen></iframe>
+	</div>
+{% endblock %}

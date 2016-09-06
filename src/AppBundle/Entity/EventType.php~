@@ -1,0 +1,40 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * EventType
+ *
+ * @ORM\Table(name="Event_Type")
+ * @ORM\Entity
+ */
+class EventType
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="event_name", type="string", length=50, nullable=false)
+     */
+    private $eventName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="alert_type", type="string", length=50, nullable=false)
+     */
+    private $alertType;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_event_type", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idEventType;
+
+
+}
+

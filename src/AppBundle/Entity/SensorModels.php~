@@ -1,0 +1,60 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * SensorModels
+ *
+ * @ORM\Table(name="Sensor_Models", indexes={@ORM\Index(name="id_parameter", columns={"id_parameter"}), @ORM\Index(name="id_measurement_unit", columns={"id_measurement_unit"})})
+ * @ORM\Entity
+ */
+class SensorModels
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="max_limit", type="integer", nullable=false)
+     */
+    private $maxLimit;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="min_limit", type="integer", nullable=false)
+     */
+    private $minLimit;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_sensor_model", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idSensorModel;
+
+    /**
+     * @var \AppBundle\Entity\MeasurementsUnits
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\MeasurementsUnits")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_measurement_unit", referencedColumnName="id_measurement_unit")
+     * })
+     */
+    private $idMeasurementUnit;
+
+    /**
+     * @var \AppBundle\Entity\Parameters
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Parameters")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_parameter", referencedColumnName="id_parameter")
+     * })
+     */
+    private $idParameter;
+
+
+}
+

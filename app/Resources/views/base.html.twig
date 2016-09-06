@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">  
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <title>{% block title %}WAPOSAT{% endblock %}</title>
+        
+        {% block stylesheets %}
+            <!--Estilos-->
+            <link rel="stylesheet" type="text/css" href="{{ asset('public/css/tooltipster.bundle.min.css')}}">
+            <link rel="stylesheet" type="text/css" href="{{ asset('public/css/style.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ asset('public/css/style.min.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ asset('public/css/owl.carousel.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ asset('public/css/font-awesome.css') }}">
+            <!--Icono-->
+            <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+            <link rel="shortcut icon" href="{{ asset('favicon.ico')}}" type="image/x-icon">
+            <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+        {% endblock %}
+    </head>
+    <body>
+        {% block body %}
+
+            <div id="o-wrapper"  class="o-wrapper">
+                <header></header>
+                <section></section>
+                <footer></footer>
+            </div>     
+
+            <div id="c-mask" class="c-mask"></div>
+
+            <aside class="c-menu--push-left"></aside>
+            <aside class="c-menu--push-right"></aside>
+            
+        {% endblock %}
+
+        {% block javascripts %}
+             <!--Librerias Javascript-->
+            <script type="text/javascript" src="{{ asset('public/js/jquery-1.12.4.min.js')}}"></script>  
+            <script type="text/javascript" src="{{ asset('public/js/menu.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('public/js/loader.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('public/js/tooltipster.bundle.min.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('public/js/owl.carousel.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('public/js/main.js')}}"></script>
+        {% endblock %}
+    </body>
+</html>
+

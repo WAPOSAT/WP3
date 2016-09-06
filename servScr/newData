@@ -1,0 +1,6 @@
+
+#!/bin/bash
+
+/var/www/html/waposatdev/wptest/servScr/./out
+cd /var/www/html/waposatdev/wptest/servScr && ./fire 2
+

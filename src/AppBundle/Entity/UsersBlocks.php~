@@ -1,0 +1,74 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * UsersBlocks
+ *
+ * @ORM\Table(name="Users_Blocks", indexes={@ORM\Index(name="id_user", columns={"id_user"}), @ORM\Index(name="id_block", columns={"id_block"})})
+ * @ORM\Entity
+ */
+class UsersBlocks
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="role", type="string", length=20, nullable=false)
+     */
+    private $role;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="codename", type="string", length=50, nullable=false)
+     */
+    private $codename;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="creation_date", type="datetime", nullable=false)
+     */
+    private $creationDate = 'CURRENT_TIMESTAMP';
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="active", type="boolean", nullable=false)
+     */
+    private $active = '1';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_user_block", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idUserBlock;
+
+    /**
+     * @var \AppBundle\Entity\Users
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_user", referencedColumnName="id")
+     * })
+     */
+    private $idUser;
+
+    /**
+     * @var \AppBundle\Entity\Blocks
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Blocks")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_block", referencedColumnName="id")
+     * })
+     */
+    private $idBlock;
+
+
+}
+

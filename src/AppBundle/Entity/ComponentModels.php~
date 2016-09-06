@@ -1,0 +1,40 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * ComponentModels
+ *
+ * @ORM\Table(name="Component_Models")
+ * @ORM\Entity
+ */
+class ComponentModels
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="component_code", type="integer", nullable=false)
+     */
+    private $componentCode;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=100, nullable=false)
+     */
+    private $description;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_component_model", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idComponentModel;
+
+
+}
+

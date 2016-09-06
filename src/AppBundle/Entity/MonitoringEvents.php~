@@ -1,0 +1,56 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * MonitoringEvents
+ *
+ * @ORM\Table(name="Monitoring_Events", indexes={@ORM\Index(name="id_block_sensor", columns={"id_block_sensor"}), @ORM\Index(name="id_event_type", columns={"id_event_type"}), @ORM\Index(name="id_measurement", columns={"id_measurement"})})
+ * @ORM\Entity
+ */
+class MonitoringEvents
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_monitoring_event", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idMonitoringEvent;
+
+    /**
+     * @var \AppBundle\Entity\Measurement
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Measurement")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_measurement", referencedColumnName="id_measurement")
+     * })
+     */
+    private $idMeasurement;
+
+    /**
+     * @var \AppBundle\Entity\EventType
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\EventType")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_event_type", referencedColumnName="id_event_type")
+     * })
+     */
+    private $idEventType;
+
+    /**
+     * @var \AppBundle\Entity\BlockSensors
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BlockSensors")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_block_sensor", referencedColumnName="id")
+     * })
+     */
+    private $idBlockSensor;
+
+
+}
+

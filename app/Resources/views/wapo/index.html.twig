@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} WAPOSAT {% endblock %}
+
+{% block body %}
+	{{ parent() }}
+	<div class="carousel-inner text-vertical-center">
+		<img src="{{ asset('river2.png') }}" class="col-md-12 img-responsive" alt="Responsive image" style="max-width: 100%;">
+		<div class="carousel-caption">
+			<h1 class="pacifico title1">WAPOSAT</h1> 
+			<h2>Safe water 24 Hrs of day</h2>
+			<button type="button" class="btn"><a href="#">Descubre más</a></button>			
+		</div>
+	</div>  
+{% endblock %}
+

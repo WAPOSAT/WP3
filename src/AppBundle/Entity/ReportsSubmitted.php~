@@ -1,0 +1,77 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * ReportsSubmitted
+ *
+ * @ORM\Table(name="Reports_Submitted", indexes={@ORM\Index(name="id_user", columns={"id_user"}), @ORM\Index(name="id_scheduled_report", columns={"id_scheduled_report"}), @ORM\Index(name="id_sent_email", columns={"id_sent_email"})})
+ * @ORM\Entity
+ */
+class ReportsSubmitted
+{
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="since_date", type="datetime", nullable=false)
+     */
+    private $sinceDate = '0000-00-00 00:00:00';
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="until_date", type="datetime", nullable=false)
+     */
+    private $untilDate = '0000-00-00 00:00:00';
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="message_body", type="text", length=65535, nullable=false)
+     */
+    private $messageBody;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_report_submitted", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idReportSubmitted;
+
+    /**
+     * @var \AppBundle\Entity\SentEmails
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\SentEmails")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_sent_email", referencedColumnName="id_sent_email")
+     * })
+     */
+    private $idSentEmail;
+
+    /**
+     * @var \AppBundle\Entity\ScheduledReports
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ScheduledReports")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_scheduled_report", referencedColumnName="id_scheduled_report")
+     * })
+     */
+    private $idScheduledReport;
+
+    /**
+     * @var \AppBundle\Entity\Users
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_user", referencedColumnName="id")
+     * })
+     */
+    private $idUser;
+
+
+}
+

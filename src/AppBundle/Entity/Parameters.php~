@@ -1,0 +1,40 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Parameters
+ *
+ * @ORM\Table(name="Parameters")
+ * @ORM\Entity
+ */
+class Parameters
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="parameter_codename", type="string", length=6, nullable=false)
+     */
+    private $parameterCodename;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="parameter_name", type="string", length=100, nullable=false)
+     */
+    private $parameterName;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_parameter", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idParameter;
+
+
+}
+
