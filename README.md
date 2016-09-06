@@ -1,2 +1,2 @@
 # wptest
-Version 3 de la plataforma de monitoreo
+Este es el nuevo diseño de la plataforma de monitoreo de la calidad del agua.
