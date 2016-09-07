@@ -8,7 +8,8 @@ var actualizarParametro=null;
 var pathIMG="public/img/"; 
 var nodo=null;
 var pushLeft=null; 
-var pushRight=null; 
+var pushRight=null;
+var lastId = 0;
 
   
 $(document).ready(function(){
@@ -21,7 +22,7 @@ $(document).ready(function(){
 
 
 /*
-* LoadNav:
+* LoadNav
 * Construye el menu de navegacion y la barra de herramientas del sistema
 */
 function LoadNav(type = 1){
@@ -157,7 +158,7 @@ function ShowBlock(id,risk=1,danger=1,stable=1){
 
 
 /*
-* UpdateBlock
+* UpdateProcess
 * Actualiza la informacion dinamica de los ProcessBlock
 */
 function UpdateProcess(id){
@@ -194,7 +195,7 @@ function UpdateProcess(id){
 
     });
   });    
-} // End of UpdateBlock
+} // End of UpdateProcess
 
 
 /*
@@ -204,10 +205,10 @@ function UpdateProcess(id){
 function ShowPoint(id){
 
   $.getJSON('dashboard/station/'+id,function(data){
+    
     // Desactiva la actualizacion de datos por AJAX
-    //clearInterval(actualizarEstacion);
-    // Se establece la recarga de datos dinamicos con AJAX
-    //actualizarEstacion=setInterval('UpdateStation('+id+')', (data.RefreshFrecuencySeg*1000));
+    clearInterval(actualizarEstacion);
+    actualizarEstacion=setInterval('UpdateStation('+id+')',5000);
 
     if(data.NumDanger==0 && data.NumRisk==0 ){
       Icono=''; 
@@ -246,7 +247,7 @@ function ShowPoint(id){
 */
 function UpdateStation(id){
   // Realiza una peticion utilizando AJAX para la actualizacion del StationBlock
-  $.getJSON('dashboard/update/process/'+id, function(data) {
+  $.getJSON('dashboard/station/'+id, function(data) {
     
     if(data.NumDanger==0 && data.NumRisk==0 ){
       Icono=''; 
@@ -267,9 +268,123 @@ function UpdateStation(id){
     
     // Generando Cuadro de Gauge
     GaugeGenerate(data.Sensor,id,0);
+    UpdateSensorsTable(data.Sensor);
 
   });
 } // End of UpdateStation
+
+
+/*
+* BlockDetail 
+* Carga la informacion de todos los sensores en el menu derecho de la plataforma
+*/
+function BlockDetail(idstation=1){
+
+  $.getJSON('dashboard/station/'+idstation, function(data) {
+    var items = [];
+
+    items.push('<div class="DetailHead" onclick=pushRight.close()><i class="fa fa-arrow-right" aria-hidden="true"></i> Parametros Totales</div>\n\
+                <div class=Detail><span>'+data.Name+'<br>'+data.CodeName+'</span>\n\
+                <div style="padding-left:20px;" id="SensorsTable" ><table class="tablainformativa">');
+    items.push('<tr><th>Parámetro</th><th>Min</th><th>Max</th><th>Actual</th></tr>');
+    var stylo='';
+
+    $.each(data.Sensor, function(key, val) {
+      stylo=' class="Stable"';
+      if(val.LastValue>=val.LMR && val.LastValue<=val.LMP){
+        stylo=' class="Risk"';
+      }else if(val.LastValue>val.LMP){
+        stylo=' class="Danger"';
+      }  
+
+      items.push('<tr><td>' + val.Name +'</td><td>' + val.MinValue +'</td><td>' + val.MaxValue +'</td><td '+ stylo +'><span '+stylo+'>' + val.Last.Value +'</span></td></tr>');
+    });
+
+    items.push('</table></div> <a href=javascript:pushRight.close() class=ButtonBack>Volver</a></div>');
+    $(nodo1).html(items.join(''));
+  });
+ 
+} //  End of BlockDetail
+
+
+/*
+* UpdateSensorsTable
+* Genera la tabla de valores de los sensores en el menu derecho
+*/
+function UpdateSensorsTable(Sensor){
+  var cadena="";
+  cadena += "<table class='tablainformativa'>";
+  cadena += "<tr><th>Parámetro</th><th>Min</th><th>Max</th><th>Actual</th></tr>";
+  $.each(Sensor , function(key, val) {
+    stylo=' class="Stable"';
+    if(val.LastValue>=val.LMR && val.LastValue<=val.LMP){
+      stylo=' class="Risk"';
+    }else if(val.LastValue>val.LMP){
+      stylo=' class="Danger"';
+    }
+    cadena += '<tr><td>' + val.Name +'</td><td>' + val.MinValue +'</td><td>' + val.MaxValue +'</td><td '+ stylo +'><span '+stylo+'>' + val.Last.Value +'</span></td></tr>';
+  });
+  cadena += "</table>";
+
+  $("#SensorsTable").html(cadena);
+} //  UpdateSensorsTable
+
+
+/*
+* showparameter
+* Carga la informacion del sensor
+*/
+function showparameter(idstation=1,idsensor=1,long=20, Refresh=5 ){
+
+  $.getJSON('dashboard/station/'+idstation+'/sensor/'+idsensor+'/long/'+long,function(data){
+    
+    lastId= data.Last.id;
+    console.log(data.Last.id);
+
+    // Detiene alguna ejecucion previa de carga de datos dinamicos del BlockStation e inicia una nueva
+    clearInterval(actualizarParametro);
+    actualizarParametro=setInterval('showParameterUpdate('+idstation+','+idsensor+','+data.LMP+','+data.LMR+')', (Refresh*1000));
+
+    $("#ChartTittle").html("<h6>"+data.Name+"</h6><span class=subtitulo>"+data.Unit+" vs Tiempo</span>");
+    $("#ChartDetail").html('<table><tr><td>Minimo:</td><td><label id="MinValueSensors" >'+data['MinValue'].toFixed(2)+ '</label></td></tr><tr><td>Medio:</td><td><label id="MeanValueSensors">'+data['MeanValue'].toFixed(2) +'</label></td></tr><tr><td>Maximo:</td><td><label id="MaxValueSensors" >'+data['MaxValue'].toFixed(2) +'</label></td></tr></table><div></div>');
+    $("#filtro").html('<select onchange=showparameter('+idstation+','+idsensor+',this.value,'+Refresh+') id=ListPoint><option value=10 '+ (long==10?'selected':'') + '> 10 Puntos</option><option value=20 '+ (long==20?'selected':'') +'> 20 Puntos</option></select><div id=limites><label>Limite: '+data.LMR+' - '+data.LMP+'</label> <i class="fa fa-cog" aria-hidden="true"></i></div>');
+
+    
+    var datos="[";
+    for(a=0;a<=data.Data.Time.length-1;a++){
+      var d = new Date("1 1, 2016 "+data.Data.Time[a]);
+
+      datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+","+data.LMP+","+data.LMR+"],";
+    }
+    datos=datos.substr(0,datos.length-1)+"]";
+
+    drawCurveTypes('ChartLines',380,200,datos,data.Name);  
+  });  
+}
+
+
+/*
+* showParameterUpdate
+* Actualizacion de la informacion dinamica del Sensor
+*/
+function showParameterUpdate(idstation=1,idsensor=1,LMP=100,LMR=50){
+  ///dashboard/update/station/{idStation}/sensor/{idSensor}/lastid/{lastId}
+  $.getJSON('dashboard/update/station/'+idstation+'/sensor/'+idsensor+'/lastid/'+lastId,function(data){
+    if(data.Data.Time.length > 0){
+      // se guarda como variable global lastId
+      lastId=data.Last.id;
+      var datos="[";
+      for(a=0;a<=data.Data.Time.length-1;a++){
+        var d = new Date("1 1, 2016 "+data.Data.Time[a]);
+
+        datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+","+LMP+","+LMR+"],";
+      }
+      datos=datos.substr(0,datos.length-1)+"]";
+
+      UpdateCurveTypes(datos);
+    }
+  });
+}
 
 
 /*
@@ -279,30 +394,29 @@ function UpdateStation(id){
 function GaugeGenerate(Sensor,id,generate){ 
   // id -> Id of StationBlock
   // generate -> variable booleana que indica si se debe cargar la grafica del primer sensor (1-carga ; 0-no carga)
-
   var n;   
   var num=0;
   $("#ChartGauge").html("");
   $.each(Sensor,function(k,v){
     if(num==0 && generate==1){
-      showparameter(id,v.id,20);  
+      showparameter(id,v.id,20,5);  
     }
     if (num<boxCaugeCols){
       // Genera el Gauge para cada Sensor del Station Block 
-      $("#ChartGauge").append('<div style="cursor:pointer" class="ItemBox" onclick=showparameter('+id +','+v.id +',20) ><div id="chart'+k+'" class="grafico" ></div></div>');
-      n=((v.Last.Value*100)/v.MP);
+      $("#ChartGauge").append('<div style="cursor:pointer" class="ItemBox" onclick="showparameter('+id +','+v.id +', 20, 5)" ><div id="chart'+k+'" class="grafico" ></div></div>');
+      //n=((v.Last.Value*100)/v.MP);
+      
       // Funcion para generar el Gauge
-      drawChart('chart'+k,v.CodeName,Math.round(n * 100) / 100,v.LMP*100/v.MP,100,v.LMR*100/v.MP,v.LMP*100/v.MP);
-      $('#chart'+k).append("<label  style='cursor:pointer' >"+v.Name+":"+v.Last.Value+"</label>");
+      //drawChart('chart'+k,v.CodeName,Math.round(n * 100) / 100,v.LMP*100/v.MP,100,v.LMR*100/v.MP,v.LMP*100/v.MP);
+      //drawChart(id,l,v,dangerini,dangerfin,riskini,riskfin)
+      drawChart('chart'+k,v.CodeName,v.Last.Value,v.LMP,v.MP,v.LMR,v.LMP);
+      $('#chart'+k).append("<label  style='cursor:pointer' >"+v.Name+"</label>");
     }
     num+=1;
   });
   ResizeCol();
   calBoxCol();
 } // End GaugeGenerate
-
-
-
 
 
 /*
@@ -404,87 +518,32 @@ function UpdatePlain(id){
 
 
 
-/*
-*  
-* 
-*/
-function BlockDetail(idstation=1){
-
- $.getJSON('dashboard/station/'+idstation, function(data) {
- var items = [];
- 
- items.push('<div class="DetailHead" onclick=pushRight.close()><i class="fa fa-arrow-right" aria-hidden="true"></i> Parametros Totales</div>\n\
-            <div class=Detail><span>'+data.Name+'<br>'+data.CodeName+'</span>\n\
-            <div style="padding-left:20px;"><table class="tablainformativa">');
- items.push('<tr><th>Parámetro</th><th>Min</th><th>Max</th><th>Actual</th></tr>');
-   var stylo='';
-   
-   $.each(data.Sensor, function(key, val) {
-   stylo=' class="Stable"';
-    if(val.LastValue>=val.LMR && val.LastValue<=val.LMP)
-   {
-   stylo=' class="Risk"';
-   }else if(val.LastValue>val.LMP)
-   {
-    stylo=' class="Danger"';
-   }  
-   
-    items.push('<tr><td>' + val.Name +'</td><td>' + val.MinValue +'</td><td>' + val.MaxValue +'</td><td '+ stylo +'><span '+stylo+'>' + val.Last.Value +'</span></td></tr>');
-});
-
-
- items.push('</table></div> <a href=javascript:pushRight.close() class=ButtonBack>Volver</a></div>');
-
- $(nodo1).html(items.join(''));
-
-});
- 
-}
-
 
 
 /*
-* showparameter
-* 
+* CloseSession
+* Cierra la sesion borrando la variable de usuario y redirigiendo al Login
 */
-function showparameter(idstation=1,idsensor=1,long=20){
-
-  $.getJSON('dashboard/station/'+idstation+'/sensor/'+idsensor+'/long/'+long,function(data){
-    
-    $("#ChartTittle").html("<h6>"+data.Name+"</h6><span class=subtitulo>"+data.Unit+" vs Tiempo</span>");
-    $("#ChartDetail").html('<table><tr><td>Minimo:</td><td><label>'+data['MinValue'].toFixed(2)+ '</label></td></tr><tr><td>Medio:</td><td><label>'+data['MeanValue'].toFixed(2) +'</label></td></tr><tr><td>Maximo:</td><td><label>'+data['MaxValue'].toFixed(2) +'</label></td></tr></table><div></div>');
-    $("#filtro").html('<select onchange=showparameter('+idstation+','+idsensor+',this.value) id=ListPoint><option value=10 '+ (long==10?'selected':'') + '> 10 Puntos</option><option value=20 '+ (long==20?'selected':'') +'> 20 Puntos</option></select><div id=limites><label>Limite: '+data.LMR+' - '+data.LMP+'</label> <i class="fa fa-cog" aria-hidden="true"></i></div>');
-
-    var datos="[";
-    for(a=0;a<=data.Data.Time.length-1;a++){
-      var d = new Date("1 1, 2016 "+data.Data.Time[a]);
-
-      datos+="[["+ d.getHours() +","+ d.getMinutes() +",0],"+ data.Data.Value[a]+","+data.LMP+","+data.LMR+"],";
-    }
-    datos=datos.substr(0,datos.length-1)+"]";
-    
-    drawCurveTypes('ChartLines',380,200,datos,data.Name);  
-  });  
-}
-
 function CloseSession(){
     
-  if (confirm("Cerrar Sesi\u00F3n$request = Request::createFromGlobals();")) {
+  if (confirm("Cerrar Sesi\u00F3n")) {
 
     window.location.assign("http://monitoreo.waposat.com/logout");
   } 
-}
+} //  End of CloseSession
 
+/*
+* ShowAlert
+* Carga la vinieta para la visualizacion de los eventos
+*/
+function ShowAlert(type=1){
+  var ruta=null;
+  if (type==1) {ruta="dashboard/alerts/";}
+  if (type==2) {ruta="v2/dashboard/alerts/";}
 
-function ShowAlert(type=1)
-{
-    var ruta=null;
-    if (type==1) {ruta="dashboard/alerts/";}
-    if (type==2) {ruta="v2/dashboard/alerts/";}
-    
-$.getJSON(ruta,function(data){
-var items=[];
-items.push('<div class=BoxMessage><ul class="Message">');
+  $.getJSON(ruta,function(data){
+    var items=[];
+    items.push('<div class=BoxMessage><ul class="Message">');
     $.each(data.Alert,function(k,v){
       extra='';
       if(v.AlertType==0)
@@ -497,25 +556,28 @@ items.push('<div class=BoxMessage><ul class="Message">');
       {items.push('<li onclick="ShowBlock('+ v.idProcessBlock +')" '+estilomensaje+'><div class="'+extra+' InfoLittlePoint InfoList"> </div> ' +v.Message+'</li>');}
       if (type==2)
       {items.push('<li onclick="ShowPlain('+ v.idProcessBlock +')" '+estilomensaje+'><div class="'+extra+' InfoLittlePoint InfoList"> </div> ' +v.Message+'</li>');}
-      
-      
-      
     });
-items.push('</ul></div>');
+    
+    items.push('</ul></div>');
 
-$('.BoxAlert').tooltipster({
-   animation: 'fade',
-   delay: 200,
-   interactive:true,
-   content: items.join(''),
-   contentAsHTML: true,
-   theme: 'Light',
-   trigger: 'click'
-});
-});
+    $('.BoxAlert').tooltipster({
+      animation: 'fade',
+      delay: 200,
+      interactive:true,
+      content: items.join(''),
+      contentAsHTML: true,
+      theme: 'Light',
+      trigger: 'click'
+    });
+  });
 
-}
+} //  End of ShowAlert
 
+
+/*
+* drawChart
+* Genera la grafica Gauge para la medicion de un Sensor
+*/
 google.charts.load('current', {'packages':['gauge','corechart', 'line']});    
 
 function drawChart(id,l,v,dangerini,dangerfin,riskini,riskfin) {
@@ -526,6 +588,7 @@ function drawChart(id,l,v,dangerini,dangerfin,riskini,riskfin) {
         ]);
 
         var options = {
+          min:0, max:dangerfin,
           redFrom:dangerini, redTo: dangerfin,
           yellowFrom:riskini, yellowTo: riskfin,
           minorTicks: 5
@@ -533,8 +596,8 @@ function drawChart(id,l,v,dangerini,dangerfin,riskini,riskfin) {
 
         var chartG = new google.visualization.Gauge(document.getElementById(id));
         chartG.draw(data, options);
-
 }
+
  
 /*
 * drawCurveTypes
@@ -574,14 +637,37 @@ function drawCurveTypes(id,w,h,datos,titulo){
 
 /*
 * UpdateCurveTypes
-*
+* Actualiza la informacion de la grafica de Lineal de los datos del Sensor
 */
 function UpdateCurveTypes(datos){
-  $.each(datos, function(key, val) {
-    dataLine.removeRow(0);
-    dataLine.addRows(JSON.parse(val));
+  
+  $.each(JSON.parse(datos), function(key, val) {
+    dataLine.removeRow(dataLine.getNumberOfRows()-1);
   });
+
+  dataLine.insertRows(0,JSON.parse(datos));
+
+  chartLine.draw(dataLine, optionsLine);
+
+  // Secuencia para actualizar la media, max y min
+  var val = dataLine.getColumnRange(1);
+
+  var acum =0; // creando el acumulador
+  var size = dataLine.getNumberOfRows();
+
+  for(var i=0; i<size ; i++){
+    acum += dataLine.getValue(i,1);
+  }
+  var mean = acum/size;
+  // Actualizando los valores
+  $("#MinValueSensors").html(val.min.toFixed(2));
+  $("#MaxValueSensors").html(val.max.toFixed(2));
+  $("#MeanValueSensors").html(mean.toFixed(2));  
 }
+
+
+
+
 
 
 function Export(){
@@ -591,12 +677,11 @@ function Export(){
   cadena += "<div><button onclick='chargeValuesDate()'>Ver</button></div>";
   cadena += "<div id='Reporte' ></div>"
 
-  $("section").html(cadena);  
+  $("section").html("Muy pronto podras exportar los registros de las mediciones.");  
 }
 
+
 var dataProbe;
-
-
 function chargeValuesDate(){
 
   $parametros = {
@@ -614,17 +699,6 @@ function chargeValuesDate(){
     }
   });
 
-
-  /*var parametros = {
-    'date1' : document.getElementById("Date1").value+" 00:00:00",
-    'date2' : document.getElementById("Date2").value+" 23:59:59",
-  };
-  console.log(parametros.date1);
-  console.log(parametros.date2);
-  $.post('history/events', parametros, function(response) {
-    dataProbe = response;
-  }, 'json');
-*/
 }
 
 
