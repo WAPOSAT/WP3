@@ -50,13 +50,18 @@ function LoadNav(type = 1){
     // Establece el color del fondo
     $("section").css("background-color","#ffffff");
     // Carga del menu principal
+
+
     $("header").html('<a class="icon" onclick="pushLeft.open()"><i class="fa fa-bars" aria-hidden="true"></i></a>\n\
                       <div class=logo><img src="public/img/waposat-logo-flat.png" class=LogoToolBar></div>\n\
                       <div class=user><label class=labelExport>'+data.HiUser+'</label></div><div id=infoscada></div>\n\
                       <a class="icon-close" id=Close><i class="fa fa-power-off" aria-hidden="true"></i></a>\n\
                       <div class="BoxAlert"><i class="fa fa-bell" aria-hidden="true" style="float:left"></i> <label class=labelExport><span class="InfoDanger InfoLittle ">'+data.NumDanger+'</span><span class="InfoRisk InfoLittle ">'+ data.NumRisk+'</span></label></div>\n\
-                      <div class="Export" onclick="Export()"><i class="fa fa-share-square-o" aria-hidden="true"></i> <label class=labelExport>Exportar</label></div>\n\
                       ');
+
+    /* Para agregar el boton de EXPORTAR
+    <div class="Export" onclick="Export()"><i class="fa fa-share-square-o" aria-hidden="true"></i> <label class=labelExport>Exportar</label></div>\n\
+    */
     
     // Carga del menu izquierdo [BLOQUES]  
     items.push('<div id="bloques" onclick=pushLeft.close()>BLOQUES <i class="fa fa-arrow-right" aria-hidden="true"></i></div>');
@@ -139,9 +144,13 @@ function ShowBlock(id,risk=1,danger=1,stable=1){
         estilo='PanelHeadDanger';}
          
       cadena+='<div class="box" onclick="ShowPoint('+ val.id +')" ><div class="Panel"><div id="PanelBoxColor'+val.id+'" class='+estilo+'><table class=TablaPanel><tr><td id="PanelAlerta'+val.id+'" class=PanelAlerta>'+Icono+'</td><td class=PanelTitulo >'+ val.Name +'<br>' + val.CodeName +'</td><td align=right width="30%">'+ Danger + Risk +'</td></tr></table></div><div id="PanelBody'+val.id+'" class=PanelBody>';
-       
+      
+      var cont=0;
       $.each(data.StationBlock[key].Sensor, function(k, v) {
-        cadena+='<div class=PanelDetalle><span>' + v.CodeName +': </span><span id=sensor'+v.id+'> ' + v.Last.Value +'</span></div>';
+        if (cont<4){
+          cadena+='<div class=PanelDetalle><span>' + v.CodeName +': </span><span id=sensor'+v.id+'> ' + v.Last.Value +'</span></div>';
+          cont++;
+        }
       });
        
       cadena+='</div></div></div>';
@@ -188,9 +197,14 @@ function UpdateProcess(id){
       $("#IconPanelAlerta").html(Icono);
         
       // Realiza la actualizacion de cada Sensor recibido por Station Block
+      var cont=0;
       $.each(data.StationBlock[key].Sensor, function(k, v) {
-        cadena+='<div class=PanelDetalle><span>' + v.CodeName +': </span><span id=sensor'+v.id+'> ' + v.Last.Value +'</span></div>';
+        if (cont<4){
+          cadena+='<div class=PanelDetalle><span>' + v.CodeName +': </span><span id=sensor'+v.id+'> ' + v.Last.Value +'</span></div>';
+          cont++;
+        }
       });
+
       $("#PanelBody"+val.id).html(cadena);
 
     });
@@ -297,7 +311,7 @@ function BlockDetail(idstation=1){
         stylo=' class="Danger"';
       }  
 
-      items.push('<tr><td>' + val.Name +'</td><td>' + val.MinValue +'</td><td>' + val.MaxValue +'</td><td '+ stylo +'><span '+stylo+'>' + val.Last.Value +'</span></td></tr>');
+      items.push('<tr class="TableSensors" onclick="ChangeParameter('+idstation +','+val.id +', 20, 5)" ><td>' + val.Name +'</td><td>' + val.MinValue +'</td><td>' + val.MaxValue +'</td><td '+ stylo +'><span '+stylo+'>' + val.Last.Value +'</span></td></tr>');
     });
 
     items.push('</table></div> <a href=javascript:pushRight.close() class=ButtonBack>Volver</a></div>');
@@ -322,13 +336,22 @@ function UpdateSensorsTable(Sensor){
     }else if(val.LastValue>val.LMP){
       stylo=' class="Danger"';
     }
-    cadena += '<tr><td>' + val.Name +'</td><td>' + val.MinValue +'</td><td>' + val.MaxValue +'</td><td '+ stylo +'><span '+stylo+'>' + val.Last.Value +'</span></td></tr>';
+    cadena += '<tr class="TableSensors" onclick="ChangeParameter('+idstation +','+val.id +', 20, 5)" ><td>' + val.Name +'</td><td>' + val.MinValue +'</td><td>' + val.MaxValue +'</td><td '+ stylo +'><span '+stylo+'>' + val.Last.Value +'</span></td></tr>';
   });
   cadena += "</table>";
 
   $("#SensorsTable").html(cadena);
 } //  UpdateSensorsTable
 
+/*
+* ChangeParameter
+* Se ejecuta al hacer clic a un parametro en la tabla del menu izquierdo
+*/
+function ChangeParameter(idstation=1,idsensor=1,long=20, Refresh=5 ){
+  showparameter(idstation,idsensor,long,Refresh);
+  pushRight.close();
+
+} //  End of ChangeParameter
 
 /*
 * showparameter

@@ -173,7 +173,7 @@
 				if ($block_type == 1) 
 				{
 					$blockA["NumProcessBlocks"] = count($child_blocks);
-					$blockA["HiUser"] =  "Hola ".$this->name_user." time to monitor your sea...";
+					$blockA["HiUser"] =  "Hola ".$this->name_user.", bienvenido a tu plataforma de monitoreo.";
 					if ($this->loadProcessData) 
 					{
 						$blockA["ProcessBlock"] = $temp;
@@ -487,7 +487,7 @@
 
 		}
 
-		public function selectSensors($id_Station, $num=4)
+		public function selectSensors($id_Station, $num=8) // aca se restringe el numero de sensores que se enviara
 		{
 			$em = $this->entityManager;
 			$dql = "SELECT st_s FROM AppBundle:BlockSensors st_s WHERE st_s.idBlock = ".$id_Station;

@@ -544,6 +544,8 @@ div .next:hover {background-color: rgba(68,68,68,1)}
     filter: alpha(opacity=50); /* For IE8 and earlier */}
 
 
+.TableSensors{cursor: pointer;}
+
 .ItemBox{display:inline-block;border: solid 0px #ff0000;text-align: center;padding-bottom: 10px;}
 
 
