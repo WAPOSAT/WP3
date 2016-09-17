@@ -13,7 +13,7 @@ overflow-x: hidden;
 
 #bloques{
     background-color: #222222;
-    width: 195px;
+    width: 100%;
     text-align: right;
     padding-right: 20px;
     height: 70px;
@@ -39,7 +39,7 @@ select{border-radius: 4px;border:solid 1 px #dddddd;padding:3px;font-size:11px;f
 .tablainformativa { margin-bottom: 20px;margin-top: 20px;background-color: #FFFFFF; border-spacing: 0;border-collapse: collapse; }
 .tablainformativa th {height:30px; background-color: #256088;color: #ffffff;font-size: 11px;text-transform: uppercase; }
 
-h6{text-transform: uppercase;font-family: sans-serif;font-weight:bold;color:#FF0000;margin-bottom: 0px;font-size: 16px }
+h6 {text-transform: uppercase;font-family: sans-serif;font-weight:bold;color:#FF0000;margin-bottom: 0px;font-size: 16px }
 /* RESPONSIVE */
 @media only screen and (max-width: 1920px) {
 
@@ -146,13 +146,13 @@ box-shadow: 3px 3px 5px #cccccc;
 
 
 .user{float: left;
-margin-left: 2%;
-margin-right: 2%;
-margin-top: 30px;}
+margin-left: 1%;
+margin-right: 0.5%;
+margin-top: 20px;}
 
 #infoscada{float: left;
-margin-left: 2%;
-margin-right: 2%;
+margin-left: 0.5%;
+margin-right: 0.5%;
 margin-top: 20px;
 font-family: sans-serif;
 font-size: 11px;
@@ -200,15 +200,6 @@ background-color: #009e3f;
 }
 
 
-
-
-
-
-.PanelBody{
-border:solid 0px #FF0000;
-height: 40px;
-width: 231px;
-}
 
 .PanelAlerta
 {width:10%;
@@ -302,12 +293,22 @@ width: 231px;
  }
  
  
-.PanelDetalle{float: left;width:80px;
-padding-left: 10px;padding-top: 5px;}
+.PanelDetalle{
+  float: left;
+  text-align: left;
+  width:50%;
+  padding-left: 10px;
+  padding-top: 5px;}
+
+.PanelBody{
+  border:solid 0px #FF0000;
+  height: 40px;
+  width: 231px;
+}
 
 .Login{
-    width: 246px;
-    height: 330px;
+    width: 260px;
+    height: 350px;
     margin-left: auto;
     margin-right: auto;
     margin-top: 5%;
@@ -389,12 +390,25 @@ border: solid 1px #dddddd;
     cursor: pointer;
     padding: 5px 8px 5px 8px;
     float: right;
-    margin-left: 2%;
-    margin-right: 2%;
-    margin-top: 20px;
-    
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+    margin-top: 20px;   
     font-size: 16px;
 }
+
+.Change {
+    background-color: #256088;
+    color: #FFFFFF;
+    cursor: pointer;
+    padding: 5px 8px 5px 8px;
+    float: right;
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+    margin-top: 20px;   
+    font-size: 16px;
+}
+
+
 .BoxAlert{
     background-color: #c53f40;
     color: #FFFFFF;
@@ -402,12 +416,10 @@ border: solid 1px #dddddd;
     cursor: pointer;
     padding: 5px 8px 5px 8px;
     margin-top: 20px;
-    margin-left: 2%;
-    margin-right: 2%;
+    margin-left: 0.5%;
+    margin-right: 0.5%;
     float: right;  
-    font-size: 16px;
-
-  
+    font-size: 16px;  
 }
 
 
@@ -432,17 +444,20 @@ border: solid 1px #dddddd;
   background-color: #c55552;
 }
 
+
 .BoxLogin{
-    background-color: #ffffff;
-    border: solid 1px #bbbbbb;
-    border-radius: 3px;
-    height: 30px;
-    margin-top: 10px;
-    display: flex;
+  background-color: #ffffff;
+  border: solid 1px #bbbbbb;
+  border-radius: 3px;
+  height: 30px;
+  margin-top: 10px;
+  display: flex;
   justify-content: center;
   align-items: center;
+  padding: 10px;
 }
 .BoxLogin input{border:0;font-weight: bold;margin-left: 10px;width: 200px}
+
 .Recordar{margin-top: 10px;margin-bottom: 10px; border:solid 0px #000000;font-family: sans-serif;font-size: 14px;height:30px}
 .Recordar label{cursor: pointer;color: #aaaaaa}
 .LoginInfo{text-align: center;color:#b4b2b3;width:280px;font-size: 13px;margin-left: auto;margin-right: auto;margin-top: 20px}
@@ -528,7 +543,8 @@ div .next:hover {background-color: rgba(68,68,68,1)}
 
 .DetailParameter{background-color: #45464a;border: solid 1px #000000}
 .DetailHead{background-color: #38393e;height: 52px;line-height: 52px;text-align: center;color: #FFFFFF;font-weight: bold;font-family: sans-serif;text-transform: uppercase;}
-.DetailAlert{background-color:#FF0000;color: #ffffff; display: flex;align-items: center;width: 200px;margin-left: auto;margin-right: auto;margin-top: 10px;margin-bottom: 10px;padding: 10px 10px 10px 10px;}
+/*.DetailAlert{background-color:#FF0000;color: #ffffff; display: flex;align-items: center;width: 200px;margin-left: auto;margin-right: auto;margin-top: 10px;margin-bottom: 10px;padding: 10px 10px 10px 10px;}*/
+#DetailAlert{ display: flex;align-items: center;width: 200px;margin-left: auto;margin-right: auto;margin-top: 10px;margin-bottom: 10px;padding: 10px 10px 10px 10px;}
 .DetailValue{color:#ffffff;border:solid 1px #ffffff;display: inline-block;font-size: 10px;padding: 10px;margin-left: 15px}
 .DetailValue label{font-size: 20px;font-weight: bold}
 #Chart{border: solid #ffFF00 0px;width:100px;height: 100px;}
@@ -561,6 +577,8 @@ div .next:hover {background-color: rgba(68,68,68,1)}
 vertical-align: top;
 }
 
+.HeadTableStation td {padding: 10px;}
+
 .Block{border:solid 0px #ff0000;
 display: inline-block;
 vertical-align: top;
@@ -569,9 +587,17 @@ vertical-align: top;
     width: device-width;
     max-zoom: 1;
 }
-@media (max-width: 750px) {
+@media (max-width: 775px) {
     .Block{display: block;width:95%}
     .DetailBlock{display: block;width:95%}
 
     .labelExport{display: none}
+}
+
+@media (min-width: 776px) {
+    .labelphone { display: none; }
+}
+
+@media (max-width: 813px){
+    .labeltablet {display: none; }
 }

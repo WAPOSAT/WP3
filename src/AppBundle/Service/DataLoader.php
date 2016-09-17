@@ -17,6 +17,7 @@
 		private $critical, $alert, $stable;
 		private $requiredSensors = 4;
 		private $loadStationData = 0, $loadProcessData = 0, $loadSensorData = 0;
+		private $numsensors;
 		private $basic_stat=0, $basic_info=0, $limits=0, $long=0, $addData=0, $uselastId=0;
 
 		public function __construct(EntityManager $entityManager)
@@ -43,12 +44,13 @@
 			$this->uselastId = $uselastId;
 		}
 
-		public function retrieveStationData($critical = 1 , $alert = 1, $stable = 1)
+		public function retrieveStationData($critical = 1 , $alert = 1, $stable = 1, $numsensors=4)
 		{
 			$this->loadStationData = 1;
 			$this->critical = $critical;
 			$this->alert = $alert;
 			$this->stable = $stable;
+			$this->numsensors = $numsensors;
 		}
 
 		public function retrieveProcessData($vectorEvents=0)
@@ -122,7 +124,7 @@
 				if ($this->loadSensorData == 1) 
 				{
 					$temp = array();
-					$temp1 = $this->selectSensors($block[0]->getId());
+					$temp1 = $this->selectSensors($block[0]->getId(), $this->numsensors);
 
 				 	foreach($temp1 as $Sensor)
 					{
@@ -173,7 +175,7 @@
 				if ($block_type == 1) 
 				{
 					$blockA["NumProcessBlocks"] = count($child_blocks);
-					$blockA["HiUser"] =  "Hola ".$this->name_user.", bienvenido a tu plataforma de monitoreo.";
+					$blockA["HiUser"] =  "Hola <b>".$this->name_user."</b>,<br>Bienvenido a tu plataforma de monitoreo.";
 					if ($this->loadProcessData) 
 					{
 						$blockA["ProcessBlock"] = $temp;
@@ -251,11 +253,11 @@
 					if ($eventType == 'danger')
 					{
 						$longDanger++;
-						$dangerA[] = array("idProcessBlock"=>$process[0]->getId(), "idStationBlock"=>$station->getId(), "idSensor"=>$sensor->getIdSensor(), "Message"=>$process[0]->getBlockName()." problemas en estacion: ".$station->getBlockCodeName().", sensor: ".$sensor->getCodename(), "Date"=>$eventDate);
+						$dangerA[] = array("idProcessBlock"=>$process[0]->getId(), "idStationBlock"=>$station->getId(), "idSensor"=>$sensor->getIdSensor(), "Message"=>$process[0]->getBlockName()." / ".$station->getBlockCodeName().", sensor: ".$sensor->getCodename(), "Date"=>$eventDate);
 					} else if($eventType == 'risk')
 					{
 						$longRisk++;
-						$riskA[] = array("idProcessBlock"=>$process[0]->getId(), "idStationBlock"=>$station->getId(), "idSensor"=>$sensor->getIdSensor(), "Message"=>$process[0]->getBlockName()." problemas en estacion: ".$station->getBlockCodeName().", sensor: ".$sensor->getCodename(), "Date"=>$eventDate);
+						$riskA[] = array("idProcessBlock"=>$process[0]->getId(), "idStationBlock"=>$station->getId(), "idSensor"=>$sensor->getIdSensor(), "Message"=>$process[0]->getBlockName()." / ".$station->getBlockCodeName().", sensor: ".$sensor->getCodename(), "Date"=>$eventDate);
 					}
 				} else 
 				{
@@ -268,7 +270,7 @@
 					}
 					
 
-					$alerts[] = array("idProcessBlock"=>$process[0]->getId(), "idStationBlock"=>$station->getId(), "idNotification"=>$n->getIdNotificationAlert(), "Message"=>$process[0]->getBlockName()." problemas en estacion: ".$station->getBlockCodeName().", sensor: ".$sensor->getCodename(), "Date"=>$eventDate, "AlertType"=>$eventNum);
+					$alerts[] = array("idProcessBlock"=>$process[0]->getId(), "idStationBlock"=>$station->getId(), "idNotification"=>$n->getIdNotificationAlert(), "Message"=>$process[0]->getBlockName()." / ".$station->getBlockCodeName().", sensor: ".$sensor->getCodename(), "Date"=>$eventDate, "AlertType"=>$eventNum);
 				}
 			}
 
@@ -487,7 +489,7 @@
 
 		}
 
-		public function selectSensors($id_Station, $num=8) // aca se restringe el numero de sensores que se enviara
+		public function selectSensors($id_Station, $num=4) // aca se restringe el numero de sensores que se enviara
 		{
 			$em = $this->entityManager;
 			$dql = "SELECT st_s FROM AppBundle:BlockSensors st_s WHERE st_s.idBlock = ".$id_Station;
@@ -495,6 +497,7 @@
 			$station_sensor = $query->getResult();
 
 			$relevance = array();
+			$sensorx = array();
 
 			foreach ($station_sensor as $s) 
 			{
@@ -504,21 +507,32 @@
 
 				if(count($measurement)==1)
 				{
-					$key = strval(abs(($measurement[0]->getValue() - $s->getUpDangerLimit())/($s->getUpDangerLimit())));
+					$val = strval(abs(($measurement[0]->getValue() - $s->getUpDangerLimit())/($s->getUpDangerLimit())));
 
-					$relevance[$key] = $sensor;
+					$relevance[$sensor->getIdSensor()] = $val;
+					$sensorx[$sensor->getIdSensor()] = $sensor;
 				}
 
 			}
 
-			ksort($relevance);
+
+			asort($relevance);
+
 			$temp = array();
-			if (count($relevance)>$num) 
+			
+			if ($num==0) 
+			{
+				foreach ($relevance as $key => $obj) 
+				{
+					$temp[] = $sensorx[$key];
+				}
+			}
+			elseif (count($relevance)>$num) 
 			{	
 				$counter = 0;
 				foreach ($relevance as $key => $obj) 
 				{
-					$temp[] = $obj;
+					$temp[] = $sensorx[$key];
 					$counter++;
 					if ($counter == $num) {break;}
 				}
@@ -527,7 +541,7 @@
 			{
 				foreach ($relevance as $key => $obj) 
 				{
-					$temp[] = $obj;
+					$temp[] = $sensorx[$key];
 				}
 			}
 			return $temp;

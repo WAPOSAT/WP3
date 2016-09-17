@@ -28,11 +28,16 @@ $(document).ready(function(){
 function LoadNav(type = 1){
   var ruta=null;
   var funcion=null;
+  var change;
   // Dependiendo del tipo de vista deseado, se define una ruta y la funcion de carga de informacion
   if (type==1) {ruta="/dashboard";
-    funcion="ShowBlock";}
+    funcion="ShowBlock";
+    change = "<div class='Change' title='Cambiar a vista SCADA' onclick='LoadScada()'><i class='fa fa-map' aria-hidden='true'></i></div>";
+  }
   if (type==2) {ruta="v2/dashboard";
-    funcion="ShowPlain";}
+    funcion="ShowPlain";
+    change = "<div class='Change' title='Cambiar a vista ALERTAS' onclick='LoadAlert()'><i class='fa fa-th-large' aria-hidden='true'></i></div>";
+  }
 
   // Se utiliza la [ruta] obtenida para iniciar la carga de informacion
   //Se realiza una consulta AJAX con el metodo POST utilizando JQUERY
@@ -52,12 +57,13 @@ function LoadNav(type = 1){
     // Carga del menu principal
 
 
-    $("header").html('<a class="icon" onclick="pushLeft.open()"><i class="fa fa-bars" aria-hidden="true"></i></a>\n\
-                      <div class=logo><img src="public/img/waposat-logo-flat.png" class=LogoToolBar></div>\n\
-                      <div class=user><label class=labelExport>'+data.HiUser+'</label></div><div id=infoscada></div>\n\
+    $("header").html('<div><a class="icon" onclick="pushLeft.open()"><i class="fa fa-bars" aria-hidden="true"></i></a>\n\
+                      <div  class="logo"><img src="public/img/waposat-imagotipo-rightside.png" class="LogoToolBar labelExport">\n\
+                      <img src="public/img/waposat-isotipo.png" class=" LogoToolBar labelphone"></div>\n\
+                      <div id="HiUser" class=user><label class=labelExport>'+data.HiUser+'</label></div><div id=infoscada></div>\n\
                       <a class="icon-close" id=Close><i class="fa fa-power-off" aria-hidden="true"></i></a>\n\
                       <div class="BoxAlert"><i class="fa fa-bell" aria-hidden="true" style="float:left"></i> <label class=labelExport><span class="InfoDanger InfoLittle ">'+data.NumDanger+'</span><span class="InfoRisk InfoLittle ">'+ data.NumRisk+'</span></label></div>\n\
-                      ');
+                      '+change+'</div>');
 
     /* Para agregar el boton de EXPORTAR
     <div class="Export" onclick="Export()"><i class="fa fa-share-square-o" aria-hidden="true"></i> <label class=labelExport>Exportar</label></div>\n\
@@ -70,17 +76,17 @@ function LoadNav(type = 1){
     $.each(data.ProcessBlock, function(key, val) {
       if(num==0){
         if(type==1) {
-          ShowBlock(val.id)
+          ShowBlock(val.id);
         }
         if(type==2){
-          ShowPlain(val.id)
+          ShowPlain(val.id);
         }
       }
       num+=1;
 
       items.push('<a onclick='+funcion+'('+val.id+')>' + val.Name +'<br />' + val.CodeName +'</a>');
     });
-     
+         
     $('<nav/>', {'class': 'menu', html: items.join('')}).appendTo(nodo);
 
     ShowAlert(type);
@@ -94,6 +100,14 @@ function LoadNav(type = 1){
 
 
 /*
+*   CONTROLES PARA PLATAFORMA DE ALERTAS
+* Las siguientes funciones se encargan de utilizar los archivos JSON recibidos desde el Back-end
+* utilizando esta informacion para desplegar todas las vistas, menu derecho, menu izquierdo y panel principal
+* cada funcion tiene una breve explicacion de la tarea especifica que debe realizar
+*/
+
+
+/*
 * ShowBlock
 * Construye los cuadro de Station Block en base a la data
 */
@@ -101,7 +115,7 @@ function ShowBlock(id,risk=1,danger=1,stable=1){
   
   $("section").html('<div class=Block><div class=filtros>\n\
   <form id="formulario" name=formulario>\n\
-  Puntos de Monitoreo (<span id="puntos">0</span>) \n\
+  <label class="labelExport" >Estaciones de Monitoreo (<span id="puntos">0</span>)</label> \n\
   <label><input type="checkbox" name="critico" '+(risk==1?'checked':'')+' onclick="ShowBlock('+id+',(document.formulario.critico.checked?1:0),(document.formulario.alerta.checked?1:0),(document.formulario.estable.checked?1:0))" value=1> Critico</label>\n\
   <label><input type="checkbox" name="alerta" '+(danger==1?'checked':'')+' onclick="ShowBlock('+id+',(document.formulario.critico.checked?1:0),(document.formulario.alerta.checked?1:0),(document.formulario.estable.checked?1:0))"  value=1> Alerta</label>\n\
   <label><input type="checkbox" name="estable" '+(stable==1?'checked':'')+' onclick="ShowBlock('+id+',(document.formulario.critico.checked?1:0),(document.formulario.alerta.checked?1:0),(document.formulario.estable.checked?1:0))"  value=1> Estable</label></form>\n\
@@ -120,6 +134,8 @@ function ShowBlock(id,risk=1,danger=1,stable=1){
 
     // Se almacenara en la variable [cadena] cada cuadro de Bloque Estacion
     var cadena="";
+    var num=0;
+
     $.each(data.StationBlock, function(key, val) {
         
       Risk='';
@@ -127,6 +143,11 @@ function ShowBlock(id,risk=1,danger=1,stable=1){
       Icono=''; 
       estilo='';
       
+      if(num==0){
+        ShowPoint(val.id);
+      }
+      num++;
+
       // Genera todo el contenido del cuadro de una Station Block
       if(val.NumRisk>0){
         Risk='<div  class=InfoRisk id=RiskStation'+val.id+'>' + val.NumRisk +'</div>';}
@@ -148,7 +169,7 @@ function ShowBlock(id,risk=1,danger=1,stable=1){
       var cont=0;
       $.each(data.StationBlock[key].Sensor, function(k, v) {
         if (cont<4){
-          cadena+='<div class=PanelDetalle><span>' + v.CodeName +': </span><span id=sensor'+v.id+'> ' + v.Last.Value +'</span></div>';
+          cadena+='<div class=PanelDetalle><span>' + v.CodeName +': </span><span id=sensor'+v.id+'> ' + v.Last.Value +' '+v.Unit+'</span></div>';
           cont++;
         }
       });
@@ -159,7 +180,6 @@ function ShowBlock(id,risk=1,danger=1,stable=1){
       calBoxCol();
       ResizeCol();
       pushLeft.close();
-
     });
   });
 
@@ -200,7 +220,7 @@ function UpdateProcess(id){
       var cont=0;
       $.each(data.StationBlock[key].Sensor, function(k, v) {
         if (cont<4){
-          cadena+='<div class=PanelDetalle><span>' + v.CodeName +': </span><span id=sensor'+v.id+'> ' + v.Last.Value +'</span></div>';
+          cadena+='<div class=PanelDetalle><span>' + v.CodeName +': </span><span id=sensor'+v.id+'> ' + v.Last.Value +' '+v.Unit+'</span></div>';
           cont++;
         }
       });
@@ -236,21 +256,19 @@ function ShowPoint(id){
     }
     
     $(".DetailBlock").html("<table class=TablaPoint>\n\
-    <tr><td><div id='HeadTableStation' class='"+estilo+"' ><table cellpadding=10 width=100%><tr><td width=20><div id=IconPanelAlerta Class=PanelAlerta style='color:#FFFFFF;font-size:22px'>"+ Icono +"</div></td><td style='color:#FFFFFF'> "+data.Name+"<br>"+data.CodeName+"</td><td align=right><div class='MenuRight' onclick='BlockDetail("+data.id +");pushRight.open()'><i class='fa fa-bars' aria-hidden='true'></i></div></td></tr></table></div></td></tr>\n\
+    <tr><td><div id='HeadTableStation' class='"+estilo+"' ><table class='HeadTableStation' width=100%><tr><td width=20><div id=IconPanelAlerta Class=PanelAlerta style='color:#FFFFFF;font-size:22px'>"+ Icono +"</div></td><td style='color:#FFFFFF'> "+data.Name+"<br>"+data.CodeName+"</td><td align=right><div class='MenuRight' onclick='BlockDetail("+data.id +");pushRight.open()'><i class='fa fa-bars' aria-hidden='true'></i></div></td></tr></table></div></td></tr>\n\
     <tr><td> <div id=ChartGauge class=Group></div></div></td></tr>\n\
     <tr><td align=center id=SensorInfo >\n\
     <table>\n\
     <tr><td colspan=2><div id=ChartTittle style='text-align:center'></div></td></tr>\n\
+    <tr><td colspan=2><div id='LastValue' style='text-align:center'></div></td></tr>\n\
     <tr><td colspan=2><div id=ChartLines></div></td></tr>\n\
-    <tr><td><div id=ChartDetail  class='DetailChart Black'></div> </td> <td valign=top><div id=filtro></div> </td></tr></table></td></tr></table>");
+    <tr><td><div id='ChartDetail'  class='DetailChart Black'></div> </td> <td valign=top><div id=filtro></div> </td></tr></table></td></tr></table>");
     
     ResizeCol();
     calBoxCol();
     // Generando Cuadro de Gauge
     GaugeGenerate(data.Sensor,id,1);
-
-
-    
   });
 } // End of ShowPoint
 
@@ -282,7 +300,7 @@ function UpdateStation(id){
     
     // Generando Cuadro de Gauge
     GaugeGenerate(data.Sensor,id,0);
-    UpdateSensorsTable(data.Sensor);
+    UpdateSensorsTable(data.Sensor, id);
 
   });
 } // End of UpdateStation
@@ -305,9 +323,9 @@ function BlockDetail(idstation=1){
 
     $.each(data.Sensor, function(key, val) {
       stylo=' class="Stable"';
-      if(val.LastValue>=val.LMR && val.LastValue<=val.LMP){
+      if(val.Last.Value>=val.LMR && val.Last.Value<=val.LMP){
         stylo=' class="Risk"';
-      }else if(val.LastValue>val.LMP){
+      }else if(val.Last.Value>val.LMP){
         stylo=' class="Danger"';
       }  
 
@@ -325,15 +343,15 @@ function BlockDetail(idstation=1){
 * UpdateSensorsTable
 * Genera la tabla de valores de los sensores en el menu derecho
 */
-function UpdateSensorsTable(Sensor){
+function UpdateSensorsTable(Sensor, idstation=1){
   var cadena="";
   cadena += "<table class='tablainformativa'>";
   cadena += "<tr><th>Parámetro</th><th>Min</th><th>Max</th><th>Actual</th></tr>";
   $.each(Sensor , function(key, val) {
     stylo=' class="Stable"';
-    if(val.LastValue>=val.LMR && val.LastValue<=val.LMP){
+    if(val.Last.Value>=val.LMR && val.Last.Value<=val.LMP){
       stylo=' class="Risk"';
-    }else if(val.LastValue>val.LMP){
+    }else if(val.Last.Value>val.LMP){
       stylo=' class="Danger"';
     }
     cadena += '<tr class="TableSensors" onclick="ChangeParameter('+idstation +','+val.id +', 20, 5)" ><td>' + val.Name +'</td><td>' + val.MinValue +'</td><td>' + val.MaxValue +'</td><td '+ stylo +'><span '+stylo+'>' + val.Last.Value +'</span></td></tr>';
@@ -341,17 +359,18 @@ function UpdateSensorsTable(Sensor){
   cadena += "</table>";
 
   $("#SensorsTable").html(cadena);
-} //  UpdateSensorsTable
+} //  End of UpdateSensorsTable
+
 
 /*
 * ChangeParameter
-* Se ejecuta al hacer clic a un parametro en la tabla del menu izquierdo
+* Se ejecuta al hacer clic a un parametro en la tabla del menu derecho
 */
 function ChangeParameter(idstation=1,idsensor=1,long=20, Refresh=5 ){
   showparameter(idstation,idsensor,long,Refresh);
   pushRight.close();
-
 } //  End of ChangeParameter
+
 
 /*
 * showparameter
@@ -369,15 +388,15 @@ function showparameter(idstation=1,idsensor=1,long=20, Refresh=5 ){
     actualizarParametro=setInterval('showParameterUpdate('+idstation+','+idsensor+','+data.LMP+','+data.LMR+')', (Refresh*1000));
 
     $("#ChartTittle").html("<h6>"+data.Name+"</h6><span class=subtitulo>"+data.Unit+" vs Tiempo</span>");
-    $("#ChartDetail").html('<table><tr><td>Minimo:</td><td><label id="MinValueSensors" >'+data['MinValue'].toFixed(2)+ '</label></td></tr><tr><td>Medio:</td><td><label id="MeanValueSensors">'+data['MeanValue'].toFixed(2) +'</label></td></tr><tr><td>Maximo:</td><td><label id="MaxValueSensors" >'+data['MaxValue'].toFixed(2) +'</label></td></tr></table><div></div>');
+    $("#ChartDetail").html('<table><tr><td>Maximo:</td><td><label id="MaxValueSensors" >'+data.MaxValue.toFixed(2)+ '</label></td></tr><tr><td>Medio:</td><td><label id="MeanValueSensors">'+data.MeanValue.toFixed(2) +'</label></td></tr><tr><td>Minimo:</td><td><label id="MinValueSensors" >'+data.MinValue.toFixed(2) +'</label></td></tr></table><div></div>');
     $("#filtro").html('<select onchange=showparameter('+idstation+','+idsensor+',this.value,'+Refresh+') id=ListPoint><option value=10 '+ (long==10?'selected':'') + '> 10 Puntos</option><option value=20 '+ (long==20?'selected':'') +'> 20 Puntos</option></select><div id=limites><label>Limite: '+data.LMR+' - '+data.LMP+'</label> <i class="fa fa-cog" aria-hidden="true"></i></div>');
-
+    $("#LastValue").html("<h5>Medida Actual: "+data.Last.Value+" "+data.Unit+"</h5><span class=subtitulo>"+data.Last.Date+"</span>");
     
     var datos="[";
     for(a=0;a<=data.Data.Time.length-1;a++){
       var d = new Date("1 1, 2016 "+data.Data.Time[a]);
 
-      datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+","+data.LMP+","+data.LMR+"],";
+      datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+","+data.LMR+","+data.LMP+"],";
     }
     datos=datos.substr(0,datos.length-1)+"]";
 
@@ -400,7 +419,7 @@ function showParameterUpdate(idstation=1,idsensor=1,LMP=100,LMR=50){
       for(a=0;a<=data.Data.Time.length-1;a++){
         var d = new Date("1 1, 2016 "+data.Data.Time[a]);
 
-        datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+","+LMP+","+LMR+"],";
+        datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+","+LMR+","+LMP+"],";
       }
       datos=datos.substr(0,datos.length-1)+"]";
 
@@ -441,6 +460,22 @@ function GaugeGenerate(Sensor,id,generate){
   calBoxCol();
 } // End GaugeGenerate
 
+function LoadScada(){
+  clearInterval(actualizarProceso);
+  clearInterval(actualizarEstacion);
+  clearInterval(actualizarParametro);
+  $(nodo).html("");
+  LoadNav(2);
+}
+
+
+/*
+*   CONTROLES PARA PLATAFORMA DE SCADA
+* Las siguientes funciones se encargan de utilizar los archivos JSON recibidos desde el Back-end
+* utilizando esta informacion para desplegar todas las vistas, menu derecho, menu izquierdo y panel principal
+* cada funcion tiene una breve explicacion de la tarea especifica que debe realizar
+*/
+
 
 /*
 * ShowPlain
@@ -454,6 +489,7 @@ function ShowPlain(id=1){
   // Establece el color del fondo
   // Colores de los cuadros #c1c1c1 y #b9b9b9
   $("section").css("background-color","#b9b9b9");
+  $("#HiUser").html("");
 
   // Establece el carrucel para poder ver todas las estaciones en caso sean mas a 6
   items.push('<div id="owl-demo" class="owl-carousel owl-theme">');
@@ -465,31 +501,34 @@ function ShowPlain(id=1){
     clearInterval(actualizarProceso);
     actualizarProceso=setInterval('UpdatePlain('+id+')', (data.RefreshFrecuencySeg*1000));
     
-    // Generacion del cuadro de Peligro, alerta y estables
-    // ** Aun falta realizar el calculo de estaciones en alerta, en peligro y estables
-    $("#infoscada").html("<table cellspacing=0 cellpadding=5><tr><td align=right>PUNTOS DE<br>MONITOREO ("+data.StationBlock.length+")</td><td class=infoscadacelda>Alerta: <span class='InfoRisk InfoLittle'>"+data.Risk.length+"</span></td><td  class=infoscadacelda> Cr\u00cdtico: <span class='InfoDanger InfoLittle'>"+data.Danger.length+"</span></td><td class=infoscadacelda style='border-right:solid 1px #ffffff'> Estable:<span  class='InfoStable InfoLittle'>0</span></td></tr></table>");
-    
+    //Inicio del contador de sensores Stable/Risk/Danger
+    var sensors = { stable:0, risk:0, danger:0};
+
     // Se empieza a cargar la informacion de cada StationBlock
     $.each(data.StationBlock,function(key,value){
       puntos="<div style='height:120px'><table align=center border=0>";
       // Se carga la informacion de cada sensor del StationBlock
       $.each(value.Sensor,function(k,v){
-        extra=' InfoStable';
-        if(v.LastValue>=v.LMR && v.LastValue < v.LMP){extra=' InfoRisk ';}
-        if(v.LastValue>=v.LMP){extra=' InfoDanger ';}
+        if(v.Last.Value<v.LMR){extra=' InfoStable'; sensors.stable++;}
+        else if(v.Last.Value>=v.LMR && v.Last.Value<v.LMP){extra=' InfoRisk '; sensors.risk++ }
+        else if(v.Last.Value>=v.LMP){extra=' InfoDanger ';sensors.danger++}
         // cada sensor es definido   
-        puntos+='<tr onclick=ShowDetail('+value.id+','+v.id+')  style="cursor:pointer" ><td><div class="' + extra + ' InfoLittlePoint"> </div></td><td align=left>'+ v.CodeName+'</td><td align=left>: <span id=sensor'+ v.id +'>'+v.Last.Value+'<span></td></tr>'; 
+        puntos+='<tr onclick=ShowDetail('+value.id+','+v.id+','+value.RefreshFrecuencySeg+')  style="cursor:pointer" ><td><div id="pointSensor'+ v.id +'" class="' + extra + ' InfoLittlePoint"> </div></td><td align=left>'+ v.CodeName+'</td><td align=left>: <span id=sensor'+ v.id +'>'+v.Last.Value+'</span> '+v.Unit+'</td></tr>'; 
       });
       
       puntos+="</table></div>"
       // Se define la imagen de la estacion
-      items.push('<div class="item"><div class=PlainBox>'+ value.CodeName +'</div><br>'+ puntos+'<br>'+ value.Name +'<br><div style="background-image:url('+pathIMG+'PM-0'+value.URL +'.png); background-position:top center;height:250px"></img src="ScriptFrontEnd/Screen2/'+value.URL +'"></div></div>');
+      items.push('<div class="item"><div class=PlainBox>'+ value.CodeName +'</div><br>'+ puntos+'<br>'+ value.Name +'<br><div style="background-image:url('+pathIMG+''+value.URL +'); background-position:top center;height:250px"></img src="ScriptFrontEnd/Screen2/'+value.URL +'"></div></div>');
     });
     
     items.push('</div><a class="btn prev"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>  <a class="btn next"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>');
     // Se agrega el contenido a la plataforma
     $("section").html(items.join(''));   
     
+    // Generacion del cuadro de Peligro, alerta y estables
+    // se utilizan las clases labelExport y labeltablet para configurar los elementos visibles dependiendo del tamaño de la pantalla
+    $("#infoscada").html("<table cellspacing=0 cellpadding=5><tr><td align=right><label class='labeltablet' >ESTACIONES DE<br>MONITOREO ("+data.StationBlock.length+")</label></td><td class=infoscadacelda><label class='labelExport'>Alerta:</label><span class='InfoRisk InfoLittle'>"+sensors.risk+"</span></td><td  class=infoscadacelda><label class='labelExport'>Cr\u00cdtico:</label><span class='InfoDanger InfoLittle'>"+sensors.danger+"</span></td><td class=infoscadacelda style='border-right:solid 1px #ffffff'><label class='labelExport'>Estable:</label><span  class='InfoStable InfoLittle'>"+sensors.stable+"</span></td></tr></table>");
+
     // Definiendo el numero de elementos en el Carousel
     var numCarousel = 6;
     if (data.StationBlock.length < 6){
@@ -524,36 +563,163 @@ function ShowPlain(id=1){
 * Actualiza los valores del cuadro StationBlock
 */
 function UpdatePlain(id){
+
+  // Esta funcion considera que en un proceso un sensor no puede pertenecer a dos estaciones diferentes, pues el cambio se realiza
+  // utilizando la etiqueta "#pointSensor"+v.id y "#sensor"+v.id 
+
   $.getJSON("v2/dashboard/update/process/"+id,function(data){
     
-    // Generacion del cuadro de Peligro, alerta y estables
-    // ** Aun falta realizar el calculo de estaciones en alerta, en peligro y estables 
-    $("#infoscada").html("<table cellspacing=0 cellpadding=5><tr><td align=right>PUNTOS DE<br>MONITOREO ("+data.StationBlock.length+")</td><td class=infoscadacelda>Alerta: <span class='InfoRisk InfoLittle'>"+data.Risk.length+"</span></td><td  class=infoscadacelda> Cr\u00cdtico: <span class='InfoDanger InfoLittle'>"+data.Danger.length+"</span></td><td class=infoscadacelda style='border-right:solid 1px #ffffff'> Estable:<span  class='InfoStable InfoLittle'>0</span></td></tr></table>");
+    
+    var sensors = { stable:0, risk:0, danger:0};
 
     $.each(data.StationBlock,function(key,value){
 
-      $.each(value.Sensor,function(k,v){ 
+      $.each(value.Sensor,function(k,v){
+
+        if(v.Last.Value<v.LMR){extra=' InfoStable'; sensors.stable++;}
+        else if(v.Last.Value>=v.LMR && v.Last.Value<v.LMP){extra=' InfoRisk '; sensors.risk++ }
+        else if(v.Last.Value>=v.LMP){extra=' InfoDanger ';sensors.danger++}
+
         $("#sensor"+v.id).html(v.Last.Value);
+        // Actualizando el color del punto del sensor
+        $("#pointSensor"+v.id).removeClass();
+        $("#pointSensor"+v.id).addClass(extra);
+        $("#pointSensor"+v.id).addClass("InfoLittlePoint");
+
       });
     });
+
+    // Generacion del cuadro de Peligro, alerta y estables
+    // se utilizan las clases labelExport y labeltablet para configurar los elementos visibles dependiendo del tamaño de la pantalla
+    //$("#infoscada").html("<table cellspacing=0 cellpadding=5><tr><td align=right>PUNTOS DE<br>MONITOREO ("+data.StationBlock.length+")</td><td class=infoscadacelda>Alerta: <span class='InfoRisk InfoLittle'>"+sensors.risk+"</span></td><td  class=infoscadacelda> Cr\u00cdtico: <span class='InfoDanger InfoLittle'>"+sensors.danger+"</span></td><td class=infoscadacelda style='border-right:solid 1px #ffffff'> Estable:<span  class='InfoStable InfoLittle'>"+sensors.stable+"</span></td></tr></table>");
+    $("#infoscada").html("<table cellspacing=0 cellpadding=5><tr><td align=right><label class='labeltablet' >ESTACIONES DE<br>MONITOREO ("+data.StationBlock.length+")</label></td><td class=infoscadacelda><label class='labelExport'>Alerta:</label><span class='InfoRisk InfoLittle'>"+sensors.risk+"</span></td><td  class=infoscadacelda><label class='labelExport'>Cr\u00cdtico:</label><span class='InfoDanger InfoLittle'>"+sensors.danger+"</span></td><td class=infoscadacelda style='border-right:solid 1px #ffffff'><label class='labelExport'>Estable:</label><span  class='InfoStable InfoLittle'>"+sensors.stable+"</span></td></tr></table>");
+
   });
 } // End of UpdatePlain
 
 
+/*
+* ShowDetail
+* Carga el cuadro de informacion del sensor
+*/
+function ShowDetail(idstation,idsensor,Refresh=5,long=20){
 
+  var n;
+  //$('.BoxAlert').tooltipster('close');
+
+  $(nodo1).html('<div id="DetailSensor" class="DetailParameter"></div>');
+
+  // Definicion del titulo del menu
+  $("#DetailSensor").append('<div class="DetailHead"><i class="fa fa-arrow-right" aria-hidden="true"></i> Detalles del Parametro</div>');
+
+  $.getJSON('v2/dashboard/station/'+idstation+'/sensor/'+idsensor+'/long/'+long, function(data){
+
+      // Estableciendo el estilo y el icono del sensor
+      var stylo='Stable';
+      var Icono='<i class="fa fa-thumbs-o-up fa-2x" aria-hidden="true"></i>';
+      if(data.Last.Value>=data.LMR && data.Last.Value<=data.LMP){
+        stylo='Risk';
+        Icono='<i class="fa fa-exclamation-circle fa-2x" aria-hidden="true"></i>';
+      }else if(data.Last.Value>data.LMP){
+        stylo='Danger';
+        Icono='<i class="fa fa-exclamation-triangle fa-2x" aria-hidden="true"></i>';
+      }
+
+      var cadena = "";
+
+      // Definicion del header, cuadro de estado del sensor
+      cadena += '<div id="DetailAlert" class="'+stylo+'" ><table border=0 cellpadding=0 cellspacing=0><tr><td rowspan=3 width=55>';
+      cadena += '<div  id="IconPanelAlerta" class="PanelAlerta" style="font-size:30px">'+Icono+'</div></td>';
+      cadena += '<td align=center width=180 colspan=2 style="font-size:11px;font-weight:bold;text-transform:uppercase;">'+data.nameStation+'</td></tr>';
+      cadena += '<tr><td colspan=2 align=center style="font-size:20px;font-weight:bold;text-transform:uppercase;">'+data.Name+ '</td></tr>';
+      cadena += '<tr><td align=center>'+data.codenameStation+'</td><td align=center>'+data.CodeName+'</td></tr>';
+      cadena += '</table></div>';
+
+      $("#DetailSensor").append(cadena);
+      cadena = '';
+
+      // Detalles de medicion del sensor
+      cadena += '<table align=center border=0><tr><td align=center><div id=Chart></div></td><td rowspan=2  align=center>';
+      cadena += '<div class="DetailValue"><table>';
+      cadena += '<tr><td>Maximo:</td><td><label id="MaxValueSensors" >'+data.MaxValue.toFixed(2)+ '</label></td></tr>';
+      cadena += '<tr><td>Medio:</td><td><label id="MeanValueSensors" >'+data.MeanValue.toFixed(2) +'</label></td></tr>';
+      cadena += '<tr><td>Minimo:</td><td><label id="MinValueSensors" >'+data.MinValue.toFixed(2) +'</label></td></tr>';
+      cadena += '</table></div></td></tr>';
+      cadena += '<tr><td><div id="ChartDetail" class="DetailChart"></div></td></tr>';
+      //cadena += '<tr><td colspan=2 align=center><label class="DetailLabel">Limites máximos establecidos por la OMS</label></td></tr>';
+      cadena += '<tr><td colspan=2><div id="ChartLines"></div></td></tr>';
+      cadena += '<tr><td align=right><select name=long onchange=ShowDetail('+idstation+','+idsensor+','+Refresh+',this.value)><option value="20" '+(long==20?'selected':'')+'>20 puntos</option><option value="10" '+(long==10?'selected':'')+'>10 puntos</option></select></td>';
+      cadena += '<td><div id="limites" ><label>Limite: '+data.LMR+' - '+data.LMP+'</label><i class="fa fa-cog" aria-hidden="true"></i></div></td></tr></table>';
+
+      $("#DetailSensor").append(cadena);
+
+      drawChart('Chart',data.CodeName, data.Last.Value, data.LMP, data.MP, data.LMR, data.LMP);
+      
+      lastId= data.Last.id;
+      console.log(data.Last.id);
+      
+      // Detiene alguna ejecucion previa de carga de datos dinamicos del Sensor e inicia una nueva
+      clearInterval(actualizarParametro);
+      actualizarParametro=setInterval('ShowSensorDetailUpdate('+idstation+','+idsensor+','+data.LMP+','+data.LMR+')', (Refresh*1000));
+
+      $("#ChartDetail").html('Medida Actual:<br><label>'+data.Last.Value+' '+data.Unit+'</label><br>'+data.Last.Date+'');
+
+      var datos="[";
+      for(a=0;a<=data.Data.Time.length-1;a++){
+        var d = new Date("1 1, 2016 "+data.Data.Time[a]);
+        datos+="[["+ d.getHours() +","+ d.getMinutes() +",0],"+ data.Data.Value[a]+","+data.LMR+","+data.LMP+"],";
+      }
+      datos=datos.substr(0,datos.length-1)+"]";
+
+      drawCurveTypes("ChartLines",275,180,datos,data.Name);
+      pushRight.open();
+  });
+} // End of ShowDetail
 
 
 /*
-* CloseSession
-* Cierra la sesion borrando la variable de usuario y redirigiendo al Login
+* ShowSensorDetailUpdate
+* Actualizacion de la informacion dinamica del Sensor
 */
-function CloseSession(){
+function ShowSensorDetailUpdate (idstation=1,idsensor=1,LMP=100,LMR=50){
+  ///dashboard/update/station/{idStation}/sensor/{idSensor}/lastid/{lastId}
+  $.getJSON('v2/dashboard/station/'+idstation+'/sensor/'+idsensor+'/lastid/'+lastId,function(data){
     
-  if (confirm("Cerrar Sesi\u00F3n")) {
+    if(data.Data.Time.length > 0){
+      
+      // se guarda como variable global lastId
+      lastId=data.Last.id;
 
-    window.location.assign("http://monitoreo.waposat.com/logout");
-  } 
-} //  End of CloseSession
+      // Estableciendo el estilo y el icono del sensor
+      var stylo='Stable';
+      var Icono='<i class="fa fa-thumbs-o-up fa-2x" aria-hidden="true"></i>';
+      if(data.Last.Value>=LMR && data.Last.Value<=LMP){
+        stylo='Risk';
+        Icono='<i class="fa fa-exclamation-circle fa-2x" aria-hidden="true"></i>';
+      }else if(data.Last.Value>LMP){
+        stylo='Danger';
+        Icono='<i class="fa fa-exclamation-triangle fa-2x" aria-hidden="true"></i>';
+      }
+
+      $("#DetailAlert").removeClass();
+      $("#DetailAlert").addClass(stylo);
+
+      $("#ChartDetail").html('Medida Actual:<br><label>'+data.Last.Value+' '+data.Unit+'</label><br>'+data.Last.Date+'');
+      $("#IconPanelAlerta").html(Icono);
+
+      var datos="[";
+      for(a=0;a<=data.Data.Time.length-1;a++){
+        var d = new Date("1 1, 2016 "+data.Data.Time[a]);
+
+        datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+","+LMR+","+LMP+"],";
+      }
+      datos=datos.substr(0,datos.length-1)+"]";
+
+      UpdateCurveTypes(datos);
+    }
+  });
+} // End of ShowSensorDetailUpdate
+
 
 /*
 * ShowAlert
@@ -595,6 +761,78 @@ function ShowAlert(type=1){
   });
 
 } //  End of ShowAlert
+
+
+function LoadAlert(){
+  clearInterval(actualizarProceso);
+  clearInterval(actualizarEstacion);
+  clearInterval(actualizarParametro);
+  $(nodo).html("");
+  LoadNav(1);
+}
+
+
+/*
+*   CONTROLES PARA VISTA DE INFORMES
+* las siguientes funciones se encargan de utilizar la informacion recibida por JSON para 
+* mostrar informes estadisticos de las vistas 
+*/
+
+function Export(){
+
+  var cadena = "";
+  cadena += "<div><input type='date' id='Date1' value='2016-07-15'><input type='date' id='Date2' value='2016-07-15'> </div>";
+  cadena += "<div><button onclick='chargeValuesDate()'>Ver</button></div>";
+  cadena += "<div id='Reporte' ></div>";
+  cadena += '<div class="input-group">';
+  cadena += '<span class="input-group-addon" id="basic-addon1">@</span>';
+  cadena += '<input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">';
+  cadena += '</div>'
+
+  $("section").html(cadena);  
+}
+
+
+var dataProbe;
+function chargeValuesDate(){
+
+  $parametros = {
+    'date1' : document.getElementById("Date1").value+" 00:00:00",
+    'date2' : document.getElementById("Date2").value+" 23:59:59",
+  };
+  $url = "history/events";
+  $.ajax({
+    type: "POST",
+    url: $url,
+    data: $parametros,
+    dataType : "json",
+    success: function(data){
+      dataProbe = data;
+    }
+  });
+}
+
+
+/*
+*   FUNCIONES AUXILIARES
+* Las siguientes funciones se encargan tareas adicionales que tienen que ver con graficas, funcionalidad de vistas
+* dependiendo del tamaño de la pantalla y las divisiones.
+*/
+
+
+
+/*
+* CloseSession
+* Cierra la sesion borrando la variable de usuario y redirigiendo al Login
+*/
+function CloseSession(){
+    
+  if (confirm("Cerrar Sesi\u00F3n")) {
+
+    window.location.assign("http://monitoreo.waposat.com/logout");
+  } 
+} //  End of CloseSession
+
 
 
 /*
@@ -651,7 +889,7 @@ function drawCurveTypes(id,w,h,datos,titulo){
     chartArea: {'right':20,'width': '80%', 'height': '75%'},
     legend: {position: 'none'},
     hAxis: {gridlines: {count: 5}},
-    vAxis: {viewWindow: { min:0}},
+    //vAxis: {viewWindow: { min:0}}, // Si se desea que la grafica tenga como limite inferior a cero
     colors: ['#256088', '#efa331', '#a73836']};
   chartLine = new google.visualization.LineChart(document.getElementById(id));
   chartLine.draw(dataLine, optionsLine);
@@ -689,85 +927,6 @@ function UpdateCurveTypes(datos){
 }
 
 
-
-
-
-
-function Export(){
-
-  var cadena = "";
-  cadena += "<div><input type='date' id='Date1' value='2016-07-15'><input type='date' id='Date2' value='2016-07-15'> </div>";
-  cadena += "<div><button onclick='chargeValuesDate()'>Ver</button></div>";
-  cadena += "<div id='Reporte' ></div>"
-
-  $("section").html("Muy pronto podras exportar los registros de las mediciones.");  
-}
-
-
-var dataProbe;
-function chargeValuesDate(){
-
-  $parametros = {
-    'date1' : document.getElementById("Date1").value+" 00:00:00",
-    'date2' : document.getElementById("Date2").value+" 23:59:59",
-  };
-  $url = "history/events";
-  $.ajax({
-    type: "POST",
-    url: $url,
-    data: $parametros,
-    dataType : "json",
-    success: function(data){
-      dataProbe = data;
-    }
-  });
-
-}
-
-
-
-
-
-function ShowDetail(idstation,idsensor,long=20){
-  // Programacion no completa
-  var n;
-  $('.BoxAlert').tooltipster('close');
-
-  $(nodo1).html('<div class="DetailParameter"></div>');
-  $(".DetailParameter").append('<div class="DetailHead"><i class="fa fa-arrow-right" aria-hidden="true"></i> Detalles del Parametro</div>');
-
-  $.ajax({
-  url:'v2/dashboard/station/'+idstation+'/sensor/'+idsensor+'/long/'+long,
-  type:'GET',
-  dataType: 'json',
-  success:function(data){
-    $(".DetailParameter").append('<div class="DetailAlert"><table border=0 cellpadding=0 cellspacing=0><tr><td rowspan=3 width=55><div class=PanelAlerta style="font-size:30px"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></div></td><td align=center width=180 colspan=2 style="font-size:11px;font-weight:bold;text-transform:uppercase;">'+data['nameStation']+'</td></tr><tr><td colspan=2 align=center style="font-size:20px;font-weight:bold;text-transform:uppercase;">'+data['Name']+ '</td></tr><tr><td align=center>' +data['codenameStation']+'</td><td align=center>' +data['CodeName']+'</td></tr></table></div>');
-    $(".DetailParameter").append('<table align=center border=0><tr><td align=center><div id=Chart></div></td><td rowspan=2  align=center><div class="DetailValue"><table><tr><td>Minimo:</td><td><label>'+data['MinValue'].toFixed(2)+ '</label></td></tr><tr><td>Medio:</td><td><label>'+data['MeanValue'].toFixed(2) +'</label></td></tr><tr><td>Maximo:</td><td><label>'+data['MaxValue'].toFixed(2) +'</label></td></tr></table></div></td></tr><tr><td><div class="DetailChart"></div></td></tr><tr><td colspan=2 align=center> <label class=DetailLabel>Limites máximos establecidos por la OMS</label></td></tr><tr><td colspan=2><div id=ChartLines>000</div></td></tr><tr><td align=right><select name=long onchange=ShowDetail('+idstation+','+idsensor+',this.value)><option value="20" '+(long==20?'selected':'')+'>20 puntos</option><option value="10" '+(long==10?'selected':'')+'>10 puntos</option></select></td><td> <div id=limites><label>Limite: '+data['LMR']+' - '+data['LMP']+'</label> <i class="fa fa-cog" aria-hidden="true"></i></div></td></tr></table>');
-
-    n=((data['Last']['Value']*100)/data['MP']);
-
-    drawChart('Chart',data['CodeName'],Math.round(n * 100) / 100,data['LMP']*100/data['MP'],100,data['LMR']*100/data['MP'],data['LMP']*100/data['MP']);
-
-    $(".DetailChart").html('Medida Actual:<br><label>'+data['Last']['Value']+'</label>');
-
-    var datos="[";  
-    for(a=0;a<=data.Data.Time.length-1;a++){
-      var d = new Date("1 1, 2016 "+data.Data.Time[a]);
-      datos+="[["+ d.getHours() +","+ d.getMinutes() +",0],"+ data.Data.Value[a]+","+data.LMP+","+data.LMR+"],";
-    }
-    datos=datos.substr(0,datos.length-1)+"]";  
-
-    drawCurveTypes("ChartLines",275,180,datos,data['Name']);
-    pushRight.open();
-
-  },
-  error:function(){}
-
-  });
-}
-  
-  
-  
 function calBoxCol(){
 	var contentWidth = $('.boxcols').width();
 	var boxCols = 0;

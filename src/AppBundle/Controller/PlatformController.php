@@ -131,7 +131,7 @@
 			$lD = $this->get('app.dataloader');
 			$lD->setupUser($user);
     		$lD->retrieveSensorData(1, 1, 1, 20, 0, 0);
-			$lD->retrieveStationData();
+			$lD->retrieveStationData(1,1,1,0);
 			$lD->retrieveProcessData();
 			
 

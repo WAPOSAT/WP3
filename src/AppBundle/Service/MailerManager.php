@@ -36,42 +36,42 @@
 
 			for ($i=0; $i < count($users_2_not); $i++) 
 			{ 
-				$this->sendEmail($users_2_not[$i]->getEmail(), $not_per_user[$i], 'ALERRTTTT ITS GONNA EXPLODEEEEEEEE RUUUN FORREST RUN!!!!!!');
+				$this->sendEmail($not_per_user[$i], $users_2_not[$i]->getEmail(), 'ALERRTTTT ITS GONNA EXPLODEEEEEEEE RUUUN FORREST RUN!!!!!!', "event");
 			}
 
 		}
 
 		private function orderNotifications($notifications, &$users_2_not, &$not_per_user)
 		{
+			if(count($notifications) != 0)
+			{$users_2_not[] = $notifications[0]->getIdUser();
+						
+						for ($i=0; $i < count($notifications); $i++) 
+						{ 	
+							$j=0;
+							$saved = 0;
+							$times = count($users_2_not); 
+							$user_not = $notifications[$i]->getIdUser();
+							
+							while ($j<$times) 
+							{
+								if($users_2_not[$j] == $user_not)
+								{
+									$not_per_user[$j][] = $notifications[$i];
+									$saved = 1;
+									break;
+								}
+								$j++;
+							}
 			
-			$users_2_not[0] = $notifications[0]->getIdUser();
+							if ($saved == 0) 
+							{
+								$users_2_not[$j] = $user_not;
+								$not_per_user[$j][] = $notifications[$i];
+							}
 			
-			for ($i=0; $i < count($notifications); $i++) 
-			{ 	
-				$j=0;
-				$saved = 0;
-				$times = count($users_2_not); 
-				$user_not = $notifications[$i]->getIdUser();
-				
-				while ($j<$times) 
-				{
-					if($users_2_not[$j] == $user_not)
-					{
-						$not_per_user[$j][] = $notifications[$i];
-						$saved = 1;
-						break;
-					}
-					$j++;
-				}
-
-				if ($saved == 0) 
-				{
-					$users_2_not[$j] = $user_not;
-					$not_per_user[$j][] = $notifications[$i];
-				}
-
+						}
 			}
-
 		}
 
 		/***algoritmo de busqueda

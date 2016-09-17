@@ -69,9 +69,9 @@ class Blocks
     private $ubigeo;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="image", type="integer", nullable=false)
+     * @ORM\Column(name="image", type="string", length=30, nullable=false)
      */
     private $image;
 

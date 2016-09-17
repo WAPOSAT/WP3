@@ -77,7 +77,7 @@
 			$lD = $this->get('app.dataloader');
 			$lD->setupUser($user);
 			$lD->retrieveSensorData(1, 0, 1, 0, 0, 0);
-			$lD->retrieveStationData();
+			$lD->retrieveStationData(1,1,1,0);
 			$lD->retrieveProcessData(1);
 
 			$Process = $lD->LoadAction($idProcess, 0);
@@ -107,7 +107,7 @@
 			$lD = $this->get('app.dataloader');
 			$lD->setupUser($user);
 			$lD->retrieveSensorData(0, 0, 1, 0, 0, 0);
-			$lD->retrieveStationData();
+			$lD->retrieveStationData(1,1,1,0);
 			$lD->retrieveProcessData(1);
 
 			$Process = $lD->LoadAction($idProcess, 0);
