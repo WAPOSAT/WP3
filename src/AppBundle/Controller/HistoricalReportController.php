@@ -23,7 +23,7 @@
 		 */
 		public function EventReport(Request $request)
 		{
-			//Verify is user is logged
+			//Verify if user is logged
 			if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) 
 			{
         		throw $this->createAccessDeniedException();

@@ -528,7 +528,7 @@ padding: 0;
   text-align: center; font-size: 11px;vertical-align: top;padding-top: 20px;
 }
 
-.btn {background-color: rgba(68,68,68,0.5);color:#ffffff;font-size: 14px; padding: 10px 10px ;position: absolute;top:50%;margin-top: -10px;} 
+.btn1 {background-color: rgba(68,68,68,0.5);color:#ffffff;font-size: 14px; padding: 10px 10px ;position: absolute;top:50%;margin-top: -10px;}
 .next {right:0}
 div .prev:hover {background-color: rgba(68,68,68,1)}
 div .next:hover {background-color: rgba(68,68,68,1)}
@@ -598,6 +598,6 @@ vertical-align: top;
     .labelphone { display: none; }
 }
 
-@media (max-width: 813px){
+@media (max-width: 840px){
     .labeltablet {display: none; }
 }

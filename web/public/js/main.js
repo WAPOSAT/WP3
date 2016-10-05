@@ -63,6 +63,7 @@ function LoadNav(type = 1){
                       <div id="HiUser" class=user><label class=labelExport>'+data.HiUser+'</label></div><div id=infoscada></div>\n\
                       <a class="icon-close" id=Close><i class="fa fa-power-off" aria-hidden="true"></i></a>\n\
                       <div class="BoxAlert"><i class="fa fa-bell" aria-hidden="true" style="float:left"></i> <label class=labelExport><span class="InfoDanger InfoLittle ">'+data.NumDanger+'</span><span class="InfoRisk InfoLittle ">'+ data.NumRisk+'</span></label></div>\n\
+                      <div class="Export" onclick="Export()"><i class="fa fa-share-square-o" aria-hidden="true"></i> <label class=labelExport>Exportar</label></div>\n\
                       '+change+'</div>');
 
     /* Para agregar el boton de EXPORTAR
@@ -464,6 +465,7 @@ function LoadScada(){
   clearInterval(actualizarProceso);
   clearInterval(actualizarEstacion);
   clearInterval(actualizarParametro);
+  $("section").html("Cargando vista SCADA ...");
   $(nodo).html("");
   LoadNav(2);
 }
@@ -521,7 +523,7 @@ function ShowPlain(id=1){
       items.push('<div class="item"><div class=PlainBox>'+ value.CodeName +'</div><br>'+ puntos+'<br>'+ value.Name +'<br><div style="background-image:url('+pathIMG+''+value.URL +'); background-position:top center;height:250px"></img src="ScriptFrontEnd/Screen2/'+value.URL +'"></div></div>');
     });
     
-    items.push('</div><a class="btn prev"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>  <a class="btn next"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>');
+    items.push('</div><a class="btn1 prev"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>  <a class="btn1 next"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>');
     // Se agrega el contenido a la plataforma
     $("section").html(items.join(''));   
     
@@ -767,6 +769,7 @@ function LoadAlert(){
   clearInterval(actualizarProceso);
   clearInterval(actualizarEstacion);
   clearInterval(actualizarParametro);
+  $("section").html("Cargando vista ALERTAS ...");
   $(nodo).html("");
   LoadNav(1);
 }
@@ -780,14 +783,32 @@ function LoadAlert(){
 
 function Export(){
 
-  var cadena = "";
-  cadena += "<div><input type='date' id='Date1' value='2016-07-15'><input type='date' id='Date2' value='2016-07-15'> </div>";
-  cadena += "<div><button onclick='chargeValuesDate()'>Ver</button></div>";
-  cadena += "<div id='Reporte' ></div>";
-  cadena += '<div class="input-group">';
-  cadena += '<span class="input-group-addon" id="basic-addon1">@</span>';
-  cadena += '<input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">';
-  cadena += '</div>'
+  $("section").css("background-color","#ffffff");
+  clearInterval(actualizarProceso);
+  clearInterval(actualizarEstacion);
+  clearInterval(actualizarParametro);
+
+  var cadena = '';
+  cadena += '<div id="CuadroFechas" class="col-md-12" >';
+  cadena += ' <div class="col-md-6 col-sm-6 col-xs-12" >';
+  cadena += '   <span><br>Fecha de inicio de reporte de monitoreo</span>';
+  cadena += '   <div class="input-group">';
+  cadena += '     <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar" aria-hidden="true"></i></span>';
+  cadena += '     <input type="date" id="Date1"  class="form-control" aria-describedby="basic-addon1">';
+  cadena += '   </div>';
+  cadena += '   <span><br>Fecha final del reporte de monitoreo</span>';
+  cadena += '   <div class="input-group">';
+  cadena += '     <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar" aria-hidden="true"></i></span>';
+  cadena += '     <input type="date" id="Date2"  class="form-control" aria-describedby="basic-addon1">';
+  cadena += '   </div>';
+  cadena += ' </div>';
+  cadena += ' <div class="col-md-6 col-sm-6 col-xs-12 text-center" ><br>';
+  cadena += '   <button type="button" onclick="chargeValuesDate()" class="btn btn-primary "><i class="fa fa-bar-chart" aria-hidden="true"></i> Generar</button>';
+  cadena += '   <button type="button" class="btn btn-primary"><i class="fa fa-print" aria-hidden="true"></i> Imprimir</button>';
+  cadena += ' </div>';
+  cadena += '</div>';
+  cadena += '<div id="Reporte" class="col-md-12" > </div>';
+
 
   $("section").html(cadena);  
 }
@@ -802,7 +823,7 @@ function chargeValuesDate(){
   };
   $url = "history/events";
   $.ajax({
-    type: "POST",
+    type: "GET",
     url: $url,
     data: $parametros,
     dataType : "json",
