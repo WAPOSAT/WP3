@@ -416,6 +416,7 @@ function showParameterUpdate(idstation=1,idsensor=1,LMP=100,LMR=50){
       // se guarda como variable global lastId
       lastId=data.Last.id;
       $("#LastValue").html("<h5>Medida Actual: "+data.Last.Value+" "+data.Unit+"</h5><span class=subtitulo>"+data.Last.Date+"</span>");
+      console.log('la ultima medicion'+data.Last.Value);
       var datos="[";
       for(a=0;a<=data.Data.Time.length-1;a++){
         var d = new Date("1 1, 2016 "+data.Data.Time[a]);
