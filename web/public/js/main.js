@@ -63,7 +63,6 @@ function LoadNav(type = 1){
                       <div id="HiUser" class=user><label class=labelExport>'+data.HiUser+'</label></div><div id=infoscada></div>\n\
                       <a class="icon-close" id=Close><i class="fa fa-power-off" aria-hidden="true"></i></a>\n\
                       <div class="BoxAlert"><i class="fa fa-bell" aria-hidden="true" style="float:left"></i> <label class=labelExport><span class="InfoDanger InfoLittle ">'+data.NumDanger+'</span><span class="InfoRisk InfoLittle ">'+ data.NumRisk+'</span></label></div>\n\
-                      <div class="Export" onclick="Export()"><i class="fa fa-share-square-o" aria-hidden="true"></i> <label class=labelExport>Exportar</label></div>\n\
                       '+change+'</div>');
 
     /* Para agregar el boton de EXPORTAR
@@ -416,10 +415,10 @@ function showParameterUpdate(idstation=1,idsensor=1,LMP=100,LMR=50){
     if(data.Data.Time.length > 0){
       // se guarda como variable global lastId
       lastId=data.Last.id;
+      $("#LastValue").html("<h5>Medida Actual: "+data.Last.Value+" "+data.Unit+"</h5><span class=subtitulo>"+data.Last.Date+"</span>");
       var datos="[";
       for(a=0;a<=data.Data.Time.length-1;a++){
         var d = new Date("1 1, 2016 "+data.Data.Time[a]);
-
         datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+","+LMR+","+LMP+"],";
       }
       datos=datos.substr(0,datos.length-1)+"]";
