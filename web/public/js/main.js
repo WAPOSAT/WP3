@@ -63,6 +63,7 @@ function LoadNav(type = 1){
                       <div id="HiUser" class=user><label class=labelExport>'+data.HiUser+'</label></div><div id=infoscada></div>\n\
                       <a class="icon-close" id=Close><i class="fa fa-power-off" aria-hidden="true"></i></a>\n\
                       <div class="BoxAlert"><i class="fa fa-bell" aria-hidden="true" style="float:left"></i> <label class=labelExport><span class="InfoDanger InfoLittle ">'+data.NumDanger+'</span><span class="InfoRisk InfoLittle ">'+ data.NumRisk+'</span></label></div>\n\
+                      <div class="Export" onclick="Export()"><i class="fa fa-share-square-o" aria-hidden="true"></i> <label class=labelExport>Exportar</label></div>\n\
                       '+change+'</div>');
 
     /* Para agregar el boton de EXPORTAR
