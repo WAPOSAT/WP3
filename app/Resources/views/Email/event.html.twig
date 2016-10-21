@@ -1,1 +1,45 @@
-RUNNNNNNNNNNNNNNNNNNNNNNNNNNNNN!!!!!!!!!!!!!!
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    RUNNNNNNNNNNNNNNNNNNNNNNNNNNNNN!!!!!!!!!!!!!!
+{% endblock %}
+
+{% block body %}
+	<div class="container" style="padding-right: 15px; padding-left: 15px; margin-right: auto; margin-left: auto;">
+		<div>
+			Usuario : {{ info[0].idUser.name ~ ' ' ~ info[0].idUser.lastName}} <br>
+			Fecha : {{ info[0].idMonitoringEvent.idMeasurement.date|date('F jS \\a\\t g:ia')}} 
+		</div>
+		<div class="col-md-10" style="width: 83.33333333%;">
+			<table class="table" style="border-collapse: collapse !important; border-spacing: 0;
+  border-collapse: collapse; border: 1px solid; border-color: #f6b1b1; font-size: 16px; width: 100%;">
+				<thead>
+					<tr>
+						<th colspan="3"  id="th-titulo-advertencia" style="background-color:#ffc284; color:#dd8935; padding: 0;">Reporte en tiempo real de Eventos de monitoreo</th>
+					</tr>
+					<tr>
+						<th style="color:#dd8935; background-color: #fff !important; padding: 0;">Estación de monitoreo</th>
+						<th style="color:#dd8935; background-color: #fff !important; padding: 0;">Sensor</th>
+						<th style="color:#dd8935; background-color: #fff !important; padding: 0;">Valor medido</th>
+						<th style="color:#dd8935; background-color: #fff !important; padding: 0;">danger value</th>
+						<th style="color:#dd8935; background-color: #fff !important; padding: 0;">risk value</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for notif in info %}
+						<tr>
+					    	<td style="background-color: #fff !important; padding: 0; text-align: center;">{{ notif.idMonitoringEvent.idBlockSensor.idBlock.blockName ~ ' (' ~ notif.idMonitoringEvent.idBlockSensor.idBlock.blockCodename ~ ')'}}</td>
+					    	<td style="background-color: #fff !important; padding: 0; text-align: center;">{{ notif.idMonitoringEvent.idBlockSensor.idSensor.codename ~ ' (' ~ notif.idMonitoringEvent.idBlockSensor.idSensor.idSensorModel.idParameter.parameterName ~ ')'}}</td>
+					    	<td style="background-color: #fff !important; padding: 0; text-align: center;">{{ notif.idMonitoringEvent.idMeasurement.value }}</td>
+					    	<td style="background-color: #fff !important; padding: 0; text-align: center;">{{ notif.idMonitoringEvent.idBlockSensor.upDangerLimit }}</td>
+					    	<td style="background-color: #fff !important; padding: 0; text-align: center;">{{ notif.idMonitoringEvent.idBlockSensor.upRiskLimit }}</td>
+					    </tr>  
+					{% endfor %}
+				</tbody>
+				
+			</table>
+		</div>
+	</div>
+
+{% endblock %}
+
