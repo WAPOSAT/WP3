@@ -177,7 +177,7 @@
 				if ($block_type == 1) 
 				{
 					$blockA["NumProcessBlocks"] = count($child_blocks);
-					$blockA["HiUser"] =  "Hola <b>".$this->name_user."</b>,<br>Bienvenido a tu plataforma de monitoreo.";
+					$blockA["HiUser"] =  "Hola ".$this->name_user.",\nBienvenido a tu plataforma de monitoreo.";
 					if ($this->loadProcessData) 
 					{
 						$blockA["ProcessBlock"] = $temp;
@@ -386,7 +386,18 @@
 			//Select data for add to sensors
 			$lastMeasurements = null;
 			$lastId = $this->uselastId;
-			if ($lastId) 
+			$dateInterval = $this->useDateInterval;
+			if($dateInterval)
+			{
+				//return var_dump($dateInterval['date1']);
+				$dql = "SELECT m FROM AppBundle:Measurement m  WHERE m.idSensor = ".$Sensor->getIdSensor()." AND m.date BETWEEN '".$dateInterval['date1']->format('Y-m-d H:i:s')."' AND '".$dateInterval['date2']->format('Y-m-d H:i:s')."'";
+				$query = $em->createQuery($dql);
+				$lastMeasurements = $query->getResult();
+
+				//return $dateInterval['date1'];
+
+			}
+			elseif ($lastId) 
 			{
 				$dql = "SELECT m FROM AppBundle:Measurement m WHERE m.idSensor = ".$Sensor->getIdSensor()." AND m.idMeasurement > ".$lastId." ORDER BY m.idMeasurement DESC";
 				$query = $em->createQuery($dql);
@@ -507,6 +518,12 @@
 
 		public function MeanMaxMinValue($measurements=null)
 		{
+
+			if(!$measurements)
+			{
+				return array("mean"=>0,"max"=>0, "min"=>0);
+			}
+
 			$mean = $cont = 0;
 			$minVal = $maxVal = $measurements[0]->getValue();
 

@@ -62,8 +62,8 @@
 
 	    	$request = Request::createFromGlobals();
 
-    		$date1 = $request->request->get('date1');
-    		$date2 = $request->request->get('date2');
+    		$date1 = $request->query->get('date1');
+    		$date2 = $request->query->get('date2');
 
 			$d1 = \DateTime::createFromFormat('Y-m-d H:i:s', $date1);
 

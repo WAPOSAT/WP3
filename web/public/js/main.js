@@ -822,7 +822,7 @@ function chargeValuesDate(){
     'date1' : document.getElementById("Date1").value+" 00:00:00",
     'date2' : document.getElementById("Date2").value+" 23:59:59",
   };
-  $url = "history/events";
+  $url = "history/form";
   $.ajax({
     type: "GET",
     url: $url,
