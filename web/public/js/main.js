@@ -31,7 +31,7 @@ window.onload = function(){
 * LoadNav
 * Construye el menu de navegacion y la barra de herramientas del sistema
 */
-function LoadNav(type = 1){
+function LoadNav(type){
   var ruta=null;
   var funcion=null;
   var change;
