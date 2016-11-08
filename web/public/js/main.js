@@ -12,13 +12,19 @@ var pushRight=null;
 var lastId = 0;
 
   
-$(document).ready(function(){
+/*$(document).ready(function(){
   // la variable [vista] tiene valores 1 o 2 dependiendo de cual es la vista de la plataforma que se desea
   // esta es ingresada por el controlador desde el codigo twig    
   LoadNav(vista);
   $("footer").html('Copyright &copy; Waposat 2016');
 
 });
+*/
+window.onload = function(){
+  alert('funcion inicial cargada');
+  LoadNav(vista);
+  $("footer").html('Copyright &copy; Waposat 2016');
+}
 
 
 /*
@@ -38,7 +44,7 @@ function LoadNav(type = 1){
     funcion="ShowPlain";
     change = "<div class='Change' title='Cambiar a vista ALERTAS' onclick='LoadAlert()'><i class='fa fa-th-large' aria-hidden='true'></i></div>";
   }
-
+  alert('se inicia la carga de informacion...');
   // Se utiliza la [ruta] obtenida para iniciar la carga de informacion
   //Se realiza una consulta AJAX con el metodo POST utilizando JQUERY
   $.post(ruta, function(response) {
