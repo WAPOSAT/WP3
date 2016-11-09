@@ -493,6 +493,7 @@
 			$sensor_array["MeanValue"] = $stat['mean'];
 			$sensor_array["MinValue"] = $stat['min'];
 			$sensor_array["MaxValue"] = $stat['max'];
+			$sensor_array["Tendencia"] = $stat['tend'];
 		}
 
 		public function sensorLimits( &$sensor_array, $Bsensor = null )
@@ -507,13 +508,15 @@
 		{
 			$values=array();
 			$dates=array();
+			$ts=array();
 			foreach ($measurements as $measure) 
 			{
 				$values[] = $measure->getValue();
 				$dates[] = $measure->getDate()->format('H:i:s');
+				$ts[]= $measure->getDate()->format('Y-m-d H:i:s');
 			}
 
-			$sensor_array["Data"] = array("Time"=> $dates, "Value"=> $values);
+			$sensor_array["Data"] = array("Time"=> $dates, "Value"=> $values, "timestamp"=>$ts);
 		}
 
 		public function MeanMaxMinValue($measurements=null)
@@ -521,10 +524,11 @@
 
 			if(!$measurements)
 			{
-				return array("mean"=>0,"max"=>0, "min"=>0);
+				return array("mean"=>0,"max"=>0, "min"=>0, "tend"=>0);
 			}
 
 			$mean = $cont = 0;
+			$initVal = $measurements[0]->getValue();
 			$minVal = $maxVal = $measurements[0]->getValue();
 
 			foreach ($measurements as $measure) 
@@ -535,7 +539,15 @@
 				$cont++;
 			}
 
-			return array("mean"=>$mean/$cont,"max"=>$maxVal, "min"=>$minVal);
+			$lastVal = $measurements[$cont-1]->getValue();
+
+			if($initVal == 0 && $lastVal ==0) $tend = 0;
+			elseif($initVal == 0) $tend = 100;
+			else $tend = ($lastVal-$initVal)/$initVal;
+
+
+
+			return array("mean"=>round($mean/$cont,2) ,"max"=>$maxVal, "min"=>$minVal, "tend"=>round($tend, 2));
 
 		}
 
