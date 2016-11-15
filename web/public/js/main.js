@@ -21,7 +21,6 @@ var lastId = 0;
 });
 */
 window.onload = function(){
-  alert('funcion inicial cargada');
   LoadNav(vista);
   $("footer").html('Copyright &copy; Waposat 2016');
 }
@@ -44,7 +43,6 @@ function LoadNav(type){
     funcion="ShowPlain";
     change = "<div class='Change' title='Cambiar a vista ALERTAS' onclick='LoadAlert()'><i class='fa fa-th-large' aria-hidden='true'></i></div>";
   }
-  alert('se inicia la carga de informacion...');
   // Se utiliza la [ruta] obtenida para iniciar la carga de informacion
   //Se realiza una consulta AJAX con el metodo POST utilizando JQUERY
   $.post(ruta, function(response) {
@@ -403,7 +401,8 @@ function showparameter(idstation,idsensor,long, Refresh ){
     for(a=0;a<=data.Data.Time.length-1;a++){
       var d = new Date("1 1, 2016 "+data.Data.Time[a]);
 
-      datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+","+data.LMR+","+data.LMP+"],";
+      //datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+","+data.LMR+","+data.LMP+"],";
+      datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+"],";
     }
     datos=datos.substr(0,datos.length-1)+"]";
 
@@ -427,7 +426,8 @@ function showParameterUpdate(idstation,idsensor,LMP,LMR){
       var datos="[";
       for(a=0;a<=data.Data.Time.length-1;a++){
         var d = new Date("1 1, 2016 "+data.Data.Time[a]);
-        datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+","+LMR+","+LMP+"],";
+        //datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+","+LMR+","+LMP+"],";
+        datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+"],";
       }
       datos=datos.substr(0,datos.length-1)+"]";
 
@@ -676,7 +676,8 @@ function ShowDetail(idstation,idsensor,Refresh,long){
       var datos="[";
       for(a=0;a<=data.Data.Time.length-1;a++){
         var d = new Date("1 1, 2016 "+data.Data.Time[a]);
-        datos+="[["+ d.getHours() +","+ d.getMinutes() +",0],"+ data.Data.Value[a]+","+data.LMR+","+data.LMP+"],";
+        //datos+="[["+ d.getHours() +","+ d.getMinutes() +",0],"+ data.Data.Value[a]+","+data.LMR+","+data.LMP+"],";
+        datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+"],";
       }
       datos=datos.substr(0,datos.length-1)+"]";
 
@@ -720,7 +721,8 @@ function ShowSensorDetailUpdate (idstation,idsensor,LMP,LMR){
       for(a=0;a<=data.Data.Time.length-1;a++){
         var d = new Date("1 1, 2016 "+data.Data.Time[a]);
 
-        datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+","+LMR+","+LMP+"],";
+        //datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+","+LMR+","+LMP+"],";
+        datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+"],";
       }
       datos=datos.substr(0,datos.length-1)+"]";
 
@@ -900,8 +902,8 @@ function drawCurveTypes(id,w,h,datos,titulo){
   dataLine = new google.visualization.DataTable();
   dataLine.addColumn('timeofday', 'X');
   dataLine.addColumn('number', titulo);
-  dataLine.addColumn('number', 'Risk');
-  dataLine.addColumn('number', 'Danger');
+  //dataLine.addColumn('number', 'Risk');
+  //dataLine.addColumn('number', 'Danger');
 
   dataLine.addRows(JSON.parse(datos));
 
