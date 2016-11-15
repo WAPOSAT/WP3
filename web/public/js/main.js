@@ -920,7 +920,8 @@ function drawCurveTypes(id,w,h,datos,titulo){
     legend: {position: 'none'},
     hAxis: {gridlines: {count: 5}},
     //vAxis: {viewWindow: { min:0}}, // Si se desea que la grafica tenga como limite inferior a cero
-    colors: ['#256088', '#efa331', '#a73836']};
+    //colors: ['#256088', '#efa331', '#a73836']};
+    colors: ['#256088']};
   chartLine = new google.visualization.LineChart(document.getElementById(id));
   chartLine.draw(dataLine, optionsLine);
 } //  End drawCurveTypes

@@ -36,7 +36,7 @@
 
 			for ($i=0; $i < count($users_2_not); $i++) 
 			{ 
-				$this->sendEmail($not_per_user[$i], $users_2_not[$i]->getEmail(), 'ALERRTTTT ITS GONNA EXPLODEEEEEEEE RUUUN FORREST RUN!!!!!!', "event");
+				$this->sendEmail($not_per_user[$i], $users_2_not[$i]->getEmail(), 'SE HA DETECTADO UNA ALERTA!!!', "event");
 			}
 
 		}
