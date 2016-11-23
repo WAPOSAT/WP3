@@ -31,14 +31,14 @@ class Components
      *
      * @ORM\Column(name="connection_date", type="datetime", nullable=false)
      */
-    private $connectionDate = 'CURRENT_TIMESTAMP';
+    private $connectionDate;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="active", type="boolean", nullable=false)
      */
-    private $active = '1';
+    private $active;
 
     /**
      * @var integer
@@ -50,16 +50,6 @@ class Components
     private $idComponent;
 
     /**
-     * @var \AppBundle\Entity\Senders
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Senders")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_sender", referencedColumnName="id_sender")
-     * })
-     */
-    private $idSender;
-
-    /**
      * @var \AppBundle\Entity\ComponentModels
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ComponentModels")
@@ -68,6 +58,16 @@ class Components
      * })
      */
     private $idComponentModel;
+
+    /**
+     * @var \AppBundle\Entity\Senders
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Senders")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_sender", referencedColumnName="id_sender")
+     * })
+     */
+    private $idSender;
 
 
 
@@ -178,30 +178,6 @@ class Components
     }
 
     /**
-     * Set idSender
-     *
-     * @param \AppBundle\Entity\Senders $idSender
-     *
-     * @return Components
-     */
-    public function setIdSender(\AppBundle\Entity\Senders $idSender = null)
-    {
-        $this->idSender = $idSender;
-
-        return $this;
-    }
-
-    /**
-     * Get idSender
-     *
-     * @return \AppBundle\Entity\Senders
-     */
-    public function getIdSender()
-    {
-        return $this->idSender;
-    }
-
-    /**
      * Set idComponentModel
      *
      * @param \AppBundle\Entity\ComponentModels $idComponentModel
@@ -223,5 +199,29 @@ class Components
     public function getIdComponentModel()
     {
         return $this->idComponentModel;
+    }
+
+    /**
+     * Set idSender
+     *
+     * @param \AppBundle\Entity\Senders $idSender
+     *
+     * @return Components
+     */
+    public function setIdSender(\AppBundle\Entity\Senders $idSender = null)
+    {
+        $this->idSender = $idSender;
+
+        return $this;
+    }
+
+    /**
+     * Get idSender
+     *
+     * @return \AppBundle\Entity\Senders
+     */
+    public function getIdSender()
+    {
+        return $this->idSender;
     }
 }

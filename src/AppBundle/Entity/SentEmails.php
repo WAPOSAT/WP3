@@ -24,14 +24,14 @@ class SentEmails
      *
      * @ORM\Column(name="received", type="boolean", nullable=false)
      */
-    private $received = '1';
+    private $received;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="register_date", type="datetime", nullable=false)
      */
-    private $registerDate = 'CURRENT_TIMESTAMP';
+    private $registerDate;
 
     /**
      * @var integer

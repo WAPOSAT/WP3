@@ -36,16 +36,6 @@ class SensorModels
     private $idSensorModel;
 
     /**
-     * @var \AppBundle\Entity\MeasurementsUnits
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\MeasurementsUnits")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_measurement_unit", referencedColumnName="id_measurement_unit")
-     * })
-     */
-    private $idMeasurementUnit;
-
-    /**
      * @var \AppBundle\Entity\Parameters
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Parameters")
@@ -54,6 +44,16 @@ class SensorModels
      * })
      */
     private $idParameter;
+
+    /**
+     * @var \AppBundle\Entity\MeasurementsUnits
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\MeasurementsUnits")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_measurement_unit", referencedColumnName="id_measurement_unit")
+     * })
+     */
+    private $idMeasurementUnit;
 
 
 }

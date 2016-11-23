@@ -312,7 +312,7 @@ class Blocks
     /**
      * Set image
      *
-     * @param integer $image
+     * @param string $image
      *
      * @return Blocks
      */
@@ -326,7 +326,7 @@ class Blocks
     /**
      * Get image
      *
-     * @return integer
+     * @return string
      */
     public function getImage()
     {

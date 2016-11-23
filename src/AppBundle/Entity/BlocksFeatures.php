@@ -38,14 +38,14 @@ class BlocksFeatures
      *
      * @ORM\Column(name="creation_date", type="datetime", nullable=false)
      */
-    private $creationDate = 'CURRENT_TIMESTAMP';
+    private $creationDate;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="active", type="boolean", nullable=false)
      */
-    private $active = '1';
+    private $active;
 
     /**
      * @var integer
@@ -57,16 +57,6 @@ class BlocksFeatures
     private $idBlockFeature;
 
     /**
-     * @var \AppBundle\Entity\Blocks
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Blocks")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_block", referencedColumnName="id")
-     * })
-     */
-    private $idBlock;
-
-    /**
      * @var \AppBundle\Entity\Features
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Features")
@@ -75,6 +65,16 @@ class BlocksFeatures
      * })
      */
     private $idFeature;
+
+    /**
+     * @var \AppBundle\Entity\Blocks
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Blocks")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_block", referencedColumnName="id")
+     * })
+     */
+    private $idBlock;
 
 
 
@@ -209,30 +209,6 @@ class BlocksFeatures
     }
 
     /**
-     * Set idBlock
-     *
-     * @param \AppBundle\Entity\Blocks $idBlock
-     *
-     * @return BlocksFeatures
-     */
-    public function setIdBlock(\AppBundle\Entity\Blocks $idBlock = null)
-    {
-        $this->idBlock = $idBlock;
-
-        return $this;
-    }
-
-    /**
-     * Get idBlock
-     *
-     * @return \AppBundle\Entity\Blocks
-     */
-    public function getIdBlock()
-    {
-        return $this->idBlock;
-    }
-
-    /**
      * Set idFeature
      *
      * @param \AppBundle\Entity\Features $idFeature
@@ -254,5 +230,29 @@ class BlocksFeatures
     public function getIdFeature()
     {
         return $this->idFeature;
+    }
+
+    /**
+     * Set idBlock
+     *
+     * @param \AppBundle\Entity\Blocks $idBlock
+     *
+     * @return BlocksFeatures
+     */
+    public function setIdBlock(\AppBundle\Entity\Blocks $idBlock = null)
+    {
+        $this->idBlock = $idBlock;
+
+        return $this;
+    }
+
+    /**
+     * Get idBlock
+     *
+     * @return \AppBundle\Entity\Blocks
+     */
+    public function getIdBlock()
+    {
+        return $this->idBlock;
     }
 }

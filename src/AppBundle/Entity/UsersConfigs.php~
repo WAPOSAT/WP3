@@ -17,14 +17,14 @@ class UsersConfigs
      *
      * @ORM\Column(name="active", type="boolean", nullable=false)
      */
-    private $active = '1';
+    private $active;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="creation_date", type="datetime", nullable=false)
      */
-    private $creationDate = 'CURRENT_TIMESTAMP';
+    private $creationDate;
 
     /**
      * @var integer
@@ -34,6 +34,16 @@ class UsersConfigs
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $idUserConfig;
+
+    /**
+     * @var \AppBundle\Entity\Features
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Features")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_feature", referencedColumnName="id")
+     * })
+     */
+    private $idFeature;
 
     /**
      * @var \AppBundle\Entity\Blocks
@@ -54,16 +64,6 @@ class UsersConfigs
      * })
      */
     private $idUser;
-
-    /**
-     * @var \AppBundle\Entity\Features
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Features")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_feature", referencedColumnName="id")
-     * })
-     */
-    private $idFeature;
 
 
 }

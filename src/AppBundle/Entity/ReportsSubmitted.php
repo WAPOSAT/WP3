@@ -17,14 +17,14 @@ class ReportsSubmitted
      *
      * @ORM\Column(name="since_date", type="datetime", nullable=false)
      */
-    private $sinceDate = '0000-00-00 00:00:00';
+    private $sinceDate;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="until_date", type="datetime", nullable=false)
      */
-    private $untilDate = '0000-00-00 00:00:00';
+    private $untilDate;
 
     /**
      * @var string
@@ -41,16 +41,6 @@ class ReportsSubmitted
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $idReportSubmitted;
-
-    /**
-     * @var \AppBundle\Entity\SentEmails
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\SentEmails")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_sent_email", referencedColumnName="id_sent_email")
-     * })
-     */
-    private $idSentEmail;
 
     /**
      * @var \AppBundle\Entity\ScheduledReports
@@ -71,6 +61,16 @@ class ReportsSubmitted
      * })
      */
     private $idUser;
+
+    /**
+     * @var \AppBundle\Entity\SentEmails
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\SentEmails")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_sent_email", referencedColumnName="id_sent_email")
+     * })
+     */
+    private $idSentEmail;
 
 
 
@@ -157,30 +157,6 @@ class ReportsSubmitted
     }
 
     /**
-     * Set idSentEmail
-     *
-     * @param \AppBundle\Entity\SentEmails $idSentEmail
-     *
-     * @return ReportsSubmitted
-     */
-    public function setIdSentEmail(\AppBundle\Entity\SentEmails $idSentEmail = null)
-    {
-        $this->idSentEmail = $idSentEmail;
-
-        return $this;
-    }
-
-    /**
-     * Get idSentEmail
-     *
-     * @return \AppBundle\Entity\SentEmails
-     */
-    public function getIdSentEmail()
-    {
-        return $this->idSentEmail;
-    }
-
-    /**
      * Set idScheduledReport
      *
      * @param \AppBundle\Entity\ScheduledReports $idScheduledReport
@@ -226,5 +202,29 @@ class ReportsSubmitted
     public function getIdUser()
     {
         return $this->idUser;
+    }
+
+    /**
+     * Set idSentEmail
+     *
+     * @param \AppBundle\Entity\SentEmails $idSentEmail
+     *
+     * @return ReportsSubmitted
+     */
+    public function setIdSentEmail(\AppBundle\Entity\SentEmails $idSentEmail = null)
+    {
+        $this->idSentEmail = $idSentEmail;
+
+        return $this;
+    }
+
+    /**
+     * Get idSentEmail
+     *
+     * @return \AppBundle\Entity\SentEmails
+     */
+    public function getIdSentEmail()
+    {
+        return $this->idSentEmail;
     }
 }

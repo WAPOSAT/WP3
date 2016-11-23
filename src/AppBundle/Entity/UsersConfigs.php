@@ -17,14 +17,14 @@ class UsersConfigs
      *
      * @ORM\Column(name="active", type="boolean", nullable=false)
      */
-    private $active = '1';
+    private $active;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="creation_date", type="datetime", nullable=false)
      */
-    private $creationDate = 'CURRENT_TIMESTAMP';
+    private $creationDate;
 
     /**
      * @var integer
@@ -34,6 +34,16 @@ class UsersConfigs
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $idUserConfig;
+
+    /**
+     * @var \AppBundle\Entity\Features
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Features")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_feature", referencedColumnName="id")
+     * })
+     */
+    private $idFeature;
 
     /**
      * @var \AppBundle\Entity\Blocks
@@ -54,16 +64,6 @@ class UsersConfigs
      * })
      */
     private $idUser;
-
-    /**
-     * @var \AppBundle\Entity\Features
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Features")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_feature", referencedColumnName="id")
-     * })
-     */
-    private $idFeature;
 
 
 
@@ -126,6 +126,30 @@ class UsersConfigs
     }
 
     /**
+     * Set idFeature
+     *
+     * @param \AppBundle\Entity\Features $idFeature
+     *
+     * @return UsersConfigs
+     */
+    public function setIdFeature(\AppBundle\Entity\Features $idFeature = null)
+    {
+        $this->idFeature = $idFeature;
+
+        return $this;
+    }
+
+    /**
+     * Get idFeature
+     *
+     * @return \AppBundle\Entity\Features
+     */
+    public function getIdFeature()
+    {
+        return $this->idFeature;
+    }
+
+    /**
      * Set idBlock
      *
      * @param \AppBundle\Entity\Blocks $idBlock
@@ -171,29 +195,5 @@ class UsersConfigs
     public function getIdUser()
     {
         return $this->idUser;
-    }
-
-    /**
-     * Set idFeature
-     *
-     * @param \AppBundle\Entity\Features $idFeature
-     *
-     * @return UsersConfigs
-     */
-    public function setIdFeature(\AppBundle\Entity\Features $idFeature = null)
-    {
-        $this->idFeature = $idFeature;
-
-        return $this;
-    }
-
-    /**
-     * Get idFeature
-     *
-     * @return \AppBundle\Entity\Features
-     */
-    public function getIdFeature()
-    {
-        return $this->idFeature;
     }
 }

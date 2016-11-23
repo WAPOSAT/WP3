@@ -17,7 +17,7 @@ class SensorsSenders
      *
      * @ORM\Column(name="active", type="boolean", nullable=false)
      */
-    private $active = '1';
+    private $active;
 
     /**
      * @var integer
@@ -29,16 +29,6 @@ class SensorsSenders
     private $idSensorSender;
 
     /**
-     * @var \AppBundle\Entity\Senders
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Senders")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_sender", referencedColumnName="id_sender")
-     * })
-     */
-    private $idSender;
-
-    /**
      * @var \AppBundle\Entity\Sensors
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Sensors")
@@ -47,6 +37,16 @@ class SensorsSenders
      * })
      */
     private $idSensor;
+
+    /**
+     * @var \AppBundle\Entity\Senders
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Senders")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_sender", referencedColumnName="id_sender")
+     * })
+     */
+    private $idSender;
 
 
 
@@ -85,30 +85,6 @@ class SensorsSenders
     }
 
     /**
-     * Set idSender
-     *
-     * @param \AppBundle\Entity\Senders $idSender
-     *
-     * @return SensorsSenders
-     */
-    public function setIdSender(\AppBundle\Entity\Senders $idSender = null)
-    {
-        $this->idSender = $idSender;
-
-        return $this;
-    }
-
-    /**
-     * Get idSender
-     *
-     * @return \AppBundle\Entity\Senders
-     */
-    public function getIdSender()
-    {
-        return $this->idSender;
-    }
-
-    /**
      * Set idSensor
      *
      * @param \AppBundle\Entity\Sensors $idSensor
@@ -130,5 +106,29 @@ class SensorsSenders
     public function getIdSensor()
     {
         return $this->idSensor;
+    }
+
+    /**
+     * Set idSender
+     *
+     * @param \AppBundle\Entity\Senders $idSender
+     *
+     * @return SensorsSenders
+     */
+    public function setIdSender(\AppBundle\Entity\Senders $idSender = null)
+    {
+        $this->idSender = $idSender;
+
+        return $this;
+    }
+
+    /**
+     * Get idSender
+     *
+     * @return \AppBundle\Entity\Senders
+     */
+    public function getIdSender()
+    {
+        return $this->idSender;
     }
 }

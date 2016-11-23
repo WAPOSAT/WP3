@@ -8,7 +8,6 @@
 	<div class="container" style="padding-right: 15px; padding-left: 15px; margin-right: auto; margin-left: auto;">
 		<div>
 			Usuario : {{ info[0].idUser.name ~ ' ' ~ info[0].idUser.lastName}} <br>
-			Fecha : {{ info[0].idMonitoringEvent.idMeasurement.date|date('F jS \\a\\t g:ia')}} 
 		</div>
 		<div class="col-md-10" style="width: 83.33333333%;">
 			<table class="table" style="border-collapse: collapse !important; border-spacing: 0;
@@ -23,6 +22,7 @@
 						<th style="color:#dd8935; background-color: #fff !important; padding: 0;">Valor medido</th>
 						<th style="color:#dd8935; background-color: #fff !important; padding: 0;">danger value</th>
 						<th style="color:#dd8935; background-color: #fff !important; padding: 0;">risk value</th>
+						<th style="color:#dd8935; background-color: #fff !important; padding: 0;">Date</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -33,6 +33,7 @@
 					    	<td style="background-color: #fff !important; padding: 0; text-align: center;">{{ notif.idMonitoringEvent.idMeasurement.value }}</td>
 					    	<td style="background-color: #fff !important; padding: 0; text-align: center;">{{ notif.idMonitoringEvent.idBlockSensor.upDangerLimit }}</td>
 					    	<td style="background-color: #fff !important; padding: 0; text-align: center;">{{ notif.idMonitoringEvent.idBlockSensor.upRiskLimit }}</td>
+					    	<td style="background-color: #fff !important; padding: 0; text-align: center;">{{ notif.idMonitoringEvent.idMeasurement.date|date('F jS \\a\\t g:ia')}}</td>
 					    </tr>  
 					{% endfor %}
 				</tbody>

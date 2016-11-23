@@ -17,14 +17,21 @@ class NotificationsAlert
      *
      * @ORM\Column(name="showed", type="boolean", nullable=false)
      */
-    private $showed = '0';
+    private $showed;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="viewed", type="boolean", nullable=false)
      */
-    private $viewed = '0';
+    private $viewed;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="by_email", type="integer", nullable=false)
+     */
+    private $byEmail;
 
     /**
      * @var integer

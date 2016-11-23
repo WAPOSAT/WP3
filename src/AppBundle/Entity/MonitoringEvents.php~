@@ -22,14 +22,14 @@ class MonitoringEvents
     private $idMonitoringEvent;
 
     /**
-     * @var \AppBundle\Entity\Measurement
+     * @var \AppBundle\Entity\BlockSensors
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Measurement")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BlockSensors")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_measurement", referencedColumnName="id_measurement")
+     *   @ORM\JoinColumn(name="id_block_sensor", referencedColumnName="id")
      * })
      */
-    private $idMeasurement;
+    private $idBlockSensor;
 
     /**
      * @var \AppBundle\Entity\EventType
@@ -42,14 +42,14 @@ class MonitoringEvents
     private $idEventType;
 
     /**
-     * @var \AppBundle\Entity\BlockSensors
+     * @var \AppBundle\Entity\Measurement
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BlockSensors")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Measurement")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_block_sensor", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="id_measurement", referencedColumnName="id_measurement")
      * })
      */
-    private $idBlockSensor;
+    private $idMeasurement;
 
 
 }

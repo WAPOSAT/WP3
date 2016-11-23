@@ -50,16 +50,6 @@ class UsersBlocks
     private $idUserBlock;
 
     /**
-     * @var \AppBundle\Entity\Users
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Users")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_user", referencedColumnName="id")
-     * })
-     */
-    private $idUser;
-
-    /**
      * @var \AppBundle\Entity\Blocks
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Blocks")
@@ -68,6 +58,16 @@ class UsersBlocks
      * })
      */
     private $idBlock;
+
+    /**
+     * @var \AppBundle\Entity\Users
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_user", referencedColumnName="id")
+     * })
+     */
+    private $idUser;
 
 
 
@@ -178,30 +178,6 @@ class UsersBlocks
     }
 
     /**
-     * Set idUser
-     *
-     * @param \AppBundle\Entity\Users $idUser
-     *
-     * @return UsersBlocks
-     */
-    public function setIdUser(\AppBundle\Entity\Users $idUser = null)
-    {
-        $this->idUser = $idUser;
-
-        return $this;
-    }
-
-    /**
-     * Get idUser
-     *
-     * @return \AppBundle\Entity\Users
-     */
-    public function getIdUser()
-    {
-        return $this->idUser;
-    }
-
-    /**
      * Set idBlock
      *
      * @param \AppBundle\Entity\Blocks $idBlock
@@ -223,5 +199,29 @@ class UsersBlocks
     public function getIdBlock()
     {
         return $this->idBlock;
+    }
+
+    /**
+     * Set idUser
+     *
+     * @param \AppBundle\Entity\Users $idUser
+     *
+     * @return UsersBlocks
+     */
+    public function setIdUser(\AppBundle\Entity\Users $idUser = null)
+    {
+        $this->idUser = $idUser;
+
+        return $this;
+    }
+
+    /**
+     * Get idUser
+     *
+     * @return \AppBundle\Entity\Users
+     */
+    public function getIdUser()
+    {
+        return $this->idUser;
     }
 }

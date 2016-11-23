@@ -36,16 +36,6 @@ class SensorModels
     private $idSensorModel;
 
     /**
-     * @var \AppBundle\Entity\MeasurementsUnits
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\MeasurementsUnits")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_measurement_unit", referencedColumnName="id_measurement_unit")
-     * })
-     */
-    private $idMeasurementUnit;
-
-    /**
      * @var \AppBundle\Entity\Parameters
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Parameters")
@@ -54,6 +44,16 @@ class SensorModels
      * })
      */
     private $idParameter;
+
+    /**
+     * @var \AppBundle\Entity\MeasurementsUnits
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\MeasurementsUnits")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_measurement_unit", referencedColumnName="id_measurement_unit")
+     * })
+     */
+    private $idMeasurementUnit;
 
 
 
@@ -116,30 +116,6 @@ class SensorModels
     }
 
     /**
-     * Set idMeasurementUnit
-     *
-     * @param \AppBundle\Entity\MeasurementsUnits $idMeasurementUnit
-     *
-     * @return SensorModels
-     */
-    public function setIdMeasurementUnit(\AppBundle\Entity\MeasurementsUnits $idMeasurementUnit = null)
-    {
-        $this->idMeasurementUnit = $idMeasurementUnit;
-
-        return $this;
-    }
-
-    /**
-     * Get idMeasurementUnit
-     *
-     * @return \AppBundle\Entity\MeasurementsUnits
-     */
-    public function getIdMeasurementUnit()
-    {
-        return $this->idMeasurementUnit;
-    }
-
-    /**
      * Set idParameter
      *
      * @param \AppBundle\Entity\Parameters $idParameter
@@ -161,5 +137,29 @@ class SensorModels
     public function getIdParameter()
     {
         return $this->idParameter;
+    }
+
+    /**
+     * Set idMeasurementUnit
+     *
+     * @param \AppBundle\Entity\MeasurementsUnits $idMeasurementUnit
+     *
+     * @return SensorModels
+     */
+    public function setIdMeasurementUnit(\AppBundle\Entity\MeasurementsUnits $idMeasurementUnit = null)
+    {
+        $this->idMeasurementUnit = $idMeasurementUnit;
+
+        return $this;
+    }
+
+    /**
+     * Get idMeasurementUnit
+     *
+     * @return \AppBundle\Entity\MeasurementsUnits
+     */
+    public function getIdMeasurementUnit()
+    {
+        return $this->idMeasurementUnit;
     }
 }

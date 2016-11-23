@@ -24,14 +24,14 @@ class Features
      *
      * @ORM\Column(name="creation_date", type="datetime", nullable=false)
      */
-    private $creationDate = 'CURRENT_TIMESTAMP';
+    private $creationDate;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="active", type="boolean", nullable=false)
      */
-    private $active = '1';
+    private $active;
 
     /**
      * @var integer

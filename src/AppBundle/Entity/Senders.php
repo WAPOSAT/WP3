@@ -249,5 +249,4 @@ class Senders
     {
         return $this->idSender;
     }
-
 }

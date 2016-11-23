@@ -22,14 +22,14 @@ class MonitoringEvents
     private $idMonitoringEvent;
 
     /**
-     * @var \AppBundle\Entity\Measurement
+     * @var \AppBundle\Entity\BlockSensors
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Measurement")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BlockSensors")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_measurement", referencedColumnName="id_measurement")
+     *   @ORM\JoinColumn(name="id_block_sensor", referencedColumnName="id")
      * })
      */
-    private $idMeasurement;
+    private $idBlockSensor;
 
     /**
      * @var \AppBundle\Entity\EventType
@@ -42,14 +42,14 @@ class MonitoringEvents
     private $idEventType;
 
     /**
-     * @var \AppBundle\Entity\BlockSensors
+     * @var \AppBundle\Entity\Measurement
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BlockSensors")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Measurement")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_block_sensor", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="id_measurement", referencedColumnName="id_measurement")
      * })
      */
-    private $idBlockSensor;
+    private $idMeasurement;
 
 
 
@@ -64,27 +64,27 @@ class MonitoringEvents
     }
 
     /**
-     * Set idMeasurement
+     * Set idBlockSensor
      *
-     * @param \AppBundle\Entity\Measurement $idMeasurement
+     * @param \AppBundle\Entity\BlockSensors $idBlockSensor
      *
      * @return MonitoringEvents
      */
-    public function setIdMeasurement(\AppBundle\Entity\Measurement $idMeasurement = null)
+    public function setIdBlockSensor(\AppBundle\Entity\BlockSensors $idBlockSensor = null)
     {
-        $this->idMeasurement = $idMeasurement;
+        $this->idBlockSensor = $idBlockSensor;
 
         return $this;
     }
 
     /**
-     * Get idMeasurement
+     * Get idBlockSensor
      *
-     * @return \AppBundle\Entity\Measurement
+     * @return \AppBundle\Entity\BlockSensors
      */
-    public function getIdMeasurement()
+    public function getIdBlockSensor()
     {
-        return $this->idMeasurement;
+        return $this->idBlockSensor;
     }
 
     /**
@@ -112,26 +112,26 @@ class MonitoringEvents
     }
 
     /**
-     * Set idBlockSensor
+     * Set idMeasurement
      *
-     * @param \AppBundle\Entity\BlockSensors $idBlockSensor
+     * @param \AppBundle\Entity\Measurement $idMeasurement
      *
      * @return MonitoringEvents
      */
-    public function setIdBlockSensor(\AppBundle\Entity\BlockSensors $idBlockSensor = null)
+    public function setIdMeasurement(\AppBundle\Entity\Measurement $idMeasurement = null)
     {
-        $this->idBlockSensor = $idBlockSensor;
+        $this->idMeasurement = $idMeasurement;
 
         return $this;
     }
 
     /**
-     * Get idBlockSensor
+     * Get idMeasurement
      *
-     * @return \AppBundle\Entity\BlockSensors
+     * @return \AppBundle\Entity\Measurement
      */
-    public function getIdBlockSensor()
+    public function getIdMeasurement()
     {
-        return $this->idBlockSensor;
+        return $this->idMeasurement;
     }
 }

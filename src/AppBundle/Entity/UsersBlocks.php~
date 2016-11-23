@@ -50,16 +50,6 @@ class UsersBlocks
     private $idUserBlock;
 
     /**
-     * @var \AppBundle\Entity\Users
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Users")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_user", referencedColumnName="id")
-     * })
-     */
-    private $idUser;
-
-    /**
      * @var \AppBundle\Entity\Blocks
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Blocks")
@@ -68,6 +58,16 @@ class UsersBlocks
      * })
      */
     private $idBlock;
+
+    /**
+     * @var \AppBundle\Entity\Users
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_user", referencedColumnName="id")
+     * })
+     */
+    private $idUser;
 
 
 }

@@ -17,14 +17,21 @@ class NotificationsAlert
      *
      * @ORM\Column(name="showed", type="boolean", nullable=false)
      */
-    private $showed = '0';
+    private $showed;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="viewed", type="boolean", nullable=false)
      */
-    private $viewed = '0';
+    private $viewed;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="by_email", type="boolean", nullable=false)
+     */
+    private $byEmail;
 
     /**
      * @var integer
@@ -103,6 +110,30 @@ class NotificationsAlert
     public function getViewed()
     {
         return $this->viewed;
+    }
+
+    /**
+     * Set byEmail
+     *
+     * @param integer $byEmail
+     *
+     * @return NotificationsAlert
+     */
+    public function setByEmail($byEmail)
+    {
+        $this->byEmail = $byEmail;
+
+        return $this;
+    }
+
+    /**
+     * Get byEmail
+     *
+     * @return integer
+     */
+    public function getByEmail()
+    {
+        return $this->byEmail;
     }
 
     /**

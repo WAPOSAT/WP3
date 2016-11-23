@@ -21,12 +21,20 @@
 			$this->entityManager = $entityManager;
 		}
 
-		public function fireNotifierEvents($measurements)
+		public function fireNotifierEvents($measurements, $lastMeasureEvent, $minTime4Not)
 		{
+
 			$em = $this->entityManager;
 
 			$dql = "SELECT bs FROM AppBundle:BlockSensors bs WHERE bs.idSensor = ".$measurements->getIdSensor()->getIdSensor();
 			$b_sensors = $em->createQuery($dql)->getResult();
+
+			$diff = date_diff($measurements->getDate(), $lastMeasureEvent->getIdMeasurement()->getDate());
+			$minutes = $diff->days * 24 * 60;
+			$minutes += $diff->h * 60;
+			$minutes += $diff->i;
+
+			$ind = 0;
 
 			$notifications = array();
 
@@ -49,14 +57,25 @@
 					foreach ($user_block as $ub) 
 					{
 						$notf = new NotificationsAlert();
+
 						$notf->setShowed(0);
 						$notf->setViewed(0);
 						$notf->setIdMonitoringEvent($event);
 						$notf->setIdUser($ub->getIdUser());
-						$notifications[] = $notf;
-						//$a=$notf;
+						
+						if ($minutes > $minTime4Not) 
+						{	
+							$notf->setByEmail(1);
+							$notifications[] = $notf;
+							$ind = 1;
+							
+						}
+						else{
+							$notf->setByEmail(0);
+						}
+
 						$em->persist($notf);
-						//return $a;
+
 					}
 
 					$em->flush();
@@ -78,18 +97,76 @@
 					foreach ($user_block as $ub) 
 					{
 						$notf = new NotificationsAlert();
+
 						$notf->setShowed(0);
 						$notf->setViewed(0);
 						$notf->setIdMonitoringEvent($event);
 						$notf->setIdUser($ub->getIdUser());
+
+						if ($minutes > $minTime4Not) 
+						{	
+							$notf->setByEmail(1);
+							$notifications[] = $notf;
+							$ind = 1;
+							
+						}
+						else
+						{
+							$notf->setByEmail(0);
+						}
+
+
 						$em->persist($notf);
-						$notifications[] = $notf;
+						
 					}
 
 					$em->flush();
 				}
+				else
+				{
+					$ind=2;
+				}
 				
 			}
+
+
+
+			if($ind == 1)
+			{
+
+				//Get no notified
+				$dql = "SELECT n FROM AppBundle:NotificationsAlert n WHERE n.byEmail = 0";
+				$pastNot = $em->createQuery($dql)->getResult();
+				$em->flush();
+
+				foreach ($pastNot as $not) 
+				{
+					$not->setByEmail(1);
+				}
+
+				$em->flush();
+
+				$notifications = array_merge($notifications, $pastNot);
+
+			}
+			elseif($ind == 2)
+			{
+				
+				//Get no notified
+				$dql = "SELECT n FROM AppBundle:NotificationsAlert n WHERE n.byEmail = 0";
+				$pastNot = $em->createQuery($dql)->getResult();
+				$em->flush();
+
+				foreach ($pastNot as $not) 
+				{
+					$not->setByEmail(1);
+				}
+
+				$em->flush();
+
+				$notifications = $pastNot;
+			}
+
 
 			return $notifications;
 
