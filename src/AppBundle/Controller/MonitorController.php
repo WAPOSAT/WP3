@@ -30,7 +30,7 @@
 			$sender = $em->createQuery($dql)->getSingleResult();
 
 			$time = new \DateTime();
-			$minTime4Not = 1;
+			$minTime4Not = 3;
 
 			if ($sender)  
 			{
