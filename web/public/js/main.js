@@ -810,13 +810,33 @@ function Export(){
   cadena += '</div>';
   cadena += '<div id="Reporte" class="col-md-12" > </div>';
 
-
   $("section").html(cadena);  
 }
 
 
 var dataProbe;
 function chargeValuesDate(){
+  var grafica='';
+ /* grafica +='<div class="panel panel-warning"><div class="panel-heading"><h3 class="panel-title">Panel title</h3></div></div>';
+  grafica +='<div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title">Panel title</h3></div><div class="panel-body">Panel content</div></div>';*/
+  grafica +='<div class="graficas">'
+  grafica +=' <div class="panel panel-success mg-3 mgt-200px"><div class="panel-heading"><h3 class="panel-title">Panel title</h3></div>'
+  grafica +='   <div class="panel-body"><h3 class="title-sensor">PH</h3>'
+  grafica +=    '<div class="col-sm-9"><div class="grafica-cuadro"></div></div>'
+  grafica +=    '<div class="col-sm-3"><div class="cuadro-info text-center">'
+  grafica +=     '<p><span>Máximo:</span>19.8</p><p><span>Medio:</span>17.8</p><p><span>Mínimo:</span>14.5</p></div>'
+  grafica +=    ' <div class="tendencia"><div class="glyphicon glyphicon-download"></div><div class="porcentaje"><p>Tendencia</p><p>3.4%</p></div></div></div>'
+  grafica +=   '</div>'
+  grafica +=' </div>';
+  grafica +='</div>'
+
+/*  grafica +='<div class="accordion accordion--simple">'
+  grafica +=' <div class="accordion__item">'
+  grafica +=  '<div class="accordion__title"><span>¿Debo calificar al conductor?<span></div>'
+  grafica +=  '<div class="accordion__content">Nuestra meta es construir una comunidad de usuarios</div>'                    
+  grafica +='</div>'*/
+  
+
 
   $parametros = {
     'date1' : document.getElementById("Date1").value+" 00:00:00",
@@ -832,7 +852,10 @@ function chargeValuesDate(){
       dataProbe = data;
     }
   });
+
+  $("section").append(grafica); 
 }
+
 
 
 /*
