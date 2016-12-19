@@ -37,18 +37,22 @@
 				$dql = "SELECT e FROM AppBundle:MonitoringEvents e JOIN e.idMeasurement m WHERE m.idSensor = '".$measurement->getIdSensor()->getIdSensor()."' AND e.idBlockSensor = '".$bs->getId()."' ORDER BY e.idMonitoringEvent DESC";
 				$lastMeasureEvent = $em->createQuery($dql)->setMaxResults(1)->getResult();
 
+				$minutes = 0;
 				if($lastMeasureEvent == null)
 				{
-					continue;
+					$minutes = $minTime4Not+1;
 				}
+				else 
+				{
+					$lastMeasureEvent = $lastMeasureEvent[0];
 
-				$lastMeasureEvent = $lastMeasureEvent[0];
-
-				//Minutes since the last event
-				$diff = date_diff($measurement->getDate(), $lastMeasureEvent->getIdMeasurement()->getDate());
-				$minutes = $diff->days * 24 * 60;
-				$minutes += $diff->h * 60;
-				$minutes += $diff->i;
+					//Minutes since the last event
+					$diff = date_diff($measurement->getDate(), $lastMeasureEvent->getIdMeasurement()->getDate());
+					$minutes = $diff->days * 24 * 60;
+					$minutes += $diff->h * 60;
+					$minutes += $diff->i;
+				}
+				
 
 				//Send all not notified 
 				if ($minutes > $minTime4Not) 
@@ -81,7 +85,7 @@
 				{
 					//Send or not by email
 					$sendEmail=0;
-					if ($minutes > $minTime4Not) $sendEEmail = 1;
+					if ($minutes > $minTime4Not) $sendEmail = 1;
 		
 					//Get Event type
 					$dql = "SELECT et FROM AppBundle:EventType et WHERE et.alertType = '".$alertType."'";
