@@ -9,7 +9,17 @@ body {
 overflow-x: hidden;
 }
 
+.danger{
+  color: #a94442;
+}
 
+.warning{
+  color: #f0ad4e;
+}
+
+.primary{
+  color: #337ab7;
+}
 .mg-3{
   margin: 3%;
 }
