@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * EventType
  *
- * @ORM\Table(name="Event_Type")
+ * @ORM\Table(name="event_type")
  * @ORM\Entity
  */
 class EventType
@@ -47,7 +47,7 @@ class EventType
     public function setEventName($eventName)
     {
         $this->eventName = $eventName;
-
+    
         return $this;
     }
 
@@ -71,7 +71,7 @@ class EventType
     public function setAlertType($alertType)
     {
         $this->alertType = $alertType;
-
+    
         return $this;
     }
 

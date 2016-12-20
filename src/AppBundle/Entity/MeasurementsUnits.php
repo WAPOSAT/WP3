@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * MeasurementsUnits
  *
- * @ORM\Table(name="Measurements_units")
+ * @ORM\Table(name="measurements_units")
  * @ORM\Entity
  */
 class MeasurementsUnits
@@ -40,7 +40,7 @@ class MeasurementsUnits
     public function setCode($code)
     {
         $this->code = $code;
-
+    
         return $this;
     }
 

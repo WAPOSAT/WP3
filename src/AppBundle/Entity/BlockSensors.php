@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * BlockSensors
  *
- * @ORM\Table(name="Block_Sensors", indexes={@ORM\Index(name="id_block", columns={"id_block"}), @ORM\Index(name="id_sensor", columns={"id_sensor"})})
+ * @ORM\Table(name="block_sensors", indexes={@ORM\Index(name="id_block", columns={"id_block"}), @ORM\Index(name="id_sensor", columns={"id_sensor"})})
  * @ORM\Entity
  */
 class BlockSensors
@@ -88,7 +88,7 @@ class BlockSensors
     public function setUpDangerLimit($upDangerLimit)
     {
         $this->upDangerLimit = $upDangerLimit;
-
+    
         return $this;
     }
 
@@ -112,7 +112,7 @@ class BlockSensors
     public function setUpRiskLimit($upRiskLimit)
     {
         $this->upRiskLimit = $upRiskLimit;
-
+    
         return $this;
     }
 
@@ -136,7 +136,7 @@ class BlockSensors
     public function setDownRiskLimit($downRiskLimit)
     {
         $this->downRiskLimit = $downRiskLimit;
-
+    
         return $this;
     }
 
@@ -160,7 +160,7 @@ class BlockSensors
     public function setDownDangerLimit($downDangerLimit)
     {
         $this->downDangerLimit = $downDangerLimit;
-
+    
         return $this;
     }
 
@@ -184,7 +184,7 @@ class BlockSensors
     public function setActive($active)
     {
         $this->active = $active;
-
+    
         return $this;
     }
 
@@ -218,7 +218,7 @@ class BlockSensors
     public function setIdBlock(\AppBundle\Entity\Blocks $idBlock = null)
     {
         $this->idBlock = $idBlock;
-
+    
         return $this;
     }
 
@@ -242,7 +242,7 @@ class BlockSensors
     public function setIdSensor(\AppBundle\Entity\Sensors $idSensor = null)
     {
         $this->idSensor = $idSensor;
-
+    
         return $this;
     }
 

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * BlockType
  *
- * @ORM\Table(name="Block_Type")
+ * @ORM\Table(name="block_type")
  * @ORM\Entity
  */
 class BlockType
@@ -47,7 +47,7 @@ class BlockType
     public function setBlockType($blockType)
     {
         $this->blockType = $blockType;
-
+    
         return $this;
     }
 
@@ -71,7 +71,7 @@ class BlockType
     public function setTypeName($typeName)
     {
         $this->typeName = $typeName;
-
+    
         return $this;
     }
 

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * ComponentModels
  *
- * @ORM\Table(name="Component_Models")
+ * @ORM\Table(name="component_models")
  * @ORM\Entity
  */
 class ComponentModels

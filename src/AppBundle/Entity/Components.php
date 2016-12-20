@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Components
  *
- * @ORM\Table(name="Components", indexes={@ORM\Index(name="id_component_model", columns={"id_component_model"}), @ORM\Index(name="id_sender", columns={"id_sender"})})
+ * @ORM\Table(name="components", indexes={@ORM\Index(name="id_component_model", columns={"id_component_model"}), @ORM\Index(name="id_sender", columns={"id_sender"})})
  * @ORM\Entity
  */
 class Components
@@ -81,7 +81,7 @@ class Components
     public function setSerie($serie)
     {
         $this->serie = $serie;
-
+    
         return $this;
     }
 
@@ -105,7 +105,7 @@ class Components
     public function setCodename($codename)
     {
         $this->codename = $codename;
-
+    
         return $this;
     }
 
@@ -129,7 +129,7 @@ class Components
     public function setConnectionDate($connectionDate)
     {
         $this->connectionDate = $connectionDate;
-
+    
         return $this;
     }
 
@@ -153,7 +153,7 @@ class Components
     public function setActive($active)
     {
         $this->active = $active;
-
+    
         return $this;
     }
 
@@ -187,7 +187,7 @@ class Components
     public function setIdComponentModel(\AppBundle\Entity\ComponentModels $idComponentModel = null)
     {
         $this->idComponentModel = $idComponentModel;
-
+    
         return $this;
     }
 
@@ -211,7 +211,7 @@ class Components
     public function setIdSender(\AppBundle\Entity\Senders $idSender = null)
     {
         $this->idSender = $idSender;
-
+    
         return $this;
     }
 

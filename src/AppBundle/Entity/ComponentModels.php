@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * ComponentModels
  *
- * @ORM\Table(name="Component_Models")
+ * @ORM\Table(name="component_models")
  * @ORM\Entity
  */
 class ComponentModels
@@ -47,7 +47,7 @@ class ComponentModels
     public function setComponentCode($componentCode)
     {
         $this->componentCode = $componentCode;
-
+    
         return $this;
     }
 
@@ -71,7 +71,7 @@ class ComponentModels
     public function setDescription($description)
     {
         $this->description = $description;
-
+    
         return $this;
     }
 

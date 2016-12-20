@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Senders
  *
- * @ORM\Table(name="Senders")
+ * @ORM\Table(name="senders")
  * @ORM\Entity
  */
 class Senders

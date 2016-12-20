@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Senders
  *
- * @ORM\Table(name="Senders")
+ * @ORM\Table(name="senders")
  * @ORM\Entity
  */
 class Senders
@@ -82,7 +82,7 @@ class Senders
     public function setIdSenderType($idSenderType)
     {
         $this->idSenderType = $idSenderType;
-
+    
         return $this;
     }
 
@@ -106,7 +106,7 @@ class Senders
     public function setMac($mac)
     {
         $this->mac = $mac;
-
+    
         return $this;
     }
 
@@ -130,7 +130,7 @@ class Senders
     public function setTmp($tmp)
     {
         $this->tmp = $tmp;
-
+    
         return $this;
     }
 
@@ -154,7 +154,7 @@ class Senders
     public function setPtmp($ptmp)
     {
         $this->ptmp = $ptmp;
-
+    
         return $this;
     }
 
@@ -178,7 +178,7 @@ class Senders
     public function setDescription($description)
     {
         $this->description = $description;
-
+    
         return $this;
     }
 
@@ -202,7 +202,7 @@ class Senders
     public function setCreationDate($creationDate)
     {
         $this->creationDate = $creationDate;
-
+    
         return $this;
     }
 
@@ -226,7 +226,7 @@ class Senders
     public function setActive($active)
     {
         $this->active = $active;
-
+    
         return $this;
     }
 

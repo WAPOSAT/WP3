@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * ScheduledReports
  *
- * @ORM\Table(name="Scheduled_Reports", indexes={@ORM\Index(name="id_user", columns={"id_user"})})
+ * @ORM\Table(name="scheduled_reports", indexes={@ORM\Index(name="id_user", columns={"id_user"})})
  * @ORM\Entity
  */
 class ScheduledReports
@@ -78,7 +78,7 @@ class ScheduledReports
     public function setSchedule($schedule)
     {
         $this->schedule = $schedule;
-
+    
         return $this;
     }
 
@@ -102,7 +102,7 @@ class ScheduledReports
     public function setTemplate($template)
     {
         $this->template = $template;
-
+    
         return $this;
     }
 
@@ -126,7 +126,7 @@ class ScheduledReports
     public function setSubject($subject)
     {
         $this->subject = $subject;
-
+    
         return $this;
     }
 
@@ -150,7 +150,7 @@ class ScheduledReports
     public function setCreationDate($creationDate)
     {
         $this->creationDate = $creationDate;
-
+    
         return $this;
     }
 
@@ -174,7 +174,7 @@ class ScheduledReports
     public function setActive($active)
     {
         $this->active = $active;
-
+    
         return $this;
     }
 
@@ -208,7 +208,7 @@ class ScheduledReports
     public function setIdUser(\AppBundle\Entity\Users $idUser = null)
     {
         $this->idUser = $idUser;
-
+    
         return $this;
     }
 

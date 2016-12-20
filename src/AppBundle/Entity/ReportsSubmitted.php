@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * ReportsSubmitted
  *
- * @ORM\Table(name="Reports_Submitted", indexes={@ORM\Index(name="id_user", columns={"id_user"}), @ORM\Index(name="id_scheduled_report", columns={"id_scheduled_report"}), @ORM\Index(name="id_sent_email", columns={"id_sent_email"})})
+ * @ORM\Table(name="reports_submitted", indexes={@ORM\Index(name="id_user", columns={"id_user"}), @ORM\Index(name="id_scheduled_report", columns={"id_scheduled_report"}), @ORM\Index(name="id_sent_email", columns={"id_sent_email"})})
  * @ORM\Entity
  */
 class ReportsSubmitted
@@ -84,7 +84,7 @@ class ReportsSubmitted
     public function setSinceDate($sinceDate)
     {
         $this->sinceDate = $sinceDate;
-
+    
         return $this;
     }
 
@@ -108,7 +108,7 @@ class ReportsSubmitted
     public function setUntilDate($untilDate)
     {
         $this->untilDate = $untilDate;
-
+    
         return $this;
     }
 
@@ -132,7 +132,7 @@ class ReportsSubmitted
     public function setMessageBody($messageBody)
     {
         $this->messageBody = $messageBody;
-
+    
         return $this;
     }
 
@@ -166,7 +166,7 @@ class ReportsSubmitted
     public function setIdScheduledReport(\AppBundle\Entity\ScheduledReports $idScheduledReport = null)
     {
         $this->idScheduledReport = $idScheduledReport;
-
+    
         return $this;
     }
 
@@ -190,7 +190,7 @@ class ReportsSubmitted
     public function setIdUser(\AppBundle\Entity\Users $idUser = null)
     {
         $this->idUser = $idUser;
-
+    
         return $this;
     }
 
@@ -214,7 +214,7 @@ class ReportsSubmitted
     public function setIdSentEmail(\AppBundle\Entity\SentEmails $idSentEmail = null)
     {
         $this->idSentEmail = $idSentEmail;
-
+    
         return $this;
     }
 

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * SensorModels
  *
- * @ORM\Table(name="Sensor_Models", indexes={@ORM\Index(name="id_parameter", columns={"id_parameter"}), @ORM\Index(name="id_measurement_unit", columns={"id_measurement_unit"})})
+ * @ORM\Table(name="sensor_models", indexes={@ORM\Index(name="id_parameter", columns={"id_parameter"}), @ORM\Index(name="id_measurement_unit", columns={"id_measurement_unit"})})
  * @ORM\Entity
  */
 class SensorModels
@@ -67,7 +67,7 @@ class SensorModels
     public function setMaxLimit($maxLimit)
     {
         $this->maxLimit = $maxLimit;
-
+    
         return $this;
     }
 
@@ -91,7 +91,7 @@ class SensorModels
     public function setMinLimit($minLimit)
     {
         $this->minLimit = $minLimit;
-
+    
         return $this;
     }
 
@@ -125,7 +125,7 @@ class SensorModels
     public function setIdParameter(\AppBundle\Entity\Parameters $idParameter = null)
     {
         $this->idParameter = $idParameter;
-
+    
         return $this;
     }
 
@@ -149,7 +149,7 @@ class SensorModels
     public function setIdMeasurementUnit(\AppBundle\Entity\MeasurementsUnits $idMeasurementUnit = null)
     {
         $this->idMeasurementUnit = $idMeasurementUnit;
-
+    
         return $this;
     }
 
