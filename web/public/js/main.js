@@ -819,11 +819,11 @@ function chargeValuesDate(){
   
 
   $parametros = {
-/*    'date1' : document.getElementById("Date1").value+" 00:00:00",
-    'date2' : document.getElementById("Date2").value+" 23:59:59",*/
+    'date1' : document.getElementById("Date1").value+" 00:00:00",
+    'date2' : document.getElementById("Date2").value+" 23:59:59",
 
-    'date1' : "2016-09-14" +" 00:00:00",
-    'date2' : "2016-09-14" +" 23:59:59",
+/*    'date1' : "2016-09-14" +" 00:00:00",
+    'date2' : "2016-09-14" +" 23:59:59",*/
   };
   $url = "history/form";
   $.ajax({
