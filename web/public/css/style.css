@@ -28,6 +28,17 @@ overflow-x: hidden;
   margin-top: 220px;
 }
 
+.bold{
+  font-weight: 700;
+}
+
+
+.half{
+  width: 50%;
+  float: left;
+  text-align: end;
+}
+
 
 #bloques{
     background-color: #222222;
@@ -642,11 +653,11 @@ vertical-align: top;
   height: 200px;
   border: 1px solid #ccc;
   padding: 28px;
+  font-size: 19px;
 }
 
 .graficas .cuadro-info p{
-  font-weight: 700;
-  font-size: 24px;
+  margin-top: 21px;
 }
 
 .graficas .cuadro-info p span{

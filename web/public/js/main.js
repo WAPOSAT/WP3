@@ -819,10 +819,10 @@ function chargeValuesDate(){
   
 
   $parametros = {
-    /*'date1' : document.getElementById("Date1").value+" 00:00:00",
+/*    'date1' : document.getElementById("Date1").value+" 00:00:00",
     'date2' : document.getElementById("Date2").value+" 23:59:59",*/
 
-    'date1' : "2016-09-08" +" 00:00:00",
+    'date1' : "2016-09-14" +" 00:00:00",
     'date2' : "2016-09-14" +" 23:59:59",
   };
   $url = "history/form";
@@ -841,33 +841,40 @@ function chargeValuesDate(){
             if(val.Tendencia==0) flecha="";
             else if (val.Tendencia>0) flecha="glyphicon-upload";
             else if (val.Tendencia<0) flecha="glyphicon-download";
-          
-          
+              
           grafica +='   <div class="panel-body"><h3 class="title-sensor">'+val.Name+'</h3>'
           grafica +=    '<div class="col-sm-9"><div class="grafica-cuadro"></div></div>'
           grafica +=    '<div class="col-sm-3"><div class="cuadro-info text-center">'
-          grafica +=     '<p><span>Máximo:</span>'+val.MaxValue+'</p><p><span>Medio:</span>'+val.MeanValue+'</p><p><span>Mínimo:</span>'+val.MinValue+'</p></div>'
+          grafica +=     '<p><div class="half right">Máximo:</div><div class="bold">'+val.MaxValue+'</div></p><p><div class="half right">Medio:</div><div class="bold">'+val.MeanValue+'</div></p><p><div class="half right">Mínimo:</div><div class="bold">'+val.MinValue+'</div></p></div>'
           grafica +=    ' <div class="tendencia"><div class="glyphicon '+flecha+'"></div><div class="porcentaje"><p>Tendencia</p><p>'+val.Tendencia+' %</p></div></div></div>'
           grafica +=   '</div>'
-          
-          
+
             });
           grafica +=' </div>';
           
-
           });
           grafica +='</div>'
           $("section").append(grafica);
           }
          
+      }); 
 
-      /*var table='';
+/*  $.ajax({
+    type: "GET",
+    url: "history/events",
+    data: $parametros,
+    dataType : "json",
+    success: function(data){
+
+      var table='';
           table += '<div class="panel panel-danger mg-3"><div class="panel-heading"><h3 class="panel-title">Reporte de alertas en estado crítico <span>(1)</span></h3></div>'
           table +=   '<div class="panel-body"><table class="table">'
           table +=    '<thead class="danger"><tr><th>Punto de monitoreo</th><th>Parámetro</th><th>Fecha</th><th>Hora</th><th>Incidente</th></tr></thead>'
           table +=    '<tbody><tr><td>PM-101</td><td>Cloro residual</td><td>24/05/16</td><td>10:00am</td><td>Peligro por ascenso en LMP</td></tr></tbody></table></div></div>'
-      $("section").append(table);*/ 
-      }); 
+      $("section").append(table); 
+        }
+     }); */
+      
 }
 
 
