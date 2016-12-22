@@ -51,6 +51,7 @@
 					$minutes = $diff->days * 24 * 60;
 					$minutes += $diff->h * 60;
 					$minutes += $diff->i;
+					$minutes += ($diff->s)/60;
 				}
 				
 
