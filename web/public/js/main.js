@@ -789,6 +789,21 @@ function Export(){
   clearInterval(actualizarEstacion);
   clearInterval(actualizarParametro);
 
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth()+1; //January is 0!
+  var yyyy = today.getFullYear();
+
+  if(dd<10) {
+      dd='0'+dd
+  } 
+
+  if(mm<10) {
+      mm='0'+mm
+  } 
+
+  today = yyyy+'-'+mm+'-'+dd;
+
   var cadena = '';
   cadena += '<div id="CuadroFechas" class="col-md-12" >';
   cadena += ' <div class="col-md-6 col-sm-6 col-xs-12" >';
@@ -810,7 +825,9 @@ function Export(){
   cadena += '</div>';
   cadena += '<div id="Reporte" class="col-md-12" > </div>';
 
-  $("section").html(cadena);  
+  $("section").html(cadena);
+  $("#Date1").val(today);
+  $("#Date2").val(today);
 }
 
 
@@ -822,7 +839,7 @@ function chargeValuesDate(){
     'date1' : document.getElementById("Date1").value+" 00:00:00",
     'date2' : document.getElementById("Date2").value+" 23:59:59",
 
-/*    'date1' : "2016-09-14" +" 00:00:00",
+/*    'date1' : "2016-09-08" +" 00:00:00",
     'date2' : "2016-09-14" +" 23:59:59",*/
   };
   $url = "history/form";
@@ -832,32 +849,144 @@ function chargeValuesDate(){
     data: $parametros,
     dataType : "json",
     success: function(data){
+      $("#Reporte").html("Las fechas del reporte son: "+$parametros.date1+" y "+$parametros.date2);
       var grafica='';
       grafica +='<div class="graficas">'
       $.each(data.ProcessBlock[0].StationBlock, function(key, value) {
           grafica +=' <div class="panel panel-success mg-3 mgt-200px"><div class="panel-heading"><h3 class="panel-title">'+value.Name+'</h3></div>'
           $.each(value.Sensor, function(k, val) {
 
+            if(val.MaxValue==0 && val.MeanValue==0 && val.MinValue==0){}
+            else{ 
             if(val.Tendencia==0) flecha="";
             else if (val.Tendencia>0) flecha="glyphicon-upload";
             else if (val.Tendencia<0) flecha="glyphicon-download";
               
           grafica +='   <div class="panel-body"><h3 class="title-sensor">'+val.Name+'</h3>'
-          grafica +=    '<div class="col-sm-9"><div class="grafica-cuadro"></div></div>'
+          grafica +=    '<div class="col-sm-9"><div id="'+value.id+''+val.id+'" style="width:100%;height:300px;margin:0 auto;border:1px solid #ccc;"></div></div>'
           grafica +=    '<div class="col-sm-3"><div class="cuadro-info text-center">'
           grafica +=     '<p><div class="half right">Máximo:</div><div class="bold">'+val.MaxValue+'</div></p><p><div class="half right">Medio:</div><div class="bold">'+val.MeanValue+'</div></p><p><div class="half right">Mínimo:</div><div class="bold">'+val.MinValue+'</div></p></div>'
           grafica +=    ' <div class="tendencia"><div class="glyphicon '+flecha+'"></div><div class="porcentaje"><p>Tendencia</p><p>'+val.Tendencia+' %</p></div></div></div>'
           grafica +=   '</div>'
-
+              }
+          
             });
           grafica +=' </div>';
           
           });
           grafica +='</div>'
           $("section").append(grafica);
+
+          $.each(data.ProcessBlock[0].StationBlock, function(key, value) {
+          
+            $.each(value.Sensor, function(k, val) {
+                  if(val.MaxValue==0 && val.MeanValue==0 && val.MinValue==0){}
+                  else{
+                  // Se establecen las caracteristicas de de la grafica en la vista SCREEN 4
+                  var OptionChart = {
+                    // El selecionador de periodos
+                    rangeSelector: {
+                      selected: 4,
+                      buttons: [{
+                        type: 'hour',
+                        count: 24,
+                        text: '24h'},
+                      {
+                        type: 'day',
+                        count: 7,
+                        text: '1w'},
+                      {
+                        type: 'month',
+                        count: 1,
+                        text: '1m'},
+                      {
+                        type: 'year',
+                        count: 1,
+                        text: '1y'},
+                      {
+                        type: 'all',
+                        text: 'All'}],
+                      inputEnabled: false,
+                    },
+                    // se configura el scrollbar inferior
+                    scrollbar:{
+                      enabled: false,
+                    },
+                    // se configura del navegador
+                    navigator: {
+                        enabled: false
+                    },
+
+                    title: {
+                        text: val.Unit+" vs Tiempo"
+                    },
+
+                    // Se definen las lineas adicionales para indicar limites
+                    yAxis: {
+                        title: {
+                            text: "Nivel de "+ val.Name
+                        },
+                        plotLines: [{
+                            value: val.MinValue,
+                            color: 'green',
+                            dashStyle: 'shortdash',
+                            width: 2,
+                            label: {
+                                text: 'Punto Mínimo'
+                            }
+                        }, {
+                            value: val.MeanValue,
+                            color: 'blue',
+                            dashStyle: 'shortdash',
+                            width: 2,
+                            label: {
+                                text: 'Media Total'
+                            }
+                        }, {
+                            value: val.MaxValue,
+                            color: 'red',
+                            dashStyle: 'shortdash',
+                            width: 2,
+                            label: {
+                                text: 'Punto Máximo'
+                            }
+                        }]
+                    },
+
+/*                    xAxis: {
+                        type: 'datetime',
+                        dateTimeLabelFormats: {
+                            day: '%e of %b'
+                        }
+                    },*/
+                    // configuracion de la posicion de la grafica
+                    credits: {
+                        position: {
+                            align: 'center',
+                            verticalAlign: 'bottom'
+                        }
+                    },
+                    // Se ingresan los datos obtenidos
+                    series: [{
+                        name: val.Name,
+                        data: val.Data.Value,
+                        tooltip: {
+                            valueDecimals: 2
+                        }
+                    }]
+                  }; // Fin option charts
+
+                  Highcharts.stockChart(''+value.id+''+val.id,OptionChart);
+                  }
+               }); 
+            }); 
           }
          
       }); 
+
+
+
+      
 
 /*  $.ajax({
     type: "GET",
