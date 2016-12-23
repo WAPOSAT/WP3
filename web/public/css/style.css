@@ -28,6 +28,10 @@ overflow-x: hidden;
   margin-top: 220px;
 }
 
+.mgt-70px{
+  margin-top: 70px;
+}
+
 .bold{
   font-weight: 700;
 }
@@ -39,11 +43,15 @@ overflow-x: hidden;
   text-align: end;
 }
 
-#Reporte{
+.title-reporte{
   margin-top: 21px;
   text-align: center;
   font-size: 21px;
   font-weight: 700;
+}
+
+#Reporte{
+  
 }
 
 
@@ -84,7 +92,7 @@ h6 {text-transform: uppercase;font-family: sans-serif;font-weight:bold;color:#FF
 
   section{
  -webkit-overflow-scrolling: touch;
-border: solid 1px #383838;
+/*border: solid 1px #383838;*/
 padding-top: 0;
 padding-left: 0;
 padding-bottom: 20px;

@@ -17,7 +17,6 @@ $(document).ready(function(){
   // esta es ingresada por el controlador desde el codigo twig    
   LoadNav(vista);
   $("footer").html('Copyright &copy; Waposat 2016');
-
 });
 
 
@@ -823,7 +822,7 @@ function Export(){
   cadena += '   <button type="button" class="btn btn-primary"><i class="fa fa-print" aria-hidden="true"></i> Imprimir</button>';
   cadena += ' </div>';
   cadena += '</div>';
-  cadena += '<div id="Reporte" class="col-md-12" > </div>';
+  cadena += '<div id="Reporte" class="col-md-12" ></h3> </div>';
 
   $("section").html(cadena);
   $("#Date1").val(today);
@@ -834,7 +833,8 @@ function Export(){
 var dataProbe;
 function chargeValuesDate(){
   
-
+  $("#Reporte").html("<h3 class='title-reporte'>");
+  $("footer").hide();
   $parametros = {
     'date1' : document.getElementById("Date1").value+" 00:00:00",
     'date2' : document.getElementById("Date2").value+" 23:59:59",
@@ -842,6 +842,9 @@ function chargeValuesDate(){
 /*    'date1' : "2016-09-08" +" 00:00:00",
     'date2' : "2016-09-14" +" 23:59:59",*/
   };
+
+  var date1=$("#Date1").val();
+  var date2=$("#Date2").val();
   $url = "history/form";
   $.ajax({
     type: "GET",
@@ -849,11 +852,11 @@ function chargeValuesDate(){
     data: $parametros,
     dataType : "json",
     success: function(data){
-      $("#Reporte").html("Las fechas del reporte son: "+$parametros.date1+" y "+$parametros.date2);
+      $(".title-reporte").html("Las fechas del reporte son del: "+date1+" hasta "+date2);
       var grafica='';
       grafica +='<div class="graficas">'
       $.each(data.ProcessBlock[0].StationBlock, function(key, value) {
-          grafica +=' <div class="panel panel-success mg-3 mgt-200px"><div class="panel-heading"><h3 class="panel-title">'+value.Name+'</h3></div>'
+          grafica +=' <div class="panel panel-success mg-3 mgt-70px"><div class="panel-heading"><h3 class="panel-title">'+value.Name+'</h3></div>'
           $.each(value.Sensor, function(k, val) {
 
             if(val.MaxValue==0 && val.MeanValue==0 && val.MinValue==0){}
@@ -875,7 +878,7 @@ function chargeValuesDate(){
           
           });
           grafica +='</div>'
-          $("section").append(grafica);
+          $("#Reporte").append(grafica);
 
           $.each(data.ProcessBlock[0].StationBlock, function(key, value) {
           
@@ -988,22 +991,42 @@ function chargeValuesDate(){
 
       
 
-/*  $.ajax({
+  $.ajax({
     type: "GET",
     url: "history/events",
     data: $parametros,
     dataType : "json",
     success: function(data){
 
-      var table='';
-          table += '<div class="panel panel-danger mg-3"><div class="panel-heading"><h3 class="panel-title">Reporte de alertas en estado crítico <span>(1)</span></h3></div>'
-          table +=   '<div class="panel-body"><table class="table">'
-          table +=    '<thead class="danger"><tr><th>Punto de monitoreo</th><th>Parámetro</th><th>Fecha</th><th>Hora</th><th>Incidente</th></tr></thead>'
-          table +=    '<tbody><tr><td>PM-101</td><td>Cloro residual</td><td>24/05/16</td><td>10:00am</td><td>Peligro por ascenso en LMP</td></tr></tbody></table></div></div>'
-      $("section").append(table); 
+      if(data.LongDanger!=0){
+
+      var tdanger='';
+          tdanger += '<div class="panel panel-danger mg-3"><div class="panel-heading"><h3 class="panel-title">Reporte de alertas en estado crítico <span>('+data.LongDanger+')</span></h3></div>'
+          tdanger +=   '<div class="panel-body"><table class="table">'
+          tdanger +=    '<thead class="danger"><tr><th>Punto de monitoreo</th><th>Parámetro</th><th>Fecha</th><th>Incidente</th></tr></thead>';
+          $.each(data.Danger, function(k, val) {
+          tdanger +=    '<tbody><tr><td>'+val.StationBlock+'</td><td>'+val.Sensor+'</td><td>'+val.Date+'</td><td>'+val.Message+'</td></tr>'
+          }); 
+          tdanger+=     '</tbody></table></div></div>'
+      $("#Reporte").append(tdanger); 
+          }
+
+      if(data.LongRisk!=0){
+
+      var trisk='';
+          trisk += '<div class="panel panel-warning mg-3"><div class="panel-heading"><h3 class="panel-title">Reporte de alertas <span>('+data.LongRisk+')</span></h3></div>'
+          trisk +=   '<div class="panel-body"><table class="table">'
+          trisk +=    '<thead class="warning"><tr><th>Punto de monitoreo</th><th>Parámetro</th><th>Fecha</th><th>Incidente</th></tr></thead>';
+          $.each(data.Risk, function(k, val) {
+          trisk +=    '<tbody><tr><td>'+val.StationBlock+'</td><td>'+val.Sensor+'</td><td>'+val.Date+'</td><td>'+val.Message+'</td></tr>'
+          }); 
+          trisk+=     '</tbody></table></div></div>'
+      $("#Reporte").append(trisk); 
+          }
+        
         }
-     }); */
-      
+     }); 
+
 }
 
 
