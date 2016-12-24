@@ -818,8 +818,8 @@ function Export(){
   cadena += '   </div>';
   cadena += ' </div>';
   cadena += ' <div class="col-md-6 col-sm-6 col-xs-12 text-center" ><br>';
-  cadena += '   <button type="button" onclick="chargeValuesDate()" class="btn btn-primary "><i class="fa fa-bar-chart" aria-hidden="true"></i> Generar</button>';
-  cadena += '   <button type="button" class="btn btn-primary"><i class="fa fa-print" aria-hidden="true"></i> Imprimir</button>';
+  cadena += '   <button type="button" onclick="chargeValuesDate()" class="btn btn-primary btn-generar"><i class="fa fa-bar-chart" aria-hidden="true"></i> Generar</button>';
+  cadena += '   <button type="button" class="btn btn-primary btn-imprimir" onclick="imprimir()"><i class="fa fa-print" aria-hidden="true"></i> Imprimir</button>';
   cadena += ' </div>';
   cadena += '</div>';
   cadena += '<div id="Reporte" class="col-md-12" ></h3> </div>';
@@ -956,12 +956,7 @@ function chargeValuesDate(){
                         }]
                     },
 
-/*                    xAxis: {
-                        type: 'datetime',
-                        dateTimeLabelFormats: {
-                            day: '%e of %b'
-                        }
-                    },*/
+
                     // configuracion de la posicion de la grafica
                     credits: {
                         position: {
@@ -1002,12 +997,12 @@ function chargeValuesDate(){
 
       var tdanger='';
           tdanger += '<div class="panel panel-danger mg-3"><div class="panel-heading"><h3 class="panel-title">Reporte de alertas en estado crítico <span>('+data.LongDanger+')</span></h3></div>'
-          tdanger +=   '<div class="panel-body"><table class="table">'
+          tdanger +=   '<div class="panel-body"><div class="table-responsive"><table class="table">'
           tdanger +=    '<thead class="danger"><tr><th>Punto de monitoreo</th><th>Parámetro</th><th>Fecha</th><th>Incidente</th></tr></thead>';
           $.each(data.Danger, function(k, val) {
           tdanger +=    '<tbody><tr><td>'+val.StationBlock+'</td><td>'+val.Sensor+'</td><td>'+val.Date+'</td><td>'+val.Message+'</td></tr>'
           }); 
-          tdanger+=     '</tbody></table></div></div>'
+          tdanger+=     '</tbody></table></div></div></div>'
       $("#Reporte").append(tdanger); 
           }
 
@@ -1015,12 +1010,12 @@ function chargeValuesDate(){
 
       var trisk='';
           trisk += '<div class="panel panel-warning mg-3"><div class="panel-heading"><h3 class="panel-title">Reporte de alertas <span>('+data.LongRisk+')</span></h3></div>'
-          trisk +=   '<div class="panel-body"><table class="table">'
+          trisk +=   '<div class="panel-body"><div class="table-responsive"><table class="table">'
           trisk +=    '<thead class="warning"><tr><th>Punto de monitoreo</th><th>Parámetro</th><th>Fecha</th><th>Incidente</th></tr></thead>';
           $.each(data.Risk, function(k, val) {
           trisk +=    '<tbody><tr><td>'+val.StationBlock+'</td><td>'+val.Sensor+'</td><td>'+val.Date+'</td><td>'+val.Message+'</td></tr>'
           }); 
-          trisk+=     '</tbody></table></div></div>'
+          trisk+=     '</tbody></table></div></div></div>'
       $("#Reporte").append(trisk); 
           }
         
@@ -1029,7 +1024,9 @@ function chargeValuesDate(){
 
 }
 
-
+function imprimir(){
+  window.print();
+}
 
 /*
 *   FUNCIONES AUXILIARES

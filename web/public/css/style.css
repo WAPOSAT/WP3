@@ -46,14 +46,13 @@ overflow-x: hidden;
 .title-reporte{
   margin-top: 21px;
   text-align: center;
-  font-size: 21px;
+  font-size: 24px;
   font-weight: 700;
 }
 
-#Reporte{
-  
+.btn-generar,.btn-imprimir{
+  margin-bottom: 28px;
 }
-
 
 #bloques{
     background-color: #222222;
