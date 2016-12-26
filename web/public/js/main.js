@@ -885,6 +885,18 @@ function chargeValuesDate(){
             $.each(value.Sensor, function(k, val) {
                   if(val.MaxValue==0 && val.MeanValue==0 && val.MinValue==0){}
                   else{
+
+                    var Data = [];
+    // Generando la data para la grafica
+    for (var a=0;a<val.Data.Value.length ;a++){
+
+      //Si val.Data.timestamp[a] se recibe como un texto del tipo '2016-03-11 11:00:00' usar lo siguiente
+      var d = new Date(val.Data.timestamp[a]).getTime();
+      Data.push([d, val.Data.Value[a]]);
+      
+      //Si val.Data.timestamp[a] se recibe como el valor Unix  se puede utilizar asi
+/*      Data.push([val.Data.timestamp[a], val.Data.Value[a]]);*/
+    }
                   // Se establecen las caracteristicas de de la grafica en la vista SCREEN 4
                   var OptionChart = {
                     // El selecionador de periodos
@@ -967,7 +979,7 @@ function chargeValuesDate(){
                     // Se ingresan los datos obtenidos
                     series: [{
                         name: val.Name,
-                        data: val.Data.Value,
+                        data: Data,
                         tooltip: {
                             valueDecimals: 2
                         }
