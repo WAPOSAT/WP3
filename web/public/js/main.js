@@ -822,7 +822,8 @@ function Export(){
   cadena += '   <button type="button" class="btn btn-primary btn-imprimir" onclick="imprimir()"><i class="fa fa-print" aria-hidden="true"></i> Imprimir</button>';
   cadena += ' </div>';
   cadena += '</div>';
-  cadena += '<div id="Reporte" class="col-md-12" ></h3> </div>';
+  cadena += '<div id="cargando" class="col-md-12" ><p><i class="fa fa-cog fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span></p><p>Generando reporte...</p></div>';
+  cadena += '<div id="Reporte" class="col-md-12" > </div>';
 
   $("section").html(cadena);
   $("#Date1").val(today);
@@ -833,7 +834,7 @@ function Export(){
 var dataProbe;
 function chargeValuesDate(){
   
-  $("#Reporte").html("<h3 class='title-reporte'>");
+  $("#Reporte").html("<h3 class='title-reporte'></h3>");
   $("footer").hide();
   $parametros = {
     'date1' : document.getElementById("Date1").value+" 00:00:00",
@@ -856,7 +857,7 @@ function chargeValuesDate(){
       var grafica='';
       grafica +='<div class="graficas">'
       $.each(data.ProcessBlock[0].StationBlock, function(key, value) {
-          grafica +=' <div class="panel panel-success mg-3 mgt-70px"><div class="panel-heading"><h3 class="panel-title">'+value.Name+'</h3></div>'
+          grafica +=' <div class="panel panel-success mg-3 mgt-70px"><div class="panel-heading"><h3 class="panel-title sensor-name">'+(key+1)+'. '+value.Name+'</h3></div>'
           $.each(value.Sensor, function(k, val) {
 
             if(val.MaxValue==0 && val.MeanValue==0 && val.MinValue==0){}
@@ -865,7 +866,7 @@ function chargeValuesDate(){
             else if (val.Tendencia>0) flecha="glyphicon-upload";
             else if (val.Tendencia<0) flecha="glyphicon-download";
               
-          grafica +='   <div class="panel-body"><h3 class="title-sensor">'+val.Name+'</h3>'
+          grafica +='   <div class="panel-body"><h3 class="title-sensor">'+(key+1)+'.'+(k+1)+' '+val.Name+'</h3>'
           grafica +=    '<div class="col-sm-9"><div id="'+value.id+''+val.id+'" style="width:100%;height:300px;margin:0 auto;border:1px solid #ccc;"></div></div>'
           grafica +=    '<div class="col-sm-3"><div class="cuadro-info text-center">'
           grafica +=     '<p><div class="half right">Máximo:</div><div class="bold">'+val.MaxValue+'</div></p><p><div class="half right">Medio:</div><div class="bold">'+val.MeanValue+'</div></p><p><div class="half right">Mínimo:</div><div class="bold">'+val.MinValue+'</div></p></div>'
@@ -990,51 +991,56 @@ function chargeValuesDate(){
                   }
                }); 
             }); 
-          }
+            
+            $.ajax({
+            type: "GET",
+            url: "history/events",
+            data: $parametros,
+            dataType : "json",
+            success: function(data){
+
+              if(data.LongDanger!=0){
+
+              var tdanger='';
+                  tdanger += '<div class="panel panel-danger mg-3"><div class="panel-heading"><h3 class="panel-title">Reporte de alertas en estado crítico <span>('+data.LongDanger+')</span></h3></div>'
+                  tdanger +=   '<div class="panel-body"><div class="table-responsive"><table class="table">'
+                  tdanger +=    '<thead class="danger"><tr><th>N° de alerta</th><th>Punto de monitoreo</th><th>Parámetro</th><th>Fecha</th><th>Incidente</th></tr></thead>';
+                  $.each(data.Danger, function(k, val) {
+                  tdanger +=    '<tbody><tr><td>'+(k+1)+'</td><td>'+val.StationBlock+'</td><td>'+val.Sensor+'</td><td>'+val.Date+'</td><td>'+val.Message+'</td></tr>'
+                  }); 
+                  tdanger+=     '</tbody></table></div></div></div>'
+              $("#Reporte").append(tdanger); 
+                  }
+
+              if(data.LongRisk!=0){
+
+              var trisk='';
+                  trisk += '<div class="panel panel-warning mg-3"><div class="panel-heading"><h3 class="panel-title">Reporte de alertas <span>('+data.LongRisk+')</span></h3></div>'
+                  trisk +=   '<div class="panel-body"><div class="table-responsive"><table class="table">'
+                  trisk +=    '<thead class="warning"><tr><th>N° de alerta</th><th>Punto de monitoreo</th><th>Parámetro</th><th>Fecha</th><th>Incidente</th></tr></thead>';
+                  $.each(data.Risk, function(k, val) {
+                  trisk +=    '<tbody><tr><td>'+(k+1)+'</td><td>'+val.StationBlock+'</td><td>'+val.Sensor+'</td><td>'+val.Date+'</td><td>'+val.Message+'</td></tr>'
+                  }); 
+                  trisk+=     '</tbody></table></div></div></div>'
+              $("#Reporte").append(trisk); 
+                  }
+                
+                }
+             }); 
+            
+          } //fin success de ajax de carga de datos para las gráficas
          
-      }); 
-
-
-
-      
-
-  $.ajax({
-    type: "GET",
-    url: "history/events",
-    data: $parametros,
-    dataType : "json",
-    success: function(data){
-
-      if(data.LongDanger!=0){
-
-      var tdanger='';
-          tdanger += '<div class="panel panel-danger mg-3"><div class="panel-heading"><h3 class="panel-title">Reporte de alertas en estado crítico <span>('+data.LongDanger+')</span></h3></div>'
-          tdanger +=   '<div class="panel-body"><div class="table-responsive"><table class="table">'
-          tdanger +=    '<thead class="danger"><tr><th>Punto de monitoreo</th><th>Parámetro</th><th>Fecha</th><th>Incidente</th></tr></thead>';
-          $.each(data.Danger, function(k, val) {
-          tdanger +=    '<tbody><tr><td>'+val.StationBlock+'</td><td>'+val.Sensor+'</td><td>'+val.Date+'</td><td>'+val.Message+'</td></tr>'
-          }); 
-          tdanger+=     '</tbody></table></div></div></div>'
-      $("#Reporte").append(tdanger); 
-          }
-
-      if(data.LongRisk!=0){
-
-      var trisk='';
-          trisk += '<div class="panel panel-warning mg-3"><div class="panel-heading"><h3 class="panel-title">Reporte de alertas <span>('+data.LongRisk+')</span></h3></div>'
-          trisk +=   '<div class="panel-body"><div class="table-responsive"><table class="table">'
-          trisk +=    '<thead class="warning"><tr><th>Punto de monitoreo</th><th>Parámetro</th><th>Fecha</th><th>Incidente</th></tr></thead>';
-          $.each(data.Risk, function(k, val) {
-          trisk +=    '<tbody><tr><td>'+val.StationBlock+'</td><td>'+val.Sensor+'</td><td>'+val.Date+'</td><td>'+val.Message+'</td></tr>'
-          }); 
-          trisk+=     '</tbody></table></div></div></div>'
-      $("#Reporte").append(trisk); 
-          }
-        
-        }
-     }); 
+      }); //fin ajax de carga de datos para las gráficas
 
 }
+
+      $(document).ajaxStart(function(){
+          $("#cargando").css("display","block");
+      });
+
+      $(document).ajaxComplete(function(){
+          $("#cargando").slideUp(1000);
+      });
 
 function imprimir(){
   window.print();
