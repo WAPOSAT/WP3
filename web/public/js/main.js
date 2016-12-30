@@ -847,19 +847,22 @@ function chargeValuesDate(){
   var date1=$("#Date1").val();
   var date2=$("#Date2").val();
   $url = "history/form";
+
+  //Ajax para pedir los datos que se mostrarán en las gráficas
   $.ajax({
     type: "GET",
     url: $url,
     data: $parametros,
     dataType : "json",
     success: function(data){
+      //Imprime el párrafo donde se deja indicado las fechas del reporte
       $(".title-reporte").html("Las fechas del reporte son del: "+date1+" hasta "+date2);
       var grafica='';
       grafica +='<div class="graficas">'
       $.each(data.ProcessBlock[0].StationBlock, function(key, value) {
           grafica +=' <div class="panel panel-success mg-3 mgt-70px"><div class="panel-heading"><h3 class="panel-title sensor-name">'+(key+1)+'. '+value.Name+'</h3></div>'
           $.each(value.Sensor, function(k, val) {
-
+            //solo imprime las gráficas que contengan información
             if(val.MaxValue==0 && val.MeanValue==0 && val.MinValue==0){}
             else{ 
             if(val.Tendencia==0) flecha="glyphicon-minus";
@@ -898,9 +901,9 @@ function chargeValuesDate(){
                 //Si val.Data.timestamp[a] se recibe como el valor Unix  se puede utilizar asi
           /*      Data.push([val.Data.timestamp[a], val.Data.Value[a]]);*/
                   }
-                  // Se establecen las caracteristicas de de la grafica en la vista SCREEN 4
+                  // Se establecen las caracteristicas de de la gráfica
                   var OptionChart = {
-                    // El selecionador de periodos
+                    // El selecionador de períodos
                     rangeSelector: {
                       selected: 4,
                       buttons: [{
@@ -937,7 +940,7 @@ function chargeValuesDate(){
                         text: val.Unit+" vs Tiempo"
                     },
 
-                    // Se definen las lineas adicionales para indicar limites
+                    // Se definen las líneas adicionales para indicar límites
                     yAxis: {
                         title: {
                             text: "Nivel de "+ val.Name
@@ -970,7 +973,7 @@ function chargeValuesDate(){
                     },
 
 
-                    // configuracion de la posicion de la grafica
+                    // configuración de la posicion de la gráfica
                     credits: {
                         position: {
                             align: 'center',
@@ -987,11 +990,13 @@ function chargeValuesDate(){
                     }]
                   }; // Fin option charts
 
+                  //se imprime la gráfica 
                   Highcharts.stockChart(''+value.id+''+val.id,OptionChart);
                   }
                }); 
             }); 
             
+            //Ajax para pedir los datos que se mostrarán en las tablas de eventos (peligro y riesgo)
             $.ajax({
             type: "GET",
             url: "history/events",
@@ -1002,7 +1007,7 @@ function chargeValuesDate(){
               if(data.LongDanger!=0){
 
               var tdanger='';
-                  tdanger += '<div class="panel panel-danger mg-3"><div class="panel-heading" onclick="dropdownDanger()"><h3 class="panel-title">Reporte de alertas en estado crítico <span>('+data.LongDanger+')</span><i class="glyphicon glyphicon-chevron-down float-right"></i></h3></div>'
+                  tdanger += '<div class="panel panel-danger mg-3"><div class="panel-heading" onclick="dropdownDanger()"><h3 class="panel-title">Reporte de alertas en estado crítico <span>('+data.LongDanger+')</span><i class="glyphicon glyphicon-chevron-down float-left"></i></h3></div>'
                   tdanger +=   '<div class="panel-body" id="body-danger" style="display:none"><div class="table-responsive"><table class="table">'
                   tdanger +=    '<thead class="danger"><tr><th>N° de alerta</th><th>Punto de monitoreo</th><th>Parámetro</th><th>Fecha</th><th>Incidente</th></tr></thead>';
                   $.each(data.Danger, function(k, val) {
@@ -1032,18 +1037,11 @@ function chargeValuesDate(){
          
       }); //fin ajax de carga de datos para las gráficas
   
+  //se imprime el footer
   $("body").append("<footer>Copyright © Waposat 2016</footer>");
 }
 
-  /**Efecto loading cuando se efectúa una petición ajax**/
-  $(document).ajaxStart(function(){
-      $("#cargando").css("display","block");
-  });
-
-  $(document).ajaxComplete(function(){
-      $("#cargando").slideUp(1000);
-  });
-
+/**dropdown de la tabla de eventos**/
 function dropdownDanger(){
   var display=$("#body-danger").css("display");
   if (display=="none") { 
@@ -1069,16 +1067,20 @@ function dropdownRisk(){
   
 }
 
+/**Efecto loading cuando se efectúa una petición ajax**/
+$(document).ajaxStart(function(){
+    $("#cargando").css("display","block");
+});
+
+$(document).ajaxComplete(function(){
+    $("#cargando").slideUp(1000);
+});
+
+/**Función del botón Imprimir**/
+
 function imprimir(){
   window.print();
 }
-
-/*
-*   FUNCIONES AUXILIARES
-* Las siguientes funciones se encargan tareas adicionales que tienen que ver con graficas, funcionalidad de vistas
-* dependiendo del tamaño de la pantalla y las divisiones.
-*/
-
 
 
 /*

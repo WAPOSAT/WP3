@@ -46,6 +46,11 @@ overflow-x: hidden;
 .float-right{
   float: right;
 }
+
+.float-left{
+  float: left;
+}
+
 .title-reporte{
   margin-top: 21px;
   text-align: center;
@@ -744,7 +749,7 @@ vertical-align: top;
   opacity: 1;
 }
 
-@media (max-width: 776px) {
+@media (max-width: 1024px) {
     .half{
       width: auto;
       float: none;
