@@ -873,7 +873,7 @@ function chargeValuesDate(){
           grafica +=    '<div class="col-sm-9"><div id="'+value.id+''+val.id+'" style="width:100%;height:300px;margin:0 auto;border:1px solid #ccc;"></div></div>'
           grafica +=    '<div class="col-sm-3"><div class="cuadro-info text-center">'
           grafica +=     '<p><div class="half right">Máximo:</div><div class="bold">'+val.MaxValue+'</div></p><p><div class="half right">Medio:</div><div class="bold">'+val.MeanValue+'</div></p><p><div class="half right">Mínimo:</div><div class="bold">'+val.MinValue+'</div></p></div>'
-          grafica +=    ' <div class="tendencia"><div class="glyphicon '+flecha+'"></div><div class="porcentaje"><p>Tendencia</p><p>'+val.Tendencia+' %</p></div></div></div>'
+          grafica +=    ' <div class="tendencia"><div class="glyphicon float-left '+flecha+'"></div><div class="porcentaje"><p>Tendencia</p><p>'+val.Tendencia+' %</p></div></div></div>'
           grafica +=   '</div>'
               }
           
@@ -1007,7 +1007,7 @@ function chargeValuesDate(){
               if(data.LongDanger!=0){
 
               var tdanger='';
-                  tdanger += '<div class="panel panel-danger mg-3"><div class="panel-heading" onclick="dropdownDanger()"><h3 class="panel-title">Reporte de alertas en estado crítico <span>('+data.LongDanger+')</span><i class="glyphicon glyphicon-chevron-down float-left"></i></h3></div>'
+                  tdanger += '<div class="panel panel-danger mg-3"><div class="panel-heading" onclick="dropdownDanger()"><h3 class="panel-title">Reporte de alertas en estado crítico <span>('+data.LongDanger+')</span><i class="glyphicon glyphicon-chevron-down float-right"></i></h3></div>'
                   tdanger +=   '<div class="panel-body" id="body-danger" style="display:none"><div class="table-responsive"><table class="table">'
                   tdanger +=    '<thead class="danger"><tr><th>N° de alerta</th><th>Punto de monitoreo</th><th>Parámetro</th><th>Fecha</th><th>Incidente</th></tr></thead>';
                   $.each(data.Danger, function(k, val) {

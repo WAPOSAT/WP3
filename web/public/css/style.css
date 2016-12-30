@@ -698,22 +698,22 @@ vertical-align: top;
 
 .tendencia .glyphicon-download,.tendencia .glyphicon-upload,.tendencia .glyphicon-minus{
   display: inline-block;
-  width: 40%;
+  width: 30%;
   margin: 0 auto;
   text-align: center;
-  font-size: 57px;
+  font-size: 53px;
 }
 
 .tendencia .porcentaje{
   display: inline-block;
-  width: 50%;
+  width: 63%;
   float: right;
   margin: 2px 0px;
   text-align: center;
 }
 
 .porcentaje p:last-child{
-  font-size: 25px;
+  font-size: 18px;
   font-weight: 700;
 }
 
