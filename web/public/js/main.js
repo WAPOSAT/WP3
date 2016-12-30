@@ -862,7 +862,7 @@ function chargeValuesDate(){
 
             if(val.MaxValue==0 && val.MeanValue==0 && val.MinValue==0){}
             else{ 
-            if(val.Tendencia==0) flecha="";
+            if(val.Tendencia==0) flecha="glyphicon-minus";
             else if (val.Tendencia>0) flecha="glyphicon-upload";
             else if (val.Tendencia<0) flecha="glyphicon-download";
               
@@ -887,17 +887,17 @@ function chargeValuesDate(){
                   if(val.MaxValue==0 && val.MeanValue==0 && val.MinValue==0){}
                   else{
 
-                    var Data = [];
-    // Generando la data para la grafica
-    for (var a=0;a<val.Data.Value.length ;a++){
+              var Data = [];
+              // Generando la data para la grafica
+              for (var a=0;a<val.Data.Value.length ;a++){
 
-      //Si val.Data.timestamp[a] se recibe como un texto del tipo '2016-03-11 11:00:00' usar lo siguiente
-      var d = new Date(val.Data.timestamp[a]).getTime();
-      Data.push([d, val.Data.Value[a]]);
-      
-      //Si val.Data.timestamp[a] se recibe como el valor Unix  se puede utilizar asi
-/*      Data.push([val.Data.timestamp[a], val.Data.Value[a]]);*/
-    }
+                //Si val.Data.timestamp[a] se recibe como un texto del tipo '2016-03-11 11:00:00' usar lo siguiente
+                var d = new Date(val.Data.timestamp[a]).getTime();
+                Data.push([d, val.Data.Value[a]]);
+                
+                //Si val.Data.timestamp[a] se recibe como el valor Unix  se puede utilizar asi
+          /*      Data.push([val.Data.timestamp[a], val.Data.Value[a]]);*/
+                  }
                   // Se establecen las caracteristicas de de la grafica en la vista SCREEN 4
                   var OptionChart = {
                     // El selecionador de periodos
@@ -1002,8 +1002,8 @@ function chargeValuesDate(){
               if(data.LongDanger!=0){
 
               var tdanger='';
-                  tdanger += '<div class="panel panel-danger mg-3"><div class="panel-heading"><h3 class="panel-title">Reporte de alertas en estado crítico <span>('+data.LongDanger+')</span></h3></div>'
-                  tdanger +=   '<div class="panel-body"><div class="table-responsive"><table class="table">'
+                  tdanger += '<div class="panel panel-danger mg-3"><div class="panel-heading" onclick="dropdownDanger()"><h3 class="panel-title">Reporte de alertas en estado crítico <span>('+data.LongDanger+')</span><i class="glyphicon glyphicon-chevron-down float-right"></i></h3></div>'
+                  tdanger +=   '<div class="panel-body" id="body-danger" style="display:none"><div class="table-responsive"><table class="table">'
                   tdanger +=    '<thead class="danger"><tr><th>N° de alerta</th><th>Punto de monitoreo</th><th>Parámetro</th><th>Fecha</th><th>Incidente</th></tr></thead>';
                   $.each(data.Danger, function(k, val) {
                   tdanger +=    '<tbody><tr><td>'+(k+1)+'</td><td>'+val.StationBlock+'</td><td>'+val.Sensor+'</td><td>'+val.Date+'</td><td>'+val.Message+'</td></tr>'
@@ -1015,8 +1015,8 @@ function chargeValuesDate(){
               if(data.LongRisk!=0){
 
               var trisk='';
-                  trisk += '<div class="panel panel-warning mg-3"><div class="panel-heading"><h3 class="panel-title">Reporte de alertas <span>('+data.LongRisk+')</span></h3></div>'
-                  trisk +=   '<div class="panel-body"><div class="table-responsive"><table class="table">'
+                  trisk += '<div class="panel panel-warning mg-3"><div class="panel-heading" onclick="dropdownRisk()"><h3 class="panel-title">Reporte de alertas <span>('+data.LongRisk+')</span><i class="glyphicon glyphicon-chevron-down float-right"></i></h3></div>'
+                  trisk +=   '<div class="panel-body" id="body-risk" style="display:none"><div class="table-responsive"><table class="table">'
                   trisk +=    '<thead class="warning"><tr><th>N° de alerta</th><th>Punto de monitoreo</th><th>Parámetro</th><th>Fecha</th><th>Incidente</th></tr></thead>';
                   $.each(data.Risk, function(k, val) {
                   trisk +=    '<tbody><tr><td>'+(k+1)+'</td><td>'+val.StationBlock+'</td><td>'+val.Sensor+'</td><td>'+val.Date+'</td><td>'+val.Message+'</td></tr>'
@@ -1034,6 +1034,7 @@ function chargeValuesDate(){
 
 }
 
+      /**Efecto loading cuando se efectúa una petición ajax**/
       $(document).ajaxStart(function(){
           $("#cargando").css("display","block");
       });
@@ -1041,6 +1042,31 @@ function chargeValuesDate(){
       $(document).ajaxComplete(function(){
           $("#cargando").slideUp(1000);
       });
+
+function dropdownDanger(){
+  var display=$("#body-danger").css("display");
+  if (display=="none") { 
+    $("#body-danger").slideDown(500);
+    $(".panel-danger").find("i").removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+    }
+  else {
+    $("#body-danger").slideUp(500);
+    $(".panel-danger").find("i").removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+  }
+}
+
+function dropdownRisk(){
+  var display=$("#body-risk").css("display");
+  if (display=="none") { 
+    $("#body-risk").show();
+    $(".panel-warning").find("i").removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+    }
+  else {
+    $("#body-risk").slideUp(500);
+    $(".panel-warning").find("i").removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+  }
+  
+}
 
 function imprimir(){
   window.print();

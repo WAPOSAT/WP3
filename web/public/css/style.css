@@ -43,6 +43,9 @@ overflow-x: hidden;
   text-align: end;
 }
 
+.float-right{
+  float: right;
+}
 .title-reporte{
   margin-top: 21px;
   text-align: center;
@@ -664,7 +667,7 @@ vertical-align: top;
 }
 
 .graficas .cuadro-info{
-  height: 200px;
+  height: 208px;
   border: 1px solid #ccc;
   padding: 28px;
   font-size: 19px;
@@ -681,24 +684,25 @@ vertical-align: top;
 }
 
 .graficas .tendencia{
-  padding-top: 9px;
+  padding: 18px;
   background-color: #337ab7;
   color: white;
-  height: 100px;
+  height: 92px;
   text-align: center;
 }
 
-.tendencia .glyphicon-download,.tendencia .glyphicon-upload{
+.tendencia .glyphicon-download,.tendencia .glyphicon-upload,.tendencia .glyphicon-minus{
   display: inline-block;
   width: 40%;
   margin: 0 auto;
   text-align: center;
-  font-size: 70px;
+  font-size: 57px;
 }
 
 .tendencia .porcentaje{
   display: inline-block;
-  width: 40%;
+  width: 50%;
+  float: right;
   margin: 2px 0px;
   text-align: center;
 }
@@ -733,4 +737,22 @@ vertical-align: top;
 .panel-danger th:first-child,.panel-danger td:first-child,
 .panel-warning th:first-child,.panel-warning td:first-child{
   width: 87px;
+}
+
+#body-danger,#body-risk{
+  transition: opacity 1s ease-out;
+  opacity: 1;
+}
+
+@media (max-width: 776px) {
+    .half{
+      width: auto;
+      float: none;
+      text-align: inherit;
+    }
+
+    .graficas .cuadro-info{
+      padding: 0;
+      font-size: 16px;
+    }
 }
