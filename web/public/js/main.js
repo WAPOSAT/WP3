@@ -1031,17 +1031,18 @@ function chargeValuesDate(){
           } //fin success de ajax de carga de datos para las gráficas
          
       }); //fin ajax de carga de datos para las gráficas
-
+  
+  $("body").append("<footer>Copyright © Waposat 2016</footer>");
 }
 
-      /**Efecto loading cuando se efectúa una petición ajax**/
-      $(document).ajaxStart(function(){
-          $("#cargando").css("display","block");
-      });
+  /**Efecto loading cuando se efectúa una petición ajax**/
+  $(document).ajaxStart(function(){
+      $("#cargando").css("display","block");
+  });
 
-      $(document).ajaxComplete(function(){
-          $("#cargando").slideUp(1000);
-      });
+  $(document).ajaxComplete(function(){
+      $("#cargando").slideUp(1000);
+  });
 
 function dropdownDanger(){
   var display=$("#body-danger").css("display");
