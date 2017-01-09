@@ -12,19 +12,24 @@ var pushRight=null;
 var lastId = 0;
 
   
-$(document).ready(function(){
+/*$(document).ready(function(){
   // la variable [vista] tiene valores 1 o 2 dependiendo de cual es la vista de la plataforma que se desea
   // esta es ingresada por el controlador desde el codigo twig    
   LoadNav(vista);
   $("footer").html('Copyright &copy; Waposat 2016');
 });
+*/
+window.onload = function(){
+  LoadNav(vista);
+  $("footer").html('Copyright &copy; Waposat 2016');
+}
 
 
 /*
 * LoadNav
 * Construye el menu de navegacion y la barra de herramientas del sistema
 */
-function LoadNav(type = 1){
+function LoadNav(type){
   var ruta=null;
   var funcion=null;
   var change;
@@ -37,7 +42,6 @@ function LoadNav(type = 1){
     funcion="ShowPlain";
     change = "<div class='Change' title='Cambiar a vista ALERTAS' onclick='LoadAlert()'><i class='fa fa-th-large' aria-hidden='true'></i></div>";
   }
-
   // Se utiliza la [ruta] obtenida para iniciar la carga de informacion
   //Se realiza una consulta AJAX con el metodo POST utilizando JQUERY
   $.post(ruta, function(response) {
@@ -76,7 +80,7 @@ function LoadNav(type = 1){
     $.each(data.ProcessBlock, function(key, val) {
       if(num==0){
         if(type==1) {
-          ShowBlock(val.id);
+          ShowBlock(val.id,1,1,1);
         }
         if(type==2){
           ShowPlain(val.id);
@@ -111,7 +115,7 @@ function LoadNav(type = 1){
 * ShowBlock
 * Construye los cuadro de Station Block en base a la data
 */
-function ShowBlock(id,risk=1,danger=1,stable=1){
+function ShowBlock(id,risk,danger,stable){
   
   $("section").html('<div class=Block><div class=filtros>\n\
   <form id="formulario" name=formulario>\n\
@@ -310,7 +314,7 @@ function UpdateStation(id){
 * BlockDetail 
 * Carga la informacion de todos los sensores en el menu derecho de la plataforma
 */
-function BlockDetail(idstation=1){
+function BlockDetail(idstation){
 
   $.getJSON('dashboard/station/'+idstation, function(data) {
     var items = [];
@@ -343,7 +347,7 @@ function BlockDetail(idstation=1){
 * UpdateSensorsTable
 * Genera la tabla de valores de los sensores en el menu derecho
 */
-function UpdateSensorsTable(Sensor, idstation=1){
+function UpdateSensorsTable(Sensor, idstation){
   var cadena="";
   cadena += "<table class='tablainformativa'>";
   cadena += "<tr><th>Parámetro</th><th>Min</th><th>Max</th><th>Actual</th></tr>";
@@ -366,7 +370,7 @@ function UpdateSensorsTable(Sensor, idstation=1){
 * ChangeParameter
 * Se ejecuta al hacer clic a un parametro en la tabla del menu derecho
 */
-function ChangeParameter(idstation=1,idsensor=1,long=20, Refresh=5 ){
+function ChangeParameter(idstation,idsensor,long, Refresh){
   showparameter(idstation,idsensor,long,Refresh);
   pushRight.close();
 } //  End of ChangeParameter
@@ -376,7 +380,7 @@ function ChangeParameter(idstation=1,idsensor=1,long=20, Refresh=5 ){
 * showparameter
 * Carga la informacion del sensor
 */
-function showparameter(idstation=1,idsensor=1,long=20, Refresh=5 ){
+function showparameter(idstation,idsensor,long, Refresh ){
 
   $.getJSON('dashboard/station/'+idstation+'/sensor/'+idsensor+'/long/'+long,function(data){
     
@@ -396,7 +400,8 @@ function showparameter(idstation=1,idsensor=1,long=20, Refresh=5 ){
     for(a=0;a<=data.Data.Time.length-1;a++){
       var d = new Date("1 1, 2016 "+data.Data.Time[a]);
 
-      datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+","+data.LMR+","+data.LMP+"],";
+      //datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+","+data.LMR+","+data.LMP+"],";
+      datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+"],";
     }
     datos=datos.substr(0,datos.length-1)+"]";
 
@@ -409,7 +414,7 @@ function showparameter(idstation=1,idsensor=1,long=20, Refresh=5 ){
 * showParameterUpdate
 * Actualizacion de la informacion dinamica del Sensor
 */
-function showParameterUpdate(idstation=1,idsensor=1,LMP=100,LMR=50){
+function showParameterUpdate(idstation,idsensor,LMP,LMR){
   ///dashboard/update/station/{idStation}/sensor/{idSensor}/lastid/{lastId}
   $.getJSON('dashboard/update/station/'+idstation+'/sensor/'+idsensor+'/lastid/'+lastId,function(data){
     if(data.Data.Time.length > 0){
@@ -420,7 +425,8 @@ function showParameterUpdate(idstation=1,idsensor=1,LMP=100,LMR=50){
       var datos="[";
       for(a=0;a<=data.Data.Time.length-1;a++){
         var d = new Date("1 1, 2016 "+data.Data.Time[a]);
-        datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+","+LMR+","+LMP+"],";
+        //datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+","+LMR+","+LMP+"],";
+        datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+"],";
       }
       datos=datos.substr(0,datos.length-1)+"]";
 
@@ -483,7 +489,7 @@ function LoadScada(){
 * ShowPlain
 * Contruye la vista SACADA de BlockStation
 */
-function ShowPlain(id=1){
+function ShowPlain(id){
   var items = [];
   var puntos="";
   var extra="";
@@ -515,7 +521,7 @@ function ShowPlain(id=1){
         else if(v.Last.Value>=v.LMR && v.Last.Value<v.LMP){extra=' InfoRisk '; sensors.risk++ }
         else if(v.Last.Value>=v.LMP){extra=' InfoDanger ';sensors.danger++}
         // cada sensor es definido   
-        puntos+='<tr onclick=ShowDetail('+value.id+','+v.id+','+value.RefreshFrecuencySeg+')  style="cursor:pointer" ><td><div id="pointSensor'+ v.id +'" class="' + extra + ' InfoLittlePoint"> </div></td><td align=left>'+ v.CodeName+'</td><td align=left>: <span id=sensor'+ v.id +'>'+v.Last.Value+'</span> '+v.Unit+'</td></tr>'; 
+        puntos+='<tr onclick=ShowDetail('+value.id+','+v.id+','+value.RefreshFrecuencySeg+',20)  style="cursor:pointer" ><td><div id="pointSensor'+ v.id +'" class="' + extra + ' InfoLittlePoint"> </div></td><td align=left>'+ v.CodeName+'</td><td align=left>: <span id=sensor'+ v.id +'>'+v.Last.Value+'</span> '+v.Unit+'</td></tr>'; 
       });
       
       puntos+="</table></div>"
@@ -604,7 +610,7 @@ function UpdatePlain(id){
 * ShowDetail
 * Carga el cuadro de informacion del sensor
 */
-function ShowDetail(idstation,idsensor,Refresh=5,long=20){
+function ShowDetail(idstation,idsensor,Refresh,long){
 
   var n;
   //$('.BoxAlert').tooltipster('close');
@@ -669,7 +675,8 @@ function ShowDetail(idstation,idsensor,Refresh=5,long=20){
       var datos="[";
       for(a=0;a<=data.Data.Time.length-1;a++){
         var d = new Date("1 1, 2016 "+data.Data.Time[a]);
-        datos+="[["+ d.getHours() +","+ d.getMinutes() +",0],"+ data.Data.Value[a]+","+data.LMR+","+data.LMP+"],";
+        //datos+="[["+ d.getHours() +","+ d.getMinutes() +",0],"+ data.Data.Value[a]+","+data.LMR+","+data.LMP+"],";
+        datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+"],";
       }
       datos=datos.substr(0,datos.length-1)+"]";
 
@@ -683,7 +690,7 @@ function ShowDetail(idstation,idsensor,Refresh=5,long=20){
 * ShowSensorDetailUpdate
 * Actualizacion de la informacion dinamica del Sensor
 */
-function ShowSensorDetailUpdate (idstation=1,idsensor=1,LMP=100,LMR=50){
+function ShowSensorDetailUpdate (idstation,idsensor,LMP,LMR){
   ///dashboard/update/station/{idStation}/sensor/{idSensor}/lastid/{lastId}
   $.getJSON('v2/dashboard/station/'+idstation+'/sensor/'+idsensor+'/lastid/'+lastId,function(data){
     
@@ -713,7 +720,8 @@ function ShowSensorDetailUpdate (idstation=1,idsensor=1,LMP=100,LMR=50){
       for(a=0;a<=data.Data.Time.length-1;a++){
         var d = new Date("1 1, 2016 "+data.Data.Time[a]);
 
-        datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+","+LMR+","+LMP+"],";
+        //datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+","+LMR+","+LMP+"],";
+        datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+"],";
       }
       datos=datos.substr(0,datos.length-1)+"]";
 
@@ -727,7 +735,7 @@ function ShowSensorDetailUpdate (idstation=1,idsensor=1,LMP=100,LMR=50){
 * ShowAlert
 * Carga la vinieta para la visualizacion de los eventos
 */
-function ShowAlert(type=1){
+function ShowAlert(type){
   var ruta=null;
   if (type==1) {ruta="dashboard/alerts/";}
   if (type==2) {ruta="v2/dashboard/alerts/";}
@@ -744,9 +752,9 @@ function ShowAlert(type=1){
       {extra=' InfoDanger ';
       estilomensaje=' class=MessageDanger ';}
       if (type==1)
-      {items.push('<li onclick="ShowBlock('+ v.idProcessBlock +')" '+estilomensaje+'><div class="'+extra+' InfoLittlePoint InfoList"> </div> ' +v.Message+'</li>');}
+      {items.push('<li onclick="ShowBlock('+ v.idProcessBlock +',1,1,1)" '+estilomensaje+'><div class="'+extra+' InfoLittlePoint InfoList"> </div> ' +v.Message+'</li>');}
       if (type==2)
-      {items.push('<li onclick="ShowPlain('+ v.idProcessBlock +')" '+estilomensaje+'><div class="'+extra+' InfoLittlePoint InfoList"> </div> ' +v.Message+'</li>');}
+      {items.push('<li onclick="ShowPlain('+ v.idProcessBlock +',1,1,1)" '+estilomensaje+'><div class="'+extra+' InfoLittlePoint InfoList"> </div> ' +v.Message+'</li>');}
     });
     
     items.push('</ul></div>');
@@ -1134,8 +1142,8 @@ function drawCurveTypes(id,w,h,datos,titulo){
   dataLine = new google.visualization.DataTable();
   dataLine.addColumn('timeofday', 'X');
   dataLine.addColumn('number', titulo);
-  dataLine.addColumn('number', 'Risk');
-  dataLine.addColumn('number', 'Danger');
+  //dataLine.addColumn('number', 'Risk');
+  //dataLine.addColumn('number', 'Danger');
 
   dataLine.addRows(JSON.parse(datos));
 
@@ -1152,7 +1160,8 @@ function drawCurveTypes(id,w,h,datos,titulo){
     legend: {position: 'none'},
     hAxis: {gridlines: {count: 5}},
     //vAxis: {viewWindow: { min:0}}, // Si se desea que la grafica tenga como limite inferior a cero
-    colors: ['#256088', '#efa331', '#a73836']};
+    //colors: ['#256088', '#efa331', '#a73836']};
+    colors: ['#256088']};
   chartLine = new google.visualization.LineChart(document.getElementById(id));
   chartLine.draw(dataLine, optionsLine);
 } //  End drawCurveTypes
