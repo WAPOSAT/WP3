@@ -396,7 +396,8 @@ function showparameter(idstation=1,idsensor=1,long=20, Refresh=5 ){
     for(a=0;a<=data.Data.Time.length-1;a++){
       var d = new Date("1 1, 2016 "+data.Data.Time[a]);
 
-      datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+","+data.LMR+","+data.LMP+"],";
+      //datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+","+data.LMR+","+data.LMP+"],";
+      datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+"],";
     }
     datos=datos.substr(0,datos.length-1)+"]";
 
@@ -420,7 +421,8 @@ function showParameterUpdate(idstation=1,idsensor=1,LMP=100,LMR=50){
       var datos="[";
       for(a=0;a<=data.Data.Time.length-1;a++){
         var d = new Date("1 1, 2016 "+data.Data.Time[a]);
-        datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+","+LMR+","+LMP+"],";
+        //datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+","+LMR+","+LMP+"],";
+        datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+"],";
       }
       datos=datos.substr(0,datos.length-1)+"]";
 
@@ -1137,8 +1139,8 @@ function drawCurveTypes(id,w,h,datos,titulo){
   dataLine = new google.visualization.DataTable();
   dataLine.addColumn('timeofday', 'X');
   dataLine.addColumn('number', titulo);
-  dataLine.addColumn('number', 'Risk');
-  dataLine.addColumn('number', 'Danger');
+  //dataLine.addColumn('number', 'Risk');
+  //dataLine.addColumn('number', 'Danger');
 
   dataLine.addRows(JSON.parse(datos));
 
@@ -1155,7 +1157,8 @@ function drawCurveTypes(id,w,h,datos,titulo){
     legend: {position: 'none'},
     hAxis: {gridlines: {count: 5}},
     //vAxis: {viewWindow: { min:0}}, // Si se desea que la grafica tenga como limite inferior a cero
-    colors: ['#256088', '#efa331', '#a73836']};
+    //colors: ['#256088', '#efa331', '#a73836']};
+    colors: ['#256088']};
   chartLine = new google.visualization.LineChart(document.getElementById(id));
   chartLine.draw(dataLine, optionsLine);
 } //  End drawCurveTypes
