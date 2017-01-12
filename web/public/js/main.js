@@ -904,6 +904,9 @@ function chargeValuesDate(){
 
                 //Si val.Data.timestamp[a] se recibe como un texto del tipo '2016-03-11 11:00:00' usar lo siguiente
                 var d = new Date(val.Data.timestamp[a]).getTime();
+                //console.log(d);
+                // para solucionar el problema de cambio de horario
+                d = d - 18000000;
                 Data.push([d, val.Data.Value[a]]);
                 
                 //Si val.Data.timestamp[a] se recibe como el valor Unix  se puede utilizar asi
