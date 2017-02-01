@@ -913,6 +913,10 @@ function chargeValuesDate(){
                       selected: 4,
                       buttons: [{
                         type: 'hour',
+                        count: 8,
+                        text: '8h'},
+                      {
+                        type: 'hour',
                         count: 24,
                         text: '24h'},
                       {
@@ -924,17 +928,13 @@ function chargeValuesDate(){
                         count: 1,
                         text: '1m'},
                       {
-                        type: 'year',
-                        count: 1,
-                        text: '1y'},
-                      {
                         type: 'all',
                         text: 'All'}],
                       inputEnabled: false,
                     },
                     // se configura el scrollbar inferior
                     scrollbar:{
-                      enabled: false,
+                      enabled: true,
                     },
                     // se configura del navegador
                     navigator: {
