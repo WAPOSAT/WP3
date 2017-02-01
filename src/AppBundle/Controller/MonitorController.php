@@ -30,9 +30,7 @@
 			$sender = $em->createQuery($dql)->getSingleResult();
 
 			$time = new \DateTime();
-			$minTime4Not = 3;
-
-			$em->flush();
+			$minTime4Not = 1;
 
 			if ($sender)  
 			{
@@ -49,28 +47,11 @@
 					$em->persist($measurement);
 					$em->flush();
 					
-
-					//Get las measure event
-					$dql = "SELECT e FROM AppBundle:MonitoringEvents e JOIN e.idMeasurement m ORDER BY m.idMeasurement DESC";
-					$lastMeasureEvent = $em->createQuery($dql)->setMaxResults(1)->getResult()[0];
-
 					$evm = $this->get('app.event_manager');
-					$ntf = $evm->fireNotifierEvents($measurement, $lastMeasureEvent, $minTime4Not);
+					$ntf = $evm->fireNotifierEvents($measurement, $minTime4Not);
+
 					$notifications = array_merge($notifications, $ntf);
 				}
-
-					/*return new Response("<!DOCTYPE html>
-					<html>
-					<head>
-						<title>Error Page</title>
-					</head>
-					<body>
-						".$not->getIdMonitoringEvent()->getIdMeasurement()->getDate()->format('Y-m-d H:i:s')."<br>
-						".$lastMeasureEvent->getIdMeasurement()->getDate()->format('Y-m-d H:i:s')."<br>
-						".$minutes."<br>
-					</body>
-					</html>");
-					*/
 
 				$ml = $this->get('app.mailer');
 				$ml->sendNewNotifications($notifications);

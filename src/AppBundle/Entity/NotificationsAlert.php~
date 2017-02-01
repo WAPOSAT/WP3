@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * NotificationsAlert
  *
- * @ORM\Table(name="Notifications_Alert", indexes={@ORM\Index(name="id_monitoring_event", columns={"id_monitoring_event"}), @ORM\Index(name="id_user", columns={"id_user"})})
+ * @ORM\Table(name="notifications_alert", indexes={@ORM\Index(name="id_monitoring_event", columns={"id_monitoring_event"}), @ORM\Index(name="id_user", columns={"id_user"})})
  * @ORM\Entity
  */
 class NotificationsAlert
@@ -27,11 +27,11 @@ class NotificationsAlert
     private $viewed;
 
     /**
-     * @var integer
+     * @var boolean
      *
-     * @ORM\Column(name="by_email", type="integer", nullable=false)
+     * @ORM\Column(name="by_email", type="boolean", nullable=false)
      */
-    private $byEmail;
+    private $byEmail = '0';
 
     /**
      * @var integer

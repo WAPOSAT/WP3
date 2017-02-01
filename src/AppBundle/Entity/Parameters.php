@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Parameters
  *
- * @ORM\Table(name="Parameters")
+ * @ORM\Table(name="parameters")
  * @ORM\Entity
  */
 class Parameters
@@ -25,6 +25,13 @@ class Parameters
      * @ORM\Column(name="parameter_name", type="string", length=100, nullable=false)
      */
     private $parameterName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="referencia", type="text", length=65535, nullable=true)
+     */
+    private $referencia;
 
     /**
      * @var integer
@@ -47,7 +54,7 @@ class Parameters
     public function setParameterCodename($parameterCodename)
     {
         $this->parameterCodename = $parameterCodename;
-
+    
         return $this;
     }
 
@@ -71,7 +78,7 @@ class Parameters
     public function setParameterName($parameterName)
     {
         $this->parameterName = $parameterName;
-
+    
         return $this;
     }
 
@@ -83,6 +90,30 @@ class Parameters
     public function getParameterName()
     {
         return $this->parameterName;
+    }
+
+    /**
+     * Set referencia
+     *
+     * @param string $referencia
+     *
+     * @return Parameters
+     */
+    public function setReferencia($referencia)
+    {
+        $this->referencia = $referencia;
+    
+        return $this;
+    }
+
+    /**
+     * Get referencia
+     *
+     * @return string
+     */
+    public function getReferencia()
+    {
+        return $this->referencia;
     }
 
     /**

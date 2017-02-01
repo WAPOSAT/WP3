@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Measurement
  *
- * @ORM\Table(name="Measurement", indexes={@ORM\Index(name="id_sensor", columns={"id_sensor"})})
+ * @ORM\Table(name="measurement", indexes={@ORM\Index(name="id_sensor", columns={"id_sensor"})})
  * @ORM\Entity
  */
 class Measurement
@@ -57,7 +57,7 @@ class Measurement
     public function setDate($date)
     {
         $this->date = $date;
-
+    
         return $this;
     }
 
@@ -81,7 +81,7 @@ class Measurement
     public function setValue($value)
     {
         $this->value = $value;
-
+    
         return $this;
     }
 
@@ -115,7 +115,7 @@ class Measurement
     public function setIdSensor(\AppBundle\Entity\Sensors $idSensor = null)
     {
         $this->idSensor = $idSensor;
-
+    
         return $this;
     }
 

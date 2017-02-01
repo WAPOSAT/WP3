@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * BlockType
  *
- * @ORM\Table(name="Block_Type")
+ * @ORM\Table(name="block_type")
  * @ORM\Entity
  */
 class BlockType

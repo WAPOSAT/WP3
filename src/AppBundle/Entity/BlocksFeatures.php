@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * BlocksFeatures
  *
- * @ORM\Table(name="Blocks_Features", indexes={@ORM\Index(name="id_block", columns={"id_block"}), @ORM\Index(name="id_feature", columns={"id_feature"})})
+ * @ORM\Table(name="blocks_features", indexes={@ORM\Index(name="id_block", columns={"id_block"}), @ORM\Index(name="id_feature", columns={"id_feature"})})
  * @ORM\Entity
  */
 class BlocksFeatures
@@ -88,7 +88,7 @@ class BlocksFeatures
     public function setOwner($owner)
     {
         $this->owner = $owner;
-
+    
         return $this;
     }
 
@@ -112,7 +112,7 @@ class BlocksFeatures
     public function setAdmin($admin)
     {
         $this->admin = $admin;
-
+    
         return $this;
     }
 
@@ -136,7 +136,7 @@ class BlocksFeatures
     public function setUser($user)
     {
         $this->user = $user;
-
+    
         return $this;
     }
 
@@ -160,7 +160,7 @@ class BlocksFeatures
     public function setCreationDate($creationDate)
     {
         $this->creationDate = $creationDate;
-
+    
         return $this;
     }
 
@@ -184,7 +184,7 @@ class BlocksFeatures
     public function setActive($active)
     {
         $this->active = $active;
-
+    
         return $this;
     }
 
@@ -218,7 +218,7 @@ class BlocksFeatures
     public function setIdFeature(\AppBundle\Entity\Features $idFeature = null)
     {
         $this->idFeature = $idFeature;
-
+    
         return $this;
     }
 
@@ -242,7 +242,7 @@ class BlocksFeatures
     public function setIdBlock(\AppBundle\Entity\Blocks $idBlock = null)
     {
         $this->idBlock = $idBlock;
-
+    
         return $this;
     }
 

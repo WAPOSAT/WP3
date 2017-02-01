@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * NotificationsAlert
  *
- * @ORM\Table(name="Notifications_Alert", indexes={@ORM\Index(name="id_monitoring_event", columns={"id_monitoring_event"}), @ORM\Index(name="id_user", columns={"id_user"})})
+ * @ORM\Table(name="notifications_alert", indexes={@ORM\Index(name="id_monitoring_event", columns={"id_monitoring_event"}), @ORM\Index(name="id_user", columns={"id_user"})})
  * @ORM\Entity
  */
 class NotificationsAlert
@@ -31,7 +31,7 @@ class NotificationsAlert
      *
      * @ORM\Column(name="by_email", type="boolean", nullable=false)
      */
-    private $byEmail;
+    private $byEmail = '0';
 
     /**
      * @var integer
@@ -74,7 +74,7 @@ class NotificationsAlert
     public function setShowed($showed)
     {
         $this->showed = $showed;
-
+    
         return $this;
     }
 
@@ -98,7 +98,7 @@ class NotificationsAlert
     public function setViewed($viewed)
     {
         $this->viewed = $viewed;
-
+    
         return $this;
     }
 
@@ -115,21 +115,21 @@ class NotificationsAlert
     /**
      * Set byEmail
      *
-     * @param integer $byEmail
+     * @param boolean $byEmail
      *
      * @return NotificationsAlert
      */
     public function setByEmail($byEmail)
     {
         $this->byEmail = $byEmail;
-
+    
         return $this;
     }
 
     /**
      * Get byEmail
      *
-     * @return integer
+     * @return boolean
      */
     public function getByEmail()
     {
@@ -156,7 +156,7 @@ class NotificationsAlert
     public function setIdMonitoringEvent(\AppBundle\Entity\MonitoringEvents $idMonitoringEvent = null)
     {
         $this->idMonitoringEvent = $idMonitoringEvent;
-
+    
         return $this;
     }
 
@@ -180,7 +180,7 @@ class NotificationsAlert
     public function setIdUser(\AppBundle\Entity\Users $idUser = null)
     {
         $this->idUser = $idUser;
-
+    
         return $this;
     }
 

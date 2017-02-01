@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * SensorsSenders
  *
- * @ORM\Table(name="Sensors_Senders", indexes={@ORM\Index(name="id_sensor", columns={"id_sensor"}), @ORM\Index(name="id_sender", columns={"id_sender"})})
+ * @ORM\Table(name="sensors_senders", indexes={@ORM\Index(name="id_sensor", columns={"id_sensor"}), @ORM\Index(name="id_sender", columns={"id_sender"})})
  * @ORM\Entity
  */
 class SensorsSenders
@@ -60,7 +60,7 @@ class SensorsSenders
     public function setActive($active)
     {
         $this->active = $active;
-
+    
         return $this;
     }
 
@@ -94,7 +94,7 @@ class SensorsSenders
     public function setIdSensor(\AppBundle\Entity\Sensors $idSensor = null)
     {
         $this->idSensor = $idSensor;
-
+    
         return $this;
     }
 
@@ -118,7 +118,7 @@ class SensorsSenders
     public function setIdSender(\AppBundle\Entity\Senders $idSender = null)
     {
         $this->idSender = $idSender;
-
+    
         return $this;
     }
 

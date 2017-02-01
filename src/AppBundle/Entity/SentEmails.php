@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * SentEmails
  *
- * @ORM\Table(name="Sent_Emails", indexes={@ORM\Index(name="id_user", columns={"id_user"})})
+ * @ORM\Table(name="sent_emails", indexes={@ORM\Index(name="id_user", columns={"id_user"})})
  * @ORM\Entity
  */
 class SentEmails
@@ -64,7 +64,7 @@ class SentEmails
     public function setEmailRecipient($emailRecipient)
     {
         $this->emailRecipient = $emailRecipient;
-
+    
         return $this;
     }
 
@@ -88,7 +88,7 @@ class SentEmails
     public function setReceived($received)
     {
         $this->received = $received;
-
+    
         return $this;
     }
 
@@ -112,7 +112,7 @@ class SentEmails
     public function setRegisterDate($registerDate)
     {
         $this->registerDate = $registerDate;
-
+    
         return $this;
     }
 
@@ -146,7 +146,7 @@ class SentEmails
     public function setIdUser(\AppBundle\Entity\Users $idUser = null)
     {
         $this->idUser = $idUser;
-
+    
         return $this;
     }
 

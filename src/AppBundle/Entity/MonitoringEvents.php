@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * MonitoringEvents
  *
- * @ORM\Table(name="Monitoring_Events", indexes={@ORM\Index(name="id_block_sensor", columns={"id_block_sensor"}), @ORM\Index(name="id_event_type", columns={"id_event_type"}), @ORM\Index(name="id_measurement", columns={"id_measurement"})})
+ * @ORM\Table(name="monitoring_events", indexes={@ORM\Index(name="id_block_sensor", columns={"id_block_sensor"}), @ORM\Index(name="id_event_type", columns={"id_event_type"}), @ORM\Index(name="id_measurement", columns={"id_measurement"})})
  * @ORM\Entity
  */
 class MonitoringEvents
@@ -73,7 +73,7 @@ class MonitoringEvents
     public function setIdBlockSensor(\AppBundle\Entity\BlockSensors $idBlockSensor = null)
     {
         $this->idBlockSensor = $idBlockSensor;
-
+    
         return $this;
     }
 
@@ -97,7 +97,7 @@ class MonitoringEvents
     public function setIdEventType(\AppBundle\Entity\EventType $idEventType = null)
     {
         $this->idEventType = $idEventType;
-
+    
         return $this;
     }
 
@@ -121,7 +121,7 @@ class MonitoringEvents
     public function setIdMeasurement(\AppBundle\Entity\Measurement $idMeasurement = null)
     {
         $this->idMeasurement = $idMeasurement;
-
+    
         return $this;
     }
 

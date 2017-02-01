@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Blocks
  *
- * @ORM\Table(name="Blocks", indexes={@ORM\Index(name="id_block_type", columns={"id_block_type"})})
+ * @ORM\Table(name="blocks", indexes={@ORM\Index(name="id_block_type", columns={"id_block_type"})})
  * @ORM\Entity
  */
 class Blocks
@@ -127,7 +127,7 @@ class Blocks
     public function setBlockCodename($blockCodename)
     {
         $this->blockCodename = $blockCodename;
-
+    
         return $this;
     }
 
@@ -151,7 +151,7 @@ class Blocks
     public function setBlockName($blockName)
     {
         $this->blockName = $blockName;
-
+    
         return $this;
     }
 
@@ -175,7 +175,7 @@ class Blocks
     public function setIdParentBlock($idParentBlock)
     {
         $this->idParentBlock = $idParentBlock;
-
+    
         return $this;
     }
 
@@ -199,7 +199,7 @@ class Blocks
     public function setCanvasOrder($canvasOrder)
     {
         $this->canvasOrder = $canvasOrder;
-
+    
         return $this;
     }
 
@@ -223,7 +223,7 @@ class Blocks
     public function setLongitude($longitude)
     {
         $this->longitude = $longitude;
-
+    
         return $this;
     }
 
@@ -247,7 +247,7 @@ class Blocks
     public function setLatitude($latitude)
     {
         $this->latitude = $latitude;
-
+    
         return $this;
     }
 
@@ -271,7 +271,7 @@ class Blocks
     public function setDescription($description)
     {
         $this->description = $description;
-
+    
         return $this;
     }
 
@@ -295,7 +295,7 @@ class Blocks
     public function setUbigeo($ubigeo)
     {
         $this->ubigeo = $ubigeo;
-
+    
         return $this;
     }
 
@@ -319,7 +319,7 @@ class Blocks
     public function setImage($image)
     {
         $this->image = $image;
-
+    
         return $this;
     }
 
@@ -343,7 +343,7 @@ class Blocks
     public function setRefresh($refresh)
     {
         $this->refresh = $refresh;
-
+    
         return $this;
     }
 
@@ -367,7 +367,7 @@ class Blocks
     public function setCreationDate($creationDate)
     {
         $this->creationDate = $creationDate;
-
+    
         return $this;
     }
 
@@ -391,7 +391,7 @@ class Blocks
     public function setActive($active)
     {
         $this->active = $active;
-
+    
         return $this;
     }
 
@@ -425,7 +425,7 @@ class Blocks
     public function setIdBlockType(\AppBundle\Entity\BlockType $idBlockType = null)
     {
         $this->idBlockType = $idBlockType;
-
+    
         return $this;
     }
 

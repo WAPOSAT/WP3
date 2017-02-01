@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * UsersConfigs
  *
- * @ORM\Table(name="Users_Configs", indexes={@ORM\Index(name="id_user", columns={"id_user"}), @ORM\Index(name="id_block", columns={"id_block"}), @ORM\Index(name="id_feature", columns={"id_feature"})})
+ * @ORM\Table(name="users_configs", indexes={@ORM\Index(name="id_user", columns={"id_user"}), @ORM\Index(name="id_block", columns={"id_block"}), @ORM\Index(name="id_feature", columns={"id_feature"})})
  * @ORM\Entity
  */
 class UsersConfigs
@@ -77,7 +77,7 @@ class UsersConfigs
     public function setActive($active)
     {
         $this->active = $active;
-
+    
         return $this;
     }
 
@@ -101,7 +101,7 @@ class UsersConfigs
     public function setCreationDate($creationDate)
     {
         $this->creationDate = $creationDate;
-
+    
         return $this;
     }
 
@@ -135,7 +135,7 @@ class UsersConfigs
     public function setIdFeature(\AppBundle\Entity\Features $idFeature = null)
     {
         $this->idFeature = $idFeature;
-
+    
         return $this;
     }
 
@@ -159,7 +159,7 @@ class UsersConfigs
     public function setIdBlock(\AppBundle\Entity\Blocks $idBlock = null)
     {
         $this->idBlock = $idBlock;
-
+    
         return $this;
     }
 
@@ -183,7 +183,7 @@ class UsersConfigs
     public function setIdUser(\AppBundle\Entity\Users $idUser = null)
     {
         $this->idUser = $idUser;
-
+    
         return $this;
     }
 

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * UsersBlocks
  *
- * @ORM\Table(name="Users_Blocks", indexes={@ORM\Index(name="id_user", columns={"id_user"}), @ORM\Index(name="id_block", columns={"id_block"})})
+ * @ORM\Table(name="users_blocks", indexes={@ORM\Index(name="id_user", columns={"id_user"}), @ORM\Index(name="id_block", columns={"id_block"})})
  * @ORM\Entity
  */
 class UsersBlocks
@@ -81,7 +81,7 @@ class UsersBlocks
     public function setRole($role)
     {
         $this->role = $role;
-
+    
         return $this;
     }
 
@@ -105,7 +105,7 @@ class UsersBlocks
     public function setCodename($codename)
     {
         $this->codename = $codename;
-
+    
         return $this;
     }
 
@@ -129,7 +129,7 @@ class UsersBlocks
     public function setCreationDate($creationDate)
     {
         $this->creationDate = $creationDate;
-
+    
         return $this;
     }
 
@@ -153,7 +153,7 @@ class UsersBlocks
     public function setActive($active)
     {
         $this->active = $active;
-
+    
         return $this;
     }
 
@@ -187,7 +187,7 @@ class UsersBlocks
     public function setIdBlock(\AppBundle\Entity\Blocks $idBlock = null)
     {
         $this->idBlock = $idBlock;
-
+    
         return $this;
     }
 
@@ -211,7 +211,7 @@ class UsersBlocks
     public function setIdUser(\AppBundle\Entity\Users $idUser = null)
     {
         $this->idUser = $idUser;
-
+    
         return $this;
     }
 

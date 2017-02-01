@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Features
  *
- * @ORM\Table(name="Features")
+ * @ORM\Table(name="features")
  * @ORM\Entity
  */
 class Features
@@ -54,7 +54,7 @@ class Features
     public function setFeatureName($featureName)
     {
         $this->featureName = $featureName;
-
+    
         return $this;
     }
 
@@ -78,7 +78,7 @@ class Features
     public function setCreationDate($creationDate)
     {
         $this->creationDate = $creationDate;
-
+    
         return $this;
     }
 
@@ -102,7 +102,7 @@ class Features
     public function setActive($active)
     {
         $this->active = $active;
-
+    
         return $this;
     }
 
