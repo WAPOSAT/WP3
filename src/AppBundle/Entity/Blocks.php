@@ -41,16 +41,16 @@ class Blocks
     private $canvasOrder;
 
     /**
-     * @var integer
+     * @var float
      *
-     * @ORM\Column(name="longitude", type="integer", nullable=false)
+     * @ORM\Column(name="longitude", type="float", precision=10, scale=0, nullable=false)
      */
     private $longitude;
 
     /**
-     * @var integer
+     * @var float
      *
-     * @ORM\Column(name="latitude", type="integer", nullable=false)
+     * @ORM\Column(name="latitude", type="float", precision=10, scale=0, nullable=false)
      */
     private $latitude;
 
