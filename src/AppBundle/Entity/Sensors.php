@@ -20,9 +20,9 @@ class Sensors
     private $codename;
 
     /**
-     * @var float
+     * @var string
      *
-     * @ORM\Column(name="serie", type="float", precision=10, scale=0, nullable=false)
+     * @ORM\Column(name="serie", type="string", length=13, nullable=false)
      */
     private $serie;
 
