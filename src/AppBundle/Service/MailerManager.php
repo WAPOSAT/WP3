@@ -79,7 +79,7 @@
 		{
 			$message = \Swift_Message::newInstance()
 		        ->setSubject($subject)
-		        ->setFrom('jhosept@waposat.com')
+		        ->setFrom('juan.basilio@waposat.com')
 		        ->setTo($u_email)
 		        ->setBody(
 		            $this->twig->render(
