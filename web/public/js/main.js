@@ -1,3 +1,4 @@
+// hola mundo
 var Risk="";
 var Danger="";
 var Icono=""; 
