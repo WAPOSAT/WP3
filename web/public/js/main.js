@@ -1,4 +1,4 @@
-// hola mundo
+// hola Gherard
 var Risk="";
 var Danger="";
 var Icono=""; 
