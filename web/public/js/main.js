@@ -382,7 +382,7 @@ function showparameter(idstation=1,idsensor=1,long=20, Refresh=5 ){
   $.getJSON('dashboard/station/'+idstation+'/sensor/'+idsensor+'/long/'+long,function(data){
     
     lastId= data.Last.id;
-    console.log(data.Last.id);
+    
 
     // Detiene alguna ejecucion previa de carga de datos dinamicos del BlockStation e inicia una nueva
     clearInterval(actualizarParametro);
@@ -393,16 +393,130 @@ function showparameter(idstation=1,idsensor=1,long=20, Refresh=5 ){
     $("#filtro").html('<select onchange=showparameter('+idstation+','+idsensor+',this.value,'+Refresh+') id=ListPoint><option value=10 '+ (long==10?'selected':'') + '> 10 Puntos</option><option value=20 '+ (long==20?'selected':'') +'> 20 Puntos</option></select><div id=limites><label>Limite: '+data.LMR+' - '+data.LMP+'</label> <i class="fa fa-cog" aria-hidden="true"></i></div>');
     $("#LastValue").html("<h5>Medida Actual: "+data.Last.Value+" "+data.Unit+"</h5><span class=subtitulo>"+data.Last.Date+"</span>");
     
-    var datos="[";
-    for(a=0;a<=data.Data.Time.length-1;a++){
-      var d = new Date("1 1, 2016 "+data.Data.Time[a]);
+   // var datos="[";
+    var Datos2=[];
+    for(a=0;a<data.Data.Time.length;a++){
+      var d = new Date(data.Data.timestamp[a]).getTime();
+
+
+       Datos2.push([d, data.Data.Value[a]]);
 
       //datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+","+data.LMR+","+data.LMP+"],";
-      datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+"],";
-    }
-    datos=datos.substr(0,datos.length-1)+"]";
+    //  datos+="[["+ d.getHours() +","+ d.getMinutes() +","+d.getSeconds()+"],"+ data.Data.Value[a]+"],";
+   
+     }
 
-    drawCurveTypes('ChartLines',380,200,datos,data.Name);  
+ var OptionChart = {
+                    // El selecionador de períodos
+                    rangeSelector: {
+                      selected: 4,
+                      buttons: [{
+                        type: 'hour',
+                        count: 8,
+                        text: '8h'},
+                      {
+                        type: 'hour',
+                        count: 24,
+                        text: '24h'},
+                      {
+                        type: 'day',
+                        count: 7,
+                        text: '1w'},
+                      {
+                        type: 'month',
+                        count: 1,
+                        text: '1m'},
+                      {
+                        type: 'all',
+                        text: 'All'}],
+                      inputEnabled: false,
+                    },
+                    // se configura el scrollbar inferior
+                    scrollbar:{
+                      enabled: false,
+                    },
+                    // se configura del navegador
+                    navigator: {
+                        enabled: false
+                    },
+
+                    title: {
+                        text: data.Unit+" vs Tiempo"
+                    },
+
+                    // Se definen las líneas adicionales para indicar límites
+                    yAxis: {
+                        title: {
+                            text: "Nivel de "+ data.Name
+                        },
+                        plotLines: [{
+                            value: data.MaxValue,
+                            color: 'red',
+                            dashStyle: 'shortdash',
+                            width: 3,
+                            label: {
+                                text: 'Punto Máximo'                          
+                            }
+                        },{
+                            value: data.MeanValue,
+                            color: 'blue',
+                            dashStyle: 'shortdash',
+                            width: 3,
+                            label: {
+                                text: 'Media Total'
+                            }
+                        },{
+                           value: data.LMR,
+                           color: 'orange', // orange
+                           dashStyle: 'shortdash',
+                           width: 2,
+                           label: {
+                               text: 'Limite de Riesgo'
+                              }
+                        },{
+                           value: data.LMP,
+                           color: 'Black', // Black
+                           dashStyle: 'shortdash',
+                           width: 2,
+                           label: {
+                               text: 'Limite de Peligro'
+                              }
+                        },{
+                           value: data.MinValue,
+                            color: 'green',
+                            dashStyle: 'shortdash',
+                            width: 3,
+                            label: {
+                                text: 'Punto Mínimo'
+                              }
+                        }]
+                    },
+
+
+                    // configuración de la posicion de la gráfica
+                    credits: {
+                        position: {
+                            align: 'center',
+                            verticalAlign: 'bottom'
+                        }
+                    },
+                    // Se ingresan los datos obtenidos
+                    series: [{
+                        name: data.Name,
+                        data: Datos2,
+                        tooltip: {
+                            valueDecimals: 2
+                        }
+                    }]
+                  }; 
+
+
+    //datos=datos.substr(0,datos.length-1)+"]";
+
+      Highcharts.stockChart("ChartLines",OptionChart);
+
+
+   //drawCurveTypes('ChartLines',380,200,datos,data.Name);  
   });  
 }
 
@@ -935,7 +1049,7 @@ function chargeValuesDate(){
                     },
                     // se configura el scrollbar inferior
                     scrollbar:{
-                      enabled: true,
+                      enabled: false,
                     },
                     // se configura del navegador
                     navigator: {
