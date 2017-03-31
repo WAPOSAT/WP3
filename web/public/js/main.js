@@ -17,6 +17,7 @@ $(document).ready(function(){
   // la variable [vista] tiene valores 1 o 2 dependiendo de cual es la vista de la plataforma que se desea
   // esta es ingresada por el controlador desde el codigo twig    
   LoadNav(vista);
+	//Falta editar el Copyright a 2017
   $("footer").html('Copyright &copy; Waposat 2016');
 });
 
