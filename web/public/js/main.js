@@ -935,13 +935,13 @@ function chargeValuesDate(){
                       inputEnabled: false,
                     },
                     // se configura el scrollbar inferior
-                    scrollbar:{
-                      enabled: true,
-                    },
+                    //scrollbar:{
+                    //  enabled: true,
+                    //},
                     // se configura del navegador
-                    navigator: {
-                        enabled: false
-                    },
+                    //navigator: {
+                    //    enabled: false
+                    //},
 
                     title: {
                         text: val.Unit+" vs Tiempo"
